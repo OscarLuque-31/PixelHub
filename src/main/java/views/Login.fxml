@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.TextFlow?>
+<?import javafx.scene.text.Text?>
+
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity"
+	minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0"
+	prefWidth="1366.0" xmlns="http://javafx.com/javafx/8.0.171"
+	xmlns:fx="http://javafx.com/fxml/1"
+	stylesheets="@styles/styleLogin.css">
+
+	<center>
+		<!-- Contenedor del formulario -->
+		<VBox alignment="CENTER" fillWidth="false" maxHeight="677.0"
+			maxWidth="578.0" minHeight="677.0" minWidth="578.0"
+			prefHeight="677.0" prefWidth="578.0" BorderPane.alignment="CENTER"
+			styleClass="vbox-form">
+			<children>
+				<Label fx:id="lblTitulo" text="PIXELHUB" styleClass="titulo">
+					<VBox.margin>
+						<Insets top="30" bottom="50" />
+					</VBox.margin>
+				</Label>
+				<TextField fx:id="txtNombreUsuario"
+					promptText="Nombre de usuario" styleClass="text-field">
+					<VBox.margin>
+						<Insets bottom="50" />
+					</VBox.margin>
+				</TextField>
+				<PasswordField fx:id="passwordField"
+					promptText="Contraseña" styleClass="password-field">
+					<VBox.margin>
+						<Insets bottom="50" />
+					</VBox.margin>
+				</PasswordField>
+				<Button mnemonicParsing="false" text="Iniciar sesión">
+					<VBox.margin>
+						<Insets bottom="50" />
+					</VBox.margin>
+				</Button>
+				<VBox alignment="CENTER" spacing="20.0">
+					<children>
+						<TextFlow textAlignment="CENTER" styleClass="textBot">
+							<children>
+								<Text text="¿Olvidaste tu " styleClass="textBot" />
+								<Text text="contraseña" styleClass="label-link" />
+								<Text text="?" styleClass="textBot" />
+							</children>
+						</TextFlow>
+						<TextFlow textAlignment="CENTER" styleClass="textBot">
+							<children>
+								<Text text="¿No tienes una cuenta? " styleClass="textBot" />
+								<Text text="Regístrate" styleClass="label-link" />
+							</children>
+						</TextFlow>
+					</children>
+				</VBox>
+			</children>
+		</VBox>
+	</center>
+
+	<left>
+		<Pane prefHeight="200.0" prefWidth="200.0"
+			BorderPane.alignment="CENTER" />
+	</left>
+	<right>
+		<Pane prefHeight="200.0" prefWidth="200.0"
+			BorderPane.alignment="CENTER" />
+	</right>
+	<bottom>
+		<Pane prefHeight="100.0" BorderPane.alignment="CENTER" />
+	</bottom>
+	<top>
+		<Pane prefHeight="100.0" prefWidth="1535.0"
+			BorderPane.alignment="CENTER" />
+	</top>
+</BorderPane>
