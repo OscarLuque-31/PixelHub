@@ -9,6 +9,7 @@
 .vbox-form {
     -fx-background-color: #2A3B47;
     -fx-background-radius: 20;
+    -fx-effect: dropshadow(gaussian,#52A5E0 , 10, 0.5, 0, 5);
 }
 
 /* Título del formulario */
