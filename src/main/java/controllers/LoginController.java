@@ -79,20 +79,7 @@ public class LoginController {
 
     private Stage stage;
     
-    @FXML
-    /**
-     * Método que inicializa toda la clase y los componentes de la misma
-     */
-    public void initialize() {
-        // Cargar el CSS de la ventana de login
-        cargarCSS();
-        // Inicializar imágenes
-        initializeImagesBar();
-        //Efectos de hover
-        hoverEffect();
-        //Navegación entre pantallas
-        navegacionEntreVentanas();
-    }
+
 
     public void cargarFXML(Stage primaryStage) {
     			
@@ -130,6 +117,8 @@ public class LoginController {
      */
     private void navegacionEntreVentanas() {
     	btnLogin.setOnMouseClicked(event -> NavigationUtils.navigateTo(stage, "/views/Biblioteca.fxml", "Biblioteca"));
+    	linkRegister.setOnMouseClicked(event -> NavigationUtils.navigateTo(stage, "/views/Registro.fxml", "Registro"));
+
     }
 
     public void setStage(Stage stage) {
