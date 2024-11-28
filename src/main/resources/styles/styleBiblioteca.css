@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=Tilt+Neon&family=Tilt+Warp&display=swap');
+
+/* Fondo del BorderPane */
+.root {
+    -fx-background-color: #192229;
+}
+
+
+#circleLogo {
+    -fx-effect: dropshadow(gaussian, #52A5E0, 20, 0.5, 0, 0);
+    -fx-opacity: 0.25;
+}
+
+.btnNavegacion{
+	-fx-text-fill: white;
+	-fx-font-size: 15;
+	-fx-font-family: "Tilt Warp";
+}
+
+#panelLateral{
+	-fx-background-color: "212E36";
+	-fx-border-radius: 20px;
+}
+
+
+/* Título del formulario */
+.titulo {
+    -fx-text-fill: #52A5E0;
+    -fx-font-size: 60;
+    -fx-font-family: "Silkscreen";
+    -fx-alignment: center;
+}
+
+
+
+
+
+

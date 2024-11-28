@@ -5,6 +5,7 @@
     -fx-background-color: #192229;
 }
 
+
 /* Estilo del VBox (formulario) */
 .vbox-form {
     -fx-background-color: #2A3B47;
@@ -12,14 +13,13 @@
     -fx-effect: dropshadow(gaussian,#52A5E0 , 10, 0.5, 0, 5);
 }
 
-.menu-bar {
-    -fx-background-color: #52A5E0;  /* Color azul */
-    -fx-border-radius: 10;         /* Bordes redondeados */
-}
-
 #circleLogo {
     -fx-effect: dropshadow(gaussian, #52A5E0, 20, 0.5, 0, 0);
     -fx-opacity: 0.25;
+}
+
+.btnNavegacion{
+	 -fx-background-color: #2a3b47;
 }
 
 /* Título del formulario */
@@ -43,7 +43,7 @@
 }
 
 /* Botón de inicio de sesión */
-.button {
+#btnLogin {
     -fx-background-color: #52A5E0;
     -fx-text-fill: white;	
     -fx-font-size: 16;
