@@ -15,10 +15,12 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.shape.Circle?>
 
 <BorderPane fx:id="borderPane" fx:controller="controllers.RegistroController" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <center>
-      <BorderPane id="paneRegister" fx:id="paneRegister" maxHeight="550.0" maxWidth="700.0" minHeight="550.0" minWidth="700.0" prefHeight="550.0" prefWidth="700.0" BorderPane.alignment="CENTER">
+      <BorderPane id="paneRegister" maxHeight="550.0" maxWidth="700.0" minHeight="550.0" minWidth="700.0" prefHeight="550.0" prefWidth="700.0" BorderPane.alignment="CENTER">
          <top>
             <Label id="lblRegister" fx:id="lblRegister" alignment="CENTER" contentDisplay="CENTER" maxHeight="111.0" maxWidth="577.0" prefHeight="78.0" prefWidth="577.0" text="REGISTRO" textAlignment="CENTER" BorderPane.alignment="CENTER">
                <font>
@@ -118,7 +120,56 @@
       </BorderPane>
    </center>
    <top>
-      <Pane prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+      <VBox prefHeight="130.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+			<children>
+				<HBox fx:id="dragArea" alignment="CENTER_RIGHT" spacing="9">
+					<children>
+						<GridPane fx:id="gridPane">
+							<columnConstraints>
+								<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="50.0" />
+								<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="50.0" />
+								<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="50.0" />
+							</columnConstraints>
+							<rowConstraints>
+								<RowConstraints prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+							</rowConstraints>
+							<children>
+                        <Button fx:id="btnMinimizar" mnemonicParsing="false" prefWidth="50.0" style="-fx-background-color: #192229;" styleClass="btnNavegacion">
+                           <graphic>
+      								<!-- Icono Minimizar -->
+      								<ImageView fx:id="iconMinimizar" fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true" />
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnMaximizar" mnemonicParsing="false" prefWidth="50.0" style="-fx-background-color: #192229;" styleClass="btnNavegacion" GridPane.columnIndex="1">
+                           <graphic>
+      								<!-- Icono Maximizar -->
+      								<ImageView fx:id="iconMaximizar" fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true" />
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnCerrar" mnemonicParsing="false" prefWidth="50.0" style="-fx-background-color: #192229;" styleClass="btnNavegacion" GridPane.columnIndex="2">
+                           <graphic>
+      								<!-- Icono Cerrar -->
+      								<ImageView fx:id="iconCerrar" fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true" />
+                           </graphic>
+                        </Button>
+							</children>
+						</GridPane>
+					</children>
+				</HBox>
+
+
+				<HBox alignment="CENTER_LEFT" prefHeight="100.0" BorderPane.alignment="CENTER">
+					<children>
+						<Pane prefHeight="123.0" prefWidth="162.0">
+							<children>
+								<Circle fx:id="circleLogo" fill="#2a3b47" layoutX="60.0" layoutY="56.0" radius="35.0" stroke="#2a3b47" strokeType="INSIDE" />
+								<ImageView fx:id="imgLogo" fitHeight="51.0" fitWidth="56.0" layoutX="32.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true" />
+							</children>
+						</Pane>
+					</children>
+				</HBox>
+			</children>
+		</VBox>
    </top>
    <left>
       <Pane prefHeight="200.0" BorderPane.alignment="CENTER" />
@@ -130,3 +181,6 @@
       <Pane prefHeight="200.0" BorderPane.alignment="CENTER" />
    </right>
 </BorderPane>
+
+
+

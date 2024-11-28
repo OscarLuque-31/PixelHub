@@ -5,12 +5,6 @@
     -fx-background-color: #192229;
 }
 
-
-#circleLogo {
-    -fx-effect: dropshadow(gaussian, #52A5E0, 20, 0.5, 0, 0);
-    -fx-opacity: 0.25;
-}
-
 .btnNavegacion{
 	-fx-text-fill: white;
 	-fx-font-size: 15;

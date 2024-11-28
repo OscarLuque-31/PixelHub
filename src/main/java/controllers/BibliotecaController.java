@@ -84,7 +84,8 @@ public class BibliotecaController {
      */
     private void cargarCSS() {
         // Cargar el archivo de estilo para la ventana de login
-        borderPane.getStylesheets().add(getClass().getResource("/styles/styleBiblioteca.css").toExternalForm());
+        borderPane.getStylesheets().addAll(getClass().getResource("/styles/styleBiblioteca.css").toExternalForm(),
+        							       getClass().getResource("/styles/styleTopBar.css").toExternalForm());
     }
 	/**
 	 * Método que recopila todos los hoverEffect
@@ -92,7 +93,7 @@ public class BibliotecaController {
 	public void hoverEffect() {
 		UtilsViews.hoverEffectButton(btnMinimizar, "#2a3b47", "#192229");
 		UtilsViews.hoverEffectButton(btnMaximizar, "#2a3b47", "#192229");
-		UtilsViews.hoverEffectButton(btnCerrar, "#2a3b47", "#192229");
+		UtilsViews.hoverEffectButton(btnCerrar, "#c63637", "#192229");
 	}
 
 	/**
