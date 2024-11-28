@@ -2,6 +2,7 @@ package utils;
 
 import controllers.BibliotecaController;
 import controllers.LoginController;
+import controllers.RegistroController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -23,6 +24,8 @@ public class NavigationUtils {
                 ((BibliotecaController) controller).setStage(stage);
             } else if (controller instanceof LoginController) {
                 ((LoginController) controller).setStage(stage);
+            } else if (controller instanceof RegistroController) {
+                ((RegistroController) controller).setStage(stage);
             }
 
             // Establecer la nueva escena

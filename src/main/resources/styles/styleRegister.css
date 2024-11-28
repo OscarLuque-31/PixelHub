@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=Tilt+Neon&family=Tilt+Warp&display=swap'); 
+
+.root{
+	-fx-background-color: #192229;
+}
+
+#paneRegister{
+	-fx-background-color: #2A3B47;
+    -fx-background-radius: 15;
+}
+
+#lblRegister{
+	-fx-text-fill: #52A5E0;
+	-fx-font-family: "Silkscreen";
+	-fx-font-size: 55;
+}
+
+#btnRegister{
+	-fx-background-color: #52A5E0;
+	-fx-text-fill: white;
+}
+
+.txtField{
+	-fx-text-fill: #52A5E0;
+	-fx-font-family: "Tilt Warp";
+	-fx-font-size: 16;
+	-fx-background-radius: 5;
+}
+
+#datePicker{
+	-fx-text-fill: #52A5E0;
+	-fx-font-family: "Tilt Warp";
+	-fx-font-size: 15;
+	-fx-background-radius: 5;
+}
+
+.date-picker .text-field {
+    -fx-text-fill: #52A5E0;
+	-fx-font-family: "Tilt Warp";
+}
+
+.combo-box .text-field{
+	-fx-text-fill: #52A5E0;
+	-fx-font-family: "Tilt Warp";
+}
+
+.combo-box .list-cell {
+    -fx-text-fill: #52A5E0;
+	-fx-font-family: "Tilt Warp";
+}
+
+.comboBox{
+	-fx-background-color: white;
+	-fx-text-fill: #52A5E0;
+	-fx-font-family: "Tilt Warp";
+	-fx-font-size: 16;
+	-fx-background-radius: 5;
+}

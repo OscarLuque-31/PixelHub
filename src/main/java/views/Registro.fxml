@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="borderPane" fx:controller="controllers.RegistroController" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <BorderPane id="paneRegister" fx:id="paneRegister" maxHeight="550.0" maxWidth="700.0" minHeight="550.0" minWidth="700.0" prefHeight="550.0" prefWidth="700.0" BorderPane.alignment="CENTER">
+         <top>
+            <Label id="lblRegister" fx:id="lblRegister" alignment="CENTER" contentDisplay="CENTER" maxHeight="111.0" maxWidth="577.0" prefHeight="78.0" prefWidth="577.0" text="REGISTRO" textAlignment="CENTER" BorderPane.alignment="CENTER">
+               <font>
+                  <Font size="50.0" />
+               </font>
+            </Label>
+         </top>
+         <bottom>
+            <Button id="btnRegister" fx:id="btnRegister" mnemonicParsing="false" prefHeight="42.0" prefWidth="128.0" styleClass="txtField" text="Registrarse" textAlignment="CENTER" BorderPane.alignment="CENTER">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <padding>
+                  <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
+               </padding>
+            </Button>
+         </bottom>
+         <center>
+            <GridPane BorderPane.alignment="CENTER">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <TextField id="txtName" fx:id="txtName" maxHeight="45.0" maxWidth="265.0" prefHeight="45.0" prefWidth="265.0" promptText="Nombre" styleClass="txtField">
+                           <VBox.margin>
+                              <Insets bottom="20.0" top="20.0" />
+                           </VBox.margin>
+                        </TextField>
+                        <TextField id="txtUsername" fx:id="txtUsername" maxHeight="45.0" maxWidth="265.0" prefHeight="45.0" prefWidth="265.0" promptText="Nombre de usuario" styleClass="txtField">
+                           <VBox.margin>
+                              <Insets bottom="20.0" top="20.0" />
+                           </VBox.margin>
+                        </TextField>
+                        <DatePicker id="datePicker" fx:id="txtDate" maxHeight="45.0" maxWidth="265.0" prefHeight="45.0" prefWidth="265.0" promptText="Fecha de nacimiento">
+                           <VBox.margin>
+                              <Insets bottom="20.0" top="20.0" />
+                           </VBox.margin>
+                        </DatePicker>
+                        <PasswordField id="txtPassword" fx:id="txtPassword" maxHeight="45.0" maxWidth="265.0" prefHeight="45.0" prefWidth="265.0" promptText="Contraseña" styleClass="txtField">
+                           <VBox.margin>
+                              <Insets bottom="20.0" top="20.0" />
+                           </VBox.margin>
+                        </PasswordField>
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="320.0" GridPane.columnIndex="1">
+                     <children>
+                        <TextField id="txtSurname" fx:id="txtSurname" maxHeight="45.0" maxWidth="265.0" prefHeight="45.0" prefWidth="265.0" promptText="Apellidos" styleClass="txtField">
+                           <VBox.margin>
+                              <Insets bottom="20.0" top="20.0" />
+                           </VBox.margin>
+                        </TextField>
+                        <TextField id="txtEmail" fx:id="txtEmail" maxHeight="45.0" maxWidth="265.0" prefHeight="45.0" prefWidth="265.0" promptText="Email" styleClass="txtField">
+                           <VBox.margin>
+                              <Insets bottom="20.0" top="20.0" />
+                           </VBox.margin>
+                        </TextField>
+                        <HBox alignment="CENTER" maxHeight="46.0" maxWidth="292.0" prefHeight="46.0" prefWidth="292.0">
+                           <children>
+                              <ComboBox id="cmbGender" fx:id="cmbGender" maxHeight="40.0" maxWidth="121.0" prefHeight="40.0" prefWidth="111.0" promptText="Género" styleClass="comboBox">
+                                 <HBox.margin>
+                                    <Insets left="5.0" right="5.0" />
+                                 </HBox.margin>
+                              </ComboBox>
+                              <ComboBox id="cmbPlatform" fx:id="cmbPlatform" maxHeight="40.0" maxWidth="149.0" prefHeight="40.0" prefWidth="148.0" promptText="Plataforma" styleClass="comboBox">
+                                 <HBox.margin>
+                                    <Insets left="5.0" right="5.0" />
+                                 </HBox.margin>
+                              </ComboBox>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="20.0" top="20.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <PasswordField id="txtConfirmPassword" fx:id="txtConfirmPassword" maxHeight="45.0" maxWidth="265.0" prefHeight="45.0" prefWidth="265.0" promptText="Confirmar Contraseña" styleClass="txtField">
+                           <VBox.margin>
+                              <Insets bottom="20.0" top="20.0" />
+                           </VBox.margin>
+                        </PasswordField>
+                     </children>
+                  </VBox>
+               </children>
+            </GridPane>
+         </center>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+         <padding>
+            <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+         </padding>
+      </BorderPane>
+   </center>
+   <top>
+      <Pane prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </top>
+   <left>
+      <Pane prefHeight="200.0" BorderPane.alignment="CENTER" />
+   </left>
+   <bottom>
+      <Pane prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </bottom>
+   <right>
+      <Pane prefHeight="200.0" BorderPane.alignment="CENTER" />
+   </right>
+</BorderPane>
