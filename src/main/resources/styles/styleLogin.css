@@ -13,11 +13,6 @@
     -fx-effect: dropshadow(gaussian,#52A5E0 , 10, 0.5, 0, 5);
 }
 
-#circleLogo {
-    -fx-effect: dropshadow(gaussian, #52A5E0, 20, 0.5, 0, 0);
-    -fx-opacity: 0.25;
-}
-
 .btnNavegacion{
 	 -fx-background-color: #2a3b47;
 }

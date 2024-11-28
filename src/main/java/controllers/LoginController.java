@@ -81,8 +81,7 @@ public class LoginController {
     
 
 
-    public void cargarFXML(Stage primaryStage) {
-    			
+    public void cargarFXML(Stage primaryStage) {	
     	try {
 			// Cargar el FXML
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Login.fxml"));
@@ -109,7 +108,8 @@ public class LoginController {
      */
     private void cargarCSS() {
         // Cargar el archivo de estilo para la ventana de login
-        borderPane.getStylesheets().add(getClass().getResource("/styles/styleLogin.css").toExternalForm());
+        borderPane.getStylesheets().addAll(getClass().getResource("/styles/styleLogin.css").toExternalForm(),
+        		getClass().getResource("/styles/styleTopBar.css").toExternalForm());
     }
 
     /**
@@ -123,6 +123,7 @@ public class LoginController {
 
     public void setStage(Stage stage) {
         this.stage = stage;
+        //Funciones de los botones de la barra de navegacion
         UtilsViews.funBtnsBar(btnMinimizar, btnMaximizar, btnCerrar, dragArea, stage);
         //Cargar el CSS de la ventana de login
         cargarCSS();
@@ -145,7 +146,7 @@ public class LoginController {
         UtilsViews.hoverEffectButton(btnLogin, "#0095FF", "#52A5E0");
         UtilsViews.hoverEffectButton(btnMinimizar, "#2a3b47", "#192229");
         UtilsViews.hoverEffectButton(btnMaximizar, "#2a3b47", "#192229");
-        UtilsViews.hoverEffectButton(btnCerrar, "#2a3b47", "#192229");
+		UtilsViews.hoverEffectButton(btnCerrar, "#c63637", "#192229");
     }
 
     /**
