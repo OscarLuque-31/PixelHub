@@ -20,11 +20,6 @@
   			<artifactId>javafx-fxml</artifactId>
   			<version>21-ea+5</version>
   		</dependency>
-  		<dependency>
-  			<groupId>org.oscar</groupId>
-  			<artifactId>PruebaFX</artifactId>
-  			<version>0.0.1-SNAPSHOT</version>
-  		</dependency>
   </dependencies>
   <build>
   	<plugins>
