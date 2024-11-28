@@ -7,77 +7,121 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" stylesheets="@styles/styleLogin.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LoginController">
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" stylesheets="@styles/styleLogin.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LoginController">
 
-    <center>
-        <VBox fx:id="vboxForm" alignment="CENTER" fillWidth="false" maxHeight="600.0" maxWidth="578.0" minHeight="600.0" minWidth="578.0" prefHeight="600.0" prefWidth="578.0" styleClass="vbox-form" BorderPane.alignment="CENTER">
-            <children>
-                <Label fx:id="lblPixelHub" styleClass="titulo" text="PIXELHUB">
-                    <VBox.margin>
-                        <Insets bottom="50" top="30" />
-                    </VBox.margin>
-                </Label>
-                <TextField fx:id="txtUsername" promptText="Nombre de usuario" styleClass="text-field">
-                    <VBox.margin>
-                        <Insets bottom="50" />
-                    </VBox.margin>
-                </TextField>
-                <PasswordField fx:id="txtPassword" promptText="Contraseña" styleClass="password-field">
-                    <VBox.margin>
-                        <Insets bottom="50" />
-                    </VBox.margin>
-                </PasswordField>
-                <Button fx:id="btnLogin" mnemonicParsing="false" prefWidth="150.0" text="Iniciar sesión">
-                    <VBox.margin>
-                        <Insets bottom="50" />
-                    </VBox.margin>
-                </Button>
-                <VBox alignment="CENTER" spacing="20.0">
-                    <children>
-                        <TextFlow styleClass="textBot" textAlignment="CENTER">
-                            <children>
-                                <Text styleClass="textBot" text="¿Olvidaste tu " />
-                                <Text fx:id="linkPassword" styleClass="label-link" text="contraseña" />
-                                <Text styleClass="textBot" text="?" />
-                            </children>
-                        </TextFlow>
-                        <TextFlow styleClass="textBot" textAlignment="CENTER">
-                            <children>
-                                <Text styleClass="textBot" text="¿No tienes una cuenta? " />
-                                <Text fx:id="linkRegister" styleClass="label-link" text="Regístrate" />
-                            </children>
-                        </TextFlow>
-                    </children>
-                </VBox>
-            </children>
-        </VBox>
-    </center>
+	<center>
+		<VBox fx:id="vboxForm" alignment="CENTER" fillWidth="false" maxHeight="600.0" maxWidth="578.0" minHeight="600.0" minWidth="578.0" prefHeight="600.0" prefWidth="578.0" styleClass="vbox-form" BorderPane.alignment="CENTER">
+			<children>
+				<Label fx:id="lblPixelHub" styleClass="titulo" text="PIXELHUB">
+					<VBox.margin>
+						<Insets bottom="50" top="30" />
+					</VBox.margin>
+				</Label>
+				<TextField fx:id="txtUsername" promptText="Nombre de usuario" styleClass="text-field">
+					<VBox.margin>
+						<Insets bottom="50" />
+					</VBox.margin>
+				</TextField>
+				<PasswordField fx:id="txtPassword" promptText="Contraseña" styleClass="password-field">
+					<VBox.margin>
+						<Insets bottom="50" />
+					</VBox.margin>
+				</PasswordField>
+				<Button fx:id="btnLogin" mnemonicParsing="false" prefWidth="150.0" text="Iniciar sesión">
+					<VBox.margin>
+						<Insets bottom="50" />
+					</VBox.margin>
+				</Button>
+				<VBox alignment="CENTER" spacing="20.0">
+					<children>
+						<TextFlow styleClass="textBot" textAlignment="CENTER">
+							<children>
+								<Text styleClass="textBot" text="¿Olvidaste tu " />
+								<Text fx:id="linkPassword" styleClass="label-link" text="contraseña" />
+								<Text styleClass="textBot" text="?" />
+							</children>
+						</TextFlow>
+						<TextFlow styleClass="textBot" textAlignment="CENTER">
+							<children>
+								<Text styleClass="textBot" text="¿No tienes una cuenta? " />
+								<Text fx:id="linkRegister" styleClass="label-link" text="Regístrate" />
+							</children>
+						</TextFlow>
+					</children>
+				</VBox>
+			</children>
+		</VBox>
+	</center>
 
-    <left>
-        <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
-    </left>
-    <right>
-        <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
-    </right>
-    <bottom>
-        <Pane prefHeight="100.0" BorderPane.alignment="CENTER" />
-    </bottom>
-    <top>
-        <HBox alignment="CENTER_LEFT" prefHeight="100.0" BorderPane.alignment="CENTER">
-         <children>
-            <Pane prefHeight="100.0" prefWidth="162.0">
-               <children>
-                  <Circle fx:id="circleLogo" fill="#2a3b47" layoutX="60.0" layoutY="56.0" radius="35.0" stroke="#2a3b47" strokeType="INSIDE" />
-                  <ImageView fx:id="imgLogo" fitHeight="51.0" fitWidth="56.0" layoutX="32.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true" />
-               </children>
-            </Pane>
-         </children></HBox>
-    </top>
+	<left>
+		<Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+	</left>
+	<right>
+		<Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+	</right>
+	<bottom>
+		<Pane prefHeight="100.0" BorderPane.alignment="CENTER" />
+	</bottom>
+	<top>
+		<VBox prefHeight="130.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+			<children>
+				<HBox fx:id="dragArea" alignment="CENTER_RIGHT" spacing="9">
+					<children>
+						<GridPane fx:id="gridPane">
+							<columnConstraints>
+								<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="50.0" />
+								<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="50.0" />
+								<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="50.0" />
+							</columnConstraints>
+							<rowConstraints>
+								<RowConstraints prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+							</rowConstraints>
+							<children>
+                        <Button fx:id="btnMinimizar" mnemonicParsing="false" prefWidth="50.0" style="-fx-background-color: #192229;" styleClass="btnNavegacion">
+                           <graphic>
+      								<!-- Icono Minimizar -->
+      								<ImageView fx:id="iconMinimizar" fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true" />
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnMaximizar" mnemonicParsing="false" prefWidth="50.0" style="-fx-background-color: #192229;" styleClass="btnNavegacion" GridPane.columnIndex="1">
+                           <graphic>
+      								<!-- Icono Maximizar -->
+      								<ImageView fx:id="iconMaximizar" fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true" />
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnCerrar" mnemonicParsing="false" prefWidth="50.0" style="-fx-background-color: #192229;" styleClass="btnNavegacion" GridPane.columnIndex="2">
+                           <graphic>
+      								<!-- Icono Cerrar -->
+      								<ImageView fx:id="iconCerrar" fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true" />
+                           </graphic>
+                        </Button>
+							</children>
+						</GridPane>
+					</children>
+				</HBox>
+
+
+				<HBox alignment="CENTER_LEFT" prefHeight="100.0" BorderPane.alignment="CENTER">
+					<children>
+						<Pane prefHeight="123.0" prefWidth="162.0">
+							<children>
+								<Circle fx:id="circleLogo" fill="#2a3b47" layoutX="60.0" layoutY="56.0" radius="35.0" stroke="#2a3b47" strokeType="INSIDE" />
+								<ImageView fx:id="imgLogo" fitHeight="51.0" fitWidth="56.0" layoutX="32.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true" />
+							</children>
+						</Pane>
+					</children>
+				</HBox>
+			</children>
+		</VBox>
+	</top>
 </BorderPane>
