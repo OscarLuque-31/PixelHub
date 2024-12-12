@@ -11,6 +11,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import utils.NavigationUtils;
 import utils.UtilsViews;
@@ -75,6 +76,12 @@ public class RegistroController {
     
     @FXML
     private ImageView imgLogo;
+    
+    @FXML
+	private Circle circleLogo;
+    
+    @FXML
+	private GridPane gridPane;
 
     private Stage stage;
     

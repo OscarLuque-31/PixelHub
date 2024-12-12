@@ -6,8 +6,10 @@
 
 #paneRegister{
 	-fx-background-color: #2A3B47;
-    -fx-background-radius: 15;
+    -fx-background-radius: 20;
+    -fx-effect: dropshadow(gaussian,#52A5E0 , 10, 0.5, 0, 5);
 }
+
 
 #lblRegister{
 	-fx-text-fill: #52A5E0;
