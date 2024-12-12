@@ -1,4 +1,5 @@
 package controllers;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -13,27 +14,40 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import utils.NavigationUtils;
 import utils.UtilsViews;
 
 public class BibliotecaController {
 
 	@FXML
-	private Label lblBiblioteca;
+	private BorderPane borderPane;
+
+	@FXML
+	private VBox panelLateralContainer;
+
+	@FXML
+	private GridPane panelLateral;
 
 	@FXML
 	private Label lblRecomendaciones;
 
 	@FXML
-	private Label lblCerrarSesión;
-
-	@FXML
 	private Label lblBuscarJuegos;
 
 	@FXML
-	private HBox dragArea;
+	private Button btnBiblioteca;
 
 	@FXML
-	private GridPane gridPane;
+	private Button btnRecomendaciones;
+
+	@FXML
+	private Button btnBuscarJuegos;
+
+	@FXML
+	private Button btnCerrarSesion;
+
+	@FXML
+	private HBox dragArea;
 
 	@FXML
 	private Button btnMinimizar;
@@ -52,41 +66,43 @@ public class BibliotecaController {
 
 	@FXML
 	private ImageView iconCerrar;
-	
-	@FXML
-	private VBox panelLateral;
 
 	@FXML
 	private Circle circleLogo;
 
 	@FXML
 	private ImageView imgLogo;
-
+	
 	@FXML
-	private BorderPane borderPane;
+	private Label lblTitulo;
 
 	private Stage stage;
+	
+	
 
 	public void setStage(Stage stage) {
 		this.stage = stage;
-		
-        UtilsViews.funBtnsBar(btnMinimizar, btnMaximizar, btnCerrar, dragArea, stage);
-        //Cargar el CSS de la ventana de login
-        cargarCSS();
-        // Inicializar imágenes
-        initializeImagesBar();
-        //Efectos de hover
-        hoverEffect();
+
+		UtilsViews.funBtnsBar(btnMinimizar, btnMaximizar, btnCerrar, dragArea, stage);
+		//Cargar el CSS de la ventana de login
+		cargarCSS();
+		// Inicializar imágenes
+		initializeImagesBar();
+		//Efectos de hover
+		hoverEffect();
+		//Navegacion entre pantallas
+		navegacionEntreVentanas();
+
 	}
 
 	/**
-     * Método para cargar la hoja de estilos (CSS) de la ventana de login
-     */
-    private void cargarCSS() {
-        // Cargar el archivo de estilo para la ventana de login
-        borderPane.getStylesheets().addAll(getClass().getResource("/styles/styleBiblioteca.css").toExternalForm(),
-        							       getClass().getResource("/styles/styleTopBar.css").toExternalForm());
-    }
+	 * Método para cargar la hoja de estilos (CSS) de la ventana de login
+	 */
+	private void cargarCSS() {
+		// Cargar el archivo de estilo para la ventana de login
+		borderPane.getStylesheets().addAll(getClass().getResource("/styles/styleBiblioteca.css").toExternalForm(),
+				getClass().getResource("/styles/styleTopBar.css").toExternalForm());
+	}
 	/**
 	 * Método que recopila todos los hoverEffect
 	 */
@@ -94,6 +110,17 @@ public class BibliotecaController {
 		UtilsViews.hoverEffectButton(btnMinimizar, "#2a3b47", "#192229");
 		UtilsViews.hoverEffectButton(btnMaximizar, "#2a3b47", "#192229");
 		UtilsViews.hoverEffectButton(btnCerrar, "#c63637", "#192229");
+		UtilsViews.hoverEffectButton(btnBiblioteca, "#415A6C", "#212E36");
+		UtilsViews.hoverEffectButton(btnBuscarJuegos, "#415A6C", "#212E36");
+		UtilsViews.hoverEffectButton(btnCerrarSesion, "#415A6C", "#212E36");
+		UtilsViews.hoverEffectButton(btnRecomendaciones, "#415A6C", "#212E36");
+	}
+
+	/**
+	 * Método que controla la navegación entre ventanas
+	 */
+	private void navegacionEntreVentanas() {
+		btnCerrarSesion.setOnMouseClicked(event -> NavigationUtils.navigateTo(stage, "/views/Login.fxml", "Login"));
 	}
 
 	/**

@@ -10,87 +10,106 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 
-<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.BibliotecaController">
+<BorderPane fx:id="borderPane" maxHeight="Infinity" maxWidth="Infinity" minHeight="0.0" minWidth="0.0" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.BibliotecaController">
 	<bottom>
-		<Pane prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+		<Pane prefHeight="50.0" BorderPane.alignment="CENTER" />
 	</bottom>
 	<left>
-		<VBox fx:id="panelLateral" alignment="CENTER" prefHeight="518.0" prefWidth="241.0" BorderPane.alignment="CENTER">
+		<VBox fx:id="panelLateralContainer" alignment="CENTER" maxHeight="Infinity" maxWidth="Infinity" BorderPane.alignment="CENTER" VBox.vgrow="ALWAYS">
 			<children>
-				<GridPane prefHeight="525.0" prefWidth="241.0">
+				<GridPane fx:id="panelLateral" maxHeight="Infinity" maxWidth="Infinity" GridPane.vgrow="ALWAYS" VBox.vgrow="ALWAYS">
 					<columnConstraints>
-						<ColumnConstraints hgrow="SOMETIMES" maxWidth="75.0" minWidth="10.0" prefWidth="50.0" />
-						<ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="175.0" minWidth="10.0" prefWidth="125.0" />
-						<ColumnConstraints hgrow="SOMETIMES" maxWidth="88.0" minWidth="10.0" prefWidth="50.0" />
+						<ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="280.0" minWidth="-Infinity" prefWidth="280.0" />
 					</columnConstraints>
 					<rowConstraints>
-						<RowConstraints maxHeight="106.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
-						<RowConstraints maxHeight="92.0" minHeight="0.0" prefHeight="50.0" vgrow="SOMETIMES" />
-						<RowConstraints maxHeight="163.0" minHeight="0.0" prefHeight="50.0" vgrow="SOMETIMES" />
-						<RowConstraints maxHeight="258.0" minHeight="10.0" prefHeight="258.0" valignment="BOTTOM" vgrow="SOMETIMES" />
+						<RowConstraints maxHeight="75.0" minHeight="75.0" prefHeight="75.0" valignment="BOTTOM" vgrow="ALWAYS" />
+						<RowConstraints maxHeight="75.0" minHeight="75.0" prefHeight="75.0" valignment="BOTTOM" vgrow="ALWAYS" />
+						<RowConstraints maxHeight="75.0" minHeight="75.0" prefHeight="75.0" valignment="BOTTOM" vgrow="ALWAYS" />
+						<RowConstraints minHeight="100.0" prefHeight="100.0" valignment="BOTTOM" vgrow="ALWAYS" />
 					</rowConstraints>
 					<children>
-						<Label fx:id="lblBiblioteca" styleClass="btnNavegacion" text="Biblioteca" GridPane.columnIndex="1" />
-						<Label fx:id="lblRecomendaciones" styleClass="btnNavegacion" text="Recomendaciones" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-						<Label fx:id="lblCerrarSesión" styleClass="btnNavegacion" text="Cerrar Sesión" GridPane.columnIndex="1" GridPane.rowIndex="3">
+						<Button fx:id="btnBiblioteca" mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" style="-fx-border-radius: 20;" styleClass="btnNavegacion" text="Biblioteca" />
+						<Button fx:id="btnRecomendaciones" mnemonicParsing="false" prefHeight="31.0" prefWidth="200.0" styleClass="btnNavegacion" text="Recomendaciones" GridPane.rowIndex="1" />
+						<Button fx:id="btnBuscarJuegos" mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" styleClass="btnNavegacion" text="Buscar juegos" GridPane.rowIndex="2" />
+						<Button fx:id="btnCerrarSesion" mnemonicParsing="false" prefHeight="31.0" prefWidth="172.0" styleClass="btnNavegacion" text="Cerrar sesión" GridPane.rowIndex="3">
 							<GridPane.margin>
 								<Insets bottom="20.0" />
 							</GridPane.margin>
-						</Label>
-						<Label fx:id="lblBuscarJuegos" styleClass="btnNavegacion" text="Buscar Juegos" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+						</Button>
 					</children>
 				</GridPane>
 			</children>
 		</VBox>
 	</left>
-   <top>
-      <VBox prefHeight="130.0" prefWidth="100.0" BorderPane.alignment="CENTER">
-         <children>
-            <HBox fx:id="dragArea" alignment="CENTER_RIGHT" spacing="9">
-               <children>
-                  <GridPane fx:id="gridPane">
-                     <columnConstraints>
-                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="50.0" />
-                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="50.0" />
-                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="50.0" />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
-                     </rowConstraints>
-                     <children>
-                        <Button fx:id="btnMinimizar" mnemonicParsing="false" prefWidth="50.0" style="-fx-background-color: #192229;">
-                           <graphic>
-                              <ImageView fx:id="iconMinimizar" fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true" />
-                           </graphic>
-                        </Button>
-                        <Button fx:id="btnMaximizar" mnemonicParsing="false" prefWidth="50.0" style="-fx-background-color: #192229;" GridPane.columnIndex="1">
-                           <graphic>
-                              <ImageView fx:id="iconMaximizar" fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true" />
-                           </graphic>
-                        </Button>
-                        <Button fx:id="btnCerrar" mnemonicParsing="false" prefWidth="50.0" style="-fx-background-color: #192229;" GridPane.columnIndex="2">
-                           <graphic>
-                              <ImageView fx:id="iconCerrar" fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true" />
-                           </graphic>
-                        </Button>
-                     </children>
-                  </GridPane>
-               </children>
-            </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="100.0">
-               <children>
-                  <Pane prefHeight="123.0" prefWidth="162.0">
-                     <children>
-                        <Circle fx:id="circleLogo" fill="#2a3b47" layoutX="60.0" layoutY="56.0" radius="35.0" stroke="#2a3b47" strokeType="INSIDE" />
-                        <ImageView fx:id="imgLogo" fitHeight="51.0" fitWidth="56.0" layoutX="32.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true" />
-                     </children>
-                  </Pane>
-               </children>
-            </HBox>
-         </children>
-      </VBox>
-   </top>
+	<top>
+		<VBox prefHeight="150.0" BorderPane.alignment="CENTER">
+			<children>
+				<HBox fx:id="dragArea" alignment="CENTER_RIGHT" spacing="9">
+					<children>
+						<GridPane>
+							<columnConstraints>
+								<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
+								<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
+								<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
+							</columnConstraints>
+							<rowConstraints>
+								<RowConstraints vgrow="SOMETIMES" />
+							</rowConstraints>
+							<children>
+								<Button fx:id="btnMinimizar" mnemonicParsing="false" prefWidth="50.0" style="-fx-background-color: #192229;">
+									<graphic>
+										<ImageView fx:id="iconMinimizar" fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true" />
+									</graphic>
+								</Button>
+								<Button fx:id="btnMaximizar" mnemonicParsing="false" prefWidth="50.0" style="-fx-background-color: #192229;" GridPane.columnIndex="1">
+									<graphic>
+										<ImageView fx:id="iconMaximizar" fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true" />
+									</graphic>
+								</Button>
+								<Button fx:id="btnCerrar" mnemonicParsing="false" prefWidth="50.0" style="-fx-background-color: #192229;" GridPane.columnIndex="2">
+									<graphic>
+										<ImageView fx:id="iconCerrar" fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true" />
+									</graphic>
+								</Button>
+							</children>
+						</GridPane>
+					</children>
+				</HBox>
+				<HBox alignment="CENTER_LEFT" maxHeight="200.0" prefHeight="150.0" VBox.vgrow="ALWAYS">
+					<children>
+						<GridPane prefHeight="120.0" prefWidth="1365.0">
+							<columnConstraints>
+								<ColumnConstraints halignment="CENTER" hgrow="NEVER" maxWidth="0.0" minWidth="110.0" prefWidth="110.0" />
+								<ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="700.0" />
+								<ColumnConstraints hgrow="NEVER" minWidth="200.0" />
+							</columnConstraints>
+							<rowConstraints>
+								<RowConstraints vgrow="SOMETIMES" />
+							</rowConstraints>
+							<StackPane GridPane.columnIndex="0">
+								<children>
+									<Circle fx:id="circleLogo" fill="#2a3b47" radius="32.0" stroke="#2a3b47" strokeType="INSIDE">
+                              <StackPane.margin>
+                                 <Insets bottom="7.0" />
+                              </StackPane.margin></Circle>
+									<ImageView fx:id="imgLogo" fitHeight="41.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
+                              <StackPane.margin>
+                                 <Insets bottom="6.0" />
+                              </StackPane.margin></ImageView>
+								</children>
+							</StackPane>
+                     <Label fx:id="lblTitulo" text="PixelHub" GridPane.columnIndex="1" />
+                     <padding>
+                        <Insets bottom="10.0" />
+                     </padding>
+						</GridPane>
+					</children>
+				</HBox>
+			</children>
+		</VBox>
+	</top>
 </BorderPane>

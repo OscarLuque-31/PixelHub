@@ -7,18 +7,21 @@
 
 .btnNavegacion{
 	-fx-text-fill: white;
-	-fx-font-size: 15;
+	-fx-font-size: 19;
 	-fx-font-family: "Tilt Warp";
+	-fx-background-color: "#212E36";
+	-fx-border-radius: 12;	
 }
 
 #panelLateral{
-	-fx-background-color: "212E36";
-	-fx-border-radius: 20px;
+	-fx-background-color: "#212E36";
+	-fx-background-radius: 0 20 20 0;
+	-fx-effect: dropshadow(gaussian,#52A5E0 , 9, 0.5, 1, 2);
 }
 
 
 /* Título del formulario */
-.titulo {
+#lblTitulo {
     -fx-text-fill: #52A5E0;
     -fx-font-size: 60;
     -fx-font-family: "Silkscreen";

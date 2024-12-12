@@ -25,64 +25,63 @@ public class LoginController {
 
 	@FXML
 	private BorderPane borderPane;
-	
-    @FXML
-    private VBox vboxForm;
 
-    @FXML
-    private Label lblPixelHub;
+	@FXML
+	private VBox vboxForm;
 
-    @FXML
-    private TextField txtUsername;
+	@FXML
+	private Label lblPixelHub;
 
-    @FXML
-    private PasswordField txtPassword;
+	@FXML
+	private TextField txtUsername;
 
-    @FXML
-    private Button btnLogin;
+	@FXML
+	private PasswordField txtPassword;
 
-    @FXML
-    private Text linkPassword;
+	@FXML
+	private Button btnLogin;
 
-    @FXML
-    private Text linkRegister;
+	@FXML
+	private Text linkPassword;
 
-    @FXML
-    private HBox dragArea;
+	@FXML
+	private Text linkRegister;
 
-    @FXML
-    private GridPane gridPane;
+	@FXML
+	private HBox dragArea;
 
-    @FXML
-    private Button btnMinimizar;
+	@FXML
+	private GridPane gridPane;
 
-    @FXML
-    private ImageView iconMinimizar;
+	@FXML
+	private Button btnMinimizar;
 
-    @FXML
-    private Button btnMaximizar;
+	@FXML
+	private ImageView iconMinimizar;
 
-    @FXML
-    private ImageView iconMaximizar;
+	@FXML
+	private Button btnMaximizar;
 
-    @FXML
-    private Button btnCerrar;
+	@FXML
+	private ImageView iconMaximizar;
 
-    @FXML
-    private ImageView iconCerrar;
+	@FXML
+	private Button btnCerrar;
 
-    @FXML
-    private Circle circleLogo;
+	@FXML
+	private ImageView iconCerrar;
 
-    @FXML
-    private ImageView imgLogo;
+	@FXML
+	private Circle circleLogo;
 
-    private Stage stage;
-    
+	@FXML
+	private ImageView imgLogo;
+
+	private Stage stage;
 
 
-    public void cargarFXML(Stage primaryStage) {	
-    	try {
+	public void cargarFXML(Stage primaryStage) {	
+		try {
 			// Cargar el FXML
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Login.fxml"));
 			Scene scene = new Scene(loader.load());
@@ -100,64 +99,64 @@ public class LoginController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	/**
-     * Método para cargar la hoja de estilos (CSS) de la ventana de login
-     */
-    private void cargarCSS() {
-        // Cargar el archivo de estilo para la ventana de login
-        borderPane.getStylesheets().addAll(getClass().getResource("/styles/styleLogin.css").toExternalForm(),
-        		getClass().getResource("/styles/styleTopBar.css").toExternalForm());
-    }
+	 * Método para cargar la hoja de estilos (CSS) de la ventana de login
+	 */
+	private void cargarCSS() {
+		// Cargar el archivo de estilo para la ventana de login
+		borderPane.getStylesheets().addAll(getClass().getResource("/styles/styleLogin.css").toExternalForm(),
+				getClass().getResource("/styles/styleTopBar.css").toExternalForm());
+	}
 
-    /**
-     * Método que controla la navegación entre ventanas
-     */
-    private void navegacionEntreVentanas() {
-    	btnLogin.setOnMouseClicked(event -> NavigationUtils.navigateTo(stage, "/views/Biblioteca.fxml", "Biblioteca"));
-    	linkRegister.setOnMouseClicked(event -> NavigationUtils.navigateTo(stage, "/views/Registro.fxml", "Registro"));
+	/**
+	 * Método que controla la navegación entre ventanas
+	 */
+	private void navegacionEntreVentanas() {
+		btnLogin.setOnMouseClicked(event -> NavigationUtils.navigateTo(stage, "/views/Biblioteca.fxml", "Biblioteca"));
+		linkRegister.setOnMouseClicked(event -> NavigationUtils.navigateTo(stage, "/views/Registro.fxml", "Registro"));
 
-    }
+	}
 
-    public void setStage(Stage stage) {
-        this.stage = stage;
-        //Funciones de los botones de la barra de navegacion
-        UtilsViews.funBtnsBar(btnMinimizar, btnMaximizar, btnCerrar, dragArea, stage);
-        //Cargar el CSS de la ventana de login
-        cargarCSS();
-        // Inicializar imágenes
-        initializeImagesBar();
-        //Efectos de hover
-        hoverEffect();
-        //Navegación entre pantallas
-        navegacionEntreVentanas();
-    }
+	public void setStage(Stage stage) {
+		this.stage = stage;
+		//Funciones de los botones de la barra de navegacion
+		UtilsViews.funBtnsBar(btnMinimizar, btnMaximizar, btnCerrar, dragArea, stage);
+		//Cargar el CSS de la ventana de login
+		cargarCSS();
+		// Inicializar imágenes
+		initializeImagesBar();
+		//Efectos de hover
+		hoverEffect();
+		//Navegación entre pantallas
+		navegacionEntreVentanas();
+	}
 
-   
 
-    /**
-     * Método que recopila todos los hoverEffect
-     */
-    public void hoverEffect() {
-        UtilsViews.hoverEffectText(linkPassword, "#0095FF", "#52A5E0");
-        UtilsViews.hoverEffectText(linkRegister, "#0095FF", "#52A5E0");
-        UtilsViews.hoverEffectButton(btnLogin, "#0095FF", "#52A5E0");
-        UtilsViews.hoverEffectButton(btnMinimizar, "#2a3b47", "#192229");
-        UtilsViews.hoverEffectButton(btnMaximizar, "#2a3b47", "#192229");
+
+	/**
+	 * Método que recopila todos los hoverEffect
+	 */
+	public void hoverEffect() {
+		UtilsViews.hoverEffectText(linkPassword, "#0095FF", "#52A5E0");
+		UtilsViews.hoverEffectText(linkRegister, "#0095FF", "#52A5E0");
+		UtilsViews.hoverEffectButton(btnLogin, "#0095FF", "#52A5E0");
+		UtilsViews.hoverEffectButton(btnMinimizar, "#2a3b47", "#192229");
+		UtilsViews.hoverEffectButton(btnMaximizar, "#2a3b47", "#192229");
 		UtilsViews.hoverEffectButton(btnCerrar, "#c63637", "#192229");
-    }
+	}
 
-    /**
-     * Método que inicializa las imágenes
-     */
-    public void initializeImagesBar() {
-        imgLogo.setImage(new Image(getClass().getResourceAsStream("/images/logoPixelHub.png")));
-        iconMinimizar.setImage(new Image(getClass().getResourceAsStream("/images/iconoMinimizar.png")));
-        iconMaximizar.setImage(new Image(getClass().getResourceAsStream("/images/iconoMaximizar.png")));
-        iconCerrar.setImage(new Image(getClass().getResourceAsStream("/images/iconoCerrar.png")));
-    }
+	/**
+	 * Método que inicializa las imágenes
+	 */
+	public void initializeImagesBar() {
+		imgLogo.setImage(new Image(getClass().getResourceAsStream("/images/logoPixelHub.png")));
+		iconMinimizar.setImage(new Image(getClass().getResourceAsStream("/images/iconoMinimizar.png")));
+		iconMaximizar.setImage(new Image(getClass().getResourceAsStream("/images/iconoMaximizar.png")));
+		iconCerrar.setImage(new Image(getClass().getResourceAsStream("/images/iconoCerrar.png")));
+	}
 
 
 }

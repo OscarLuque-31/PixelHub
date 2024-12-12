@@ -12,6 +12,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Text?>
@@ -73,7 +74,7 @@
 		<Pane prefHeight="100.0" BorderPane.alignment="CENTER" />
 	</bottom>
 	<top>
-		<VBox prefHeight="130.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+		<VBox maxHeight="200.0" prefHeight="150.0" BorderPane.alignment="CENTER">
 			<children>
 				<HBox fx:id="dragArea" alignment="CENTER_RIGHT" spacing="9">
 					<children>
@@ -84,7 +85,7 @@
 								<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="50.0" />
 							</columnConstraints>
 							<rowConstraints>
-								<RowConstraints prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+								<RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
 							</rowConstraints>
 							<children>
                         <Button fx:id="btnMinimizar" mnemonicParsing="false" prefWidth="50.0" style="-fx-background-color: #192229;" styleClass="btnNavegacion">
@@ -109,18 +110,27 @@
 						</GridPane>
 					</children>
 				</HBox>
-
-
-				<HBox alignment="CENTER_LEFT" prefHeight="100.0" BorderPane.alignment="CENTER">
-					<children>
-						<Pane prefHeight="123.0" prefWidth="162.0">
-							<children>
-								<Circle fx:id="circleLogo" fill="#2a3b47" layoutX="60.0" layoutY="56.0" radius="35.0" stroke="#2a3b47" strokeType="INSIDE" />
-								<ImageView fx:id="imgLogo" fitHeight="51.0" fitWidth="56.0" layoutX="32.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true" />
-							</children>
-						</Pane>
-					</children>
-				</HBox>
+            <GridPane prefHeight="120.0" prefWidth="1365.0">
+               <columnConstraints>
+                  <ColumnConstraints halignment="CENTER" hgrow="NEVER" maxWidth="0.0" minWidth="110.0" prefWidth="110.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="700.0" />
+                  <ColumnConstraints hgrow="NEVER" minWidth="200.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <StackPane GridPane.columnIndex="0">
+                     <children>
+                        <Circle fx:id="circleLogo" fill="#2a3b47" radius="32.0" stroke="#2a3b47" strokeType="INSIDE" />
+                        <ImageView fx:id="imgLogo" fitHeight="41.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </StackPane>
+               </children>
+               <padding>
+                  <Insets bottom="10.0" />
+               </padding>
+            </GridPane>
 			</children>
 		</VBox>
 	</top>
