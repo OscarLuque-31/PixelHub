@@ -88,6 +88,8 @@ public class LoginController {
 			// Establecer el Stage en el controlador
 			LoginController controller = loader.getController();
 			controller.setStage(primaryStage);
+	        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/logoPixelHub.png")));
+
 
 			// Configuración del Stage
 			primaryStage.setTitle("PixelHub");
@@ -117,7 +119,7 @@ public class LoginController {
 	private void navegacionEntreVentanas() {
 		btnLogin.setOnMouseClicked(event -> NavigationUtils.navigateTo(stage, "/views/Biblioteca.fxml", "Biblioteca"));
 		linkRegister.setOnMouseClicked(event -> NavigationUtils.navigateTo(stage, "/views/Registro.fxml", "Registro"));
-
+		linkPassword.setOnMouseClicked(event -> NavigationUtils.navigateTo(stage, "/views/RecuperarContrasena.fxml", "Recuperar Contrasena"));
 	}
 
 	public void setStage(Stage stage) {
