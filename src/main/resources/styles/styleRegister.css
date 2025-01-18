@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=Tilt+Neon&family=Tilt+Warp&display=swap'); 
+	@import url('https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=Tilt+Neon&family=Tilt+Warp&display=swap'); 
 
 .root{
 	-fx-background-color: #192229;
@@ -15,6 +15,12 @@
 	-fx-text-fill: #52A5E0;
 	-fx-font-family: "Silkscreen";
 	-fx-font-size: 55;
+}
+
+#lblPreferencias{
+	-fx-text-fill: #52A5E0;
+	-fx-font-family: "Silkscreen";
+	-fx-font-size: 20;
 }
 
 #btnRegister{
@@ -58,3 +64,9 @@
 	-fx-font-size: 16;
 	-fx-background-radius: 5;
 }
+
+#cmbGender, #cmbPlatform{
+    -fx-font-size: 16px; /* Cambiar el tamaño del título */
+}
+
+

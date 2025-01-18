@@ -12,87 +12,37 @@ import java.util.List;
  */
 public abstract class CommonDaoImpl<T> implements CommonDao<T> {
 
-	/** Tipo de clase */
-	private Class<T> entityClass;
+    private Class<T> entityClass;
+    private Session session;
 
-	/** Sesion de conexion a BD */
-	private Session session;
+    @SuppressWarnings("unchecked")
+    protected CommonDaoImpl(Session session) {
+        this.entityClass = (Class<T>) ((ParameterizedType) this.getClass().getGenericSuperclass())
+                .getActualTypeArguments()[0];
+        this.session = session;
+    }
 
-	/**
-	 * Constructor de la clase
-	 * 
-	 * @param session Session de la base de datos
-	 */
-	@SuppressWarnings("unchecked")
-	protected CommonDaoImpl(Session session) {
-		setEntityClass(
-				(Class<T>) ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[0]);
-		this.session = session;
-	}
+    public void insert(final T paramT) {
+        session.persist(paramT);
+    }
 
-	/**
-	 * Metodo insert, que inserta un objeto en la base de datos
-	 */
-	public void insert(final T paramT) {
-		if (!session.getTransaction().equals(TransactionStatus.ACTIVE)) {
-			session.getTransaction().begin();
-		}
+    public void update(final T paramT) {
+        session.merge(paramT);
+    }
 
-		session.persist(paramT);
-		session.flush();
-		session.getTransaction().commit();
-	}
+    public void delete(final T paramT) {
+        session.remove(paramT);
+    }
 
-	/**
-	 * Metodo que modifica un objeto de la base de datos
-	 */
-	public void update(final T paramT) {
-		if (!session.getTransaction().equals(TransactionStatus.ACTIVE)) {
-			session.getTransaction().begin();
-		}
+    public List<T> searchAll() {
+        return session.createQuery("FROM " + this.entityClass.getName(), entityClass).getResultList();
+    }
 
-		session.merge(paramT);
-		session.getTransaction().commit();
-	}
+    public Class<T> getEntityClass() {
+        return entityClass;
+    }
 
-	/**
-	 * Metodo que elimina un objeto de la base de datos
-	 */
-	public void delete(final T paramT) {
-		if (!session.getTransaction().equals(TransactionStatus.ACTIVE)) {
-			session.getTransaction().begin();
-		}
-
-		session.remove(paramT);
-		session.getTransaction().commit();
-	}
-
-
-	/**
-	 * Metodo que lista todos los objetos de la base de datos
-	 */
-	@SuppressWarnings("unchecked")
-	public List<T> searchAll() {
-		// if (!session.getTransaction().isActive()) {
-		if (!session.getTransaction().getStatus().equals(TransactionStatus.ACTIVE)) {
-			session.getTransaction().begin();
-		}
-
-		// Devuelve todos los objetos
-		return session.createQuery("FROM " + this.entityClass.getName(), entityClass).getResultList();
-	}
-
-	/**
-	 * @return the entityClass
-	 */
-	public Class<T> getEntityClass() {
-		return entityClass;
-	}
-
-	/**
-	 * @param entityClass the entityClass to set
-	 */
-	public void setEntityClass(Class<T> entityClass) {
-		this.entityClass = entityClass;
-	}
+    public void setEntityClass(Class<T> entityClass) {
+        this.entityClass = entityClass;
+    }
 }

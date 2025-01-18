@@ -28,6 +28,19 @@
     -fx-alignment: center;
 }
 
+#textFieldBusqueda{
+	-fx-text-fill: #52A5E0;
+	-fx-font-family: "Tilt Warp";
+	-fx-font-size: 16;
+	-fx-background-radius: 5;
+}
+
+#lblNombreUsuario{
+	-fx-text-fill: #52A5E0;
+	-fx-font-family: "Tilt Warp";
+	-fx-font-size: 16;
+}
+
 
 
 

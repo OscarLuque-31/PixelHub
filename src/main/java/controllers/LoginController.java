@@ -1,10 +1,14 @@
 package controllers;
 
+import java.util.List;
+
+import dao.UsuarioDaoImpl;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -18,6 +22,8 @@ import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import models.Usuario;
+import utils.HibernateUtil;
 import utils.NavigationUtils;
 import utils.UtilsViews;
 
@@ -88,12 +94,12 @@ public class LoginController {
 			// Establecer el Stage en el controlador
 			LoginController controller = loader.getController();
 			controller.setStage(primaryStage);
-	        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/logoPixelHub.png")));
+			primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/logoPixelHub.png")));
 
 
 			// Configuración del Stage
 			primaryStage.setTitle("PixelHub");
-			primaryStage.initStyle(StageStyle.UNDECORATED);
+			primaryStage.initStyle(StageStyle.TRANSPARENT);
 			primaryStage.setScene(scene);
 
 			// Mostrar la ventana
@@ -117,23 +123,122 @@ public class LoginController {
 	 * Método que controla la navegación entre ventanas
 	 */
 	private void navegacionEntreVentanas() {
-		btnLogin.setOnMouseClicked(event -> NavigationUtils.navigateTo(stage, "/views/Biblioteca.fxml", "Biblioteca"));
-		linkRegister.setOnMouseClicked(event -> NavigationUtils.navigateTo(stage, "/views/Registro.fxml", "Registro"));
-		linkPassword.setOnMouseClicked(event -> NavigationUtils.navigateTo(stage, "/views/RecuperarContrasena.fxml", "Recuperar Contrasena"));
+		linkRegister.setOnMouseClicked(event -> {
+	        NavigationUtils.navigateTo(stage, "/views/Registro.fxml", "Registro");
+	        System.out.println("Cambiando a ventana de registro. Maximizado: " + stage.isMaximized());
+	    });
+	    linkPassword.setOnMouseClicked(event -> {
+	        NavigationUtils.navigateTo(stage, "/views/RecuperarContrasena.fxml", "Recuperar Contraseña");
+	        System.out.println("Cambiando a ventana de recuperación. Maximizado: " + stage.isMaximized());
+	    });;
 	}
 
 	public void setStage(Stage stage) {
 		this.stage = stage;
-		//Funciones de los botones de la barra de navegacion
+		// Funciones de los botones de la barra de navegacion
 		UtilsViews.funBtnsBar(btnMinimizar, btnMaximizar, btnCerrar, dragArea, stage);
-		//Cargar el CSS de la ventana de login
+		// Cargar el CSS de la ventana de login
 		cargarCSS();
 		// Inicializar imágenes
 		initializeImagesBar();
-		//Efectos de hover
+		// Efectos de hover
 		hoverEffect();
-		//Navegación entre pantallas
+		// Navegación entre pantallas
 		navegacionEntreVentanas();
+		// Control de inicio de sesión
+		inicioDeSesion();
+	}
+
+
+
+	/**
+	 * Método que inicia sesión si las credenciales son correctas
+	 */
+	private void inicioDeSesion() {
+		btnLogin.setOnMouseClicked(event -> {
+
+			if (iniciarSesion(txtUsername.getText(),txtPassword.getText())) {
+				NavigationUtils.navigateToBibliotecaWithUser(stage, "/views/Biblioteca.fxml", "Biblioteca", devolverUsuario(txtUsername.getText(),txtPassword.getText()));
+			} else if (!txtUsername.getText().isEmpty() && !txtPassword.getText().isEmpty()) {
+				UtilsViews.mostrarDialogo(Alert.AlertType.INFORMATION,getClass(),"No se ha encontrado al usuario","Porfavor compruebe que los datos son correctos");
+			}
+
+		});
+	}
+
+
+	/**
+	 * Método que devuelve el usuario si el logueo es correcto
+	 * @return
+	 */
+	private Usuario devolverUsuario(String correo, String contraseña)  {
+		UsuarioDaoImpl usuarioDao = new UsuarioDaoImpl(HibernateUtil.getSession());
+
+		List<Usuario> usuarios = usuarioDao.searchAll();
+
+		for (Usuario usuario : usuarios) {
+			if (correo.equals(usuario.getUsername()) && contraseña.equals(usuario.getPassword())) {
+
+				// Si lo encuentra devuelve true
+				return usuario;
+			}
+		}
+		// Si no hay retornará null
+		return null;
+	}
+	
+	
+	/**
+	 * Método que comprueba las credenciales desde base de datos para afirmar que existen
+	 * @return true si ese usuario existe
+	 */
+	private boolean iniciarSesion(String correo, String contraseña) {
+
+
+		if (validarCampos()) {
+			// Lista de empleados
+			
+
+			UsuarioDaoImpl usuarioDao = new UsuarioDaoImpl(HibernateUtil.getSession());
+
+			List<Usuario> usuarios = usuarioDao.searchAll();
+
+			for (Usuario usuario : usuarios) {
+				if (correo.equals(usuario.getUsername()) && contraseña.equals(usuario.getPassword())) {
+
+					// Si lo encuentra devuelve true
+					return true;
+				}
+			}
+
+		}
+
+		// Por defecto devolverá false
+		return false;
+	}
+
+
+	private boolean validarCampos() {
+		StringBuilder errores = new StringBuilder();
+
+		// 1. Validación del Nombre
+		if (txtUsername.getText().trim().isEmpty()) {
+			errores.append("El nombre no puede estar vacío.\n");
+		}
+
+		// 2. Validación del Apellido
+		if (txtPassword.getText().trim().isEmpty()) {
+			errores.append("El apellido no puede estar vacío.\n");
+		}
+		
+		// Si hay errores, mostrar el diálogo
+		if (errores.length() > 0) {
+			UtilsViews.mostrarDialogo(Alert.AlertType.ERROR,getClass(),"Corrige estos errores porfavor",errores.toString());
+			return false;
+		}
+
+		// Si todas las validaciones son correctas
+		return true;
 	}
 
 

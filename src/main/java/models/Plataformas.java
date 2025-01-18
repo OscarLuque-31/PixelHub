@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 public class Plataformas {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idPlataforma;
+    private Integer id_plataforma;
     
     @ManyToOne
     @JoinColumn(name = "id_nuevo_juego", nullable = false)
@@ -17,14 +17,15 @@ public class Plataformas {
     private String plataforma;
 
     
-    
-	public Integer getIdPlataforma() {
-		return idPlataforma;
+	public Integer getId_plataforma() {
+		return id_plataforma;
 	}
 
-	public void setIdPlataforma(Integer idPlataforma) {
-		this.idPlataforma = idPlataforma;
+	public void setId_plataforma(Integer id_plataforma) {
+		this.id_plataforma = id_plataforma;
 	}
+
+	
 
 	public JuegoNuevo getJuegoNuevo() {
 		return juegoNuevo;
