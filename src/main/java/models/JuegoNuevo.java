@@ -9,7 +9,7 @@ import jakarta.persistence.*;
 public class JuegoNuevo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idNuevoJuego;
+    private Integer id_nuevo_juego;
     
     private Integer rating;
     
@@ -26,7 +26,7 @@ public class JuegoNuevo {
     private Boolean jugado;
     private Boolean deseado;
     
-    @Lob
+    @Column(columnDefinition = "TINYBLOB")
     private byte[] imagen;
     
     @OneToMany(mappedBy = "juegoNuevo", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -35,14 +35,13 @@ public class JuegoNuevo {
     @OneToMany(mappedBy = "juegoNuevo", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Plataformas> plataformas;
 
-    
-    
-	public Integer getIdNuevoJuego() {
-		return idNuevoJuego;
+
+	public Integer getId_nuevo_juego() {
+		return id_nuevo_juego;
 	}
 
-	public void setIdNuevoJuego(Integer idNuevoJuego) {
-		this.idNuevoJuego = idNuevoJuego;
+	public void setId_nuevo_juego(Integer id_nuevo_juego) {
+		this.id_nuevo_juego = id_nuevo_juego;
 	}
 
 	public Integer getRating() {

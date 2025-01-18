@@ -1,14 +1,32 @@
 package utils;
 
+import java.io.IOException;
+
+import javafx.animation.FadeTransition;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
+import javafx.scene.Cursor;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.util.Duration;
 
 public class UtilsViews {
 
@@ -38,12 +56,14 @@ public class UtilsViews {
 			text.setFill(colorOnHover); 
 			//Añade subrayado para identificar mejor el Text
 			text.setUnderline(true);
+			text.setCursor(Cursor.HAND);
 		});
 
 		//Restaura el color original cuando el mouse sale del Text
 		text.setOnMouseExited((MouseEvent event) -> {
 			text.setFill(colorOnExit);
 			text.setUnderline(false);
+			text.setCursor(Cursor.DEFAULT);
 		});
 	}
 
@@ -54,17 +74,17 @@ public class UtilsViews {
 	 * @param hexColorOnExit
 	 */
 	public static void hoverEffectButton(Button btn, String hexColorOnHover, String hexColorOnExit) {
+	    btn.setOnMouseEntered((MouseEvent event) -> {
+	        btn.setStyle("-fx-background-color: " + hexColorOnHover + ";");
+	        btn.setCursor(Cursor.HAND); // Cambiar el cursor a mano
+	    });
 
-		//Cambia el color cuando el mouse pasa sobre el Button
-		btn.setOnMouseEntered((MouseEvent event) -> {
-			btn.setStyle("-fx-background-color: " + hexColorOnHover + ";");            
-		});
-
-		//Restaura el color original cuando el mouse sale del Button
-		btn.setOnMouseExited((MouseEvent event) -> {
-			btn.setStyle("-fx-background-color: " + hexColorOnExit + ";");            
-		});
+	    btn.setOnMouseExited((MouseEvent event) -> {
+	        btn.setStyle("-fx-background-color: " + hexColorOnExit + ";");
+	        btn.setCursor(Cursor.DEFAULT); // Restaurar el cursor
+	    });
 	}
+
 
 	/**
 	 * Método que le añade la funcionalidad a la barra de navegación
@@ -74,30 +94,26 @@ public class UtilsViews {
 	 * @param dragArea
 	 * @param stage
 	 */
-	public static void funBtnsBar(Button btnMinimizar, Button btnMaximizar, Button btnCerrar, HBox dragArea, Stage stage) {
-		//Variables para controlar el estado del Stage
-		isMaximized = false;
+	public static void funBtnsBar(Button btnMin, Button btnMax, Button btnClose, HBox dragArea, Stage stage) {
+	    btnMin.setOnMouseClicked(event -> stage.setIconified(true));
 
-		//Botón minimizar
-		btnMinimizar.setOnMouseClicked(event -> stage.setIconified(true));
+	    btnMax.setOnMouseClicked(event -> {
+	        boolean maximized = stage.isMaximized();
+	        stage.setMaximized(!maximized);
+	        System.out.println("Maximización cambiada: " + !maximized);
+	    });
 
-		//Botón maximizar/restaurar
-		btnMaximizar.setOnMouseClicked(event -> {
-			if (isMaximized) {
-				stage.setMaximized(false);
-				isMaximized = false;
-			} else {
-				stage.setMaximized(true);
-				isMaximized = true;
-			}
-		});
+	    btnClose.setOnMouseClicked(event -> stage.close());
 
-		//Botón cerrar
-		btnCerrar.setOnMouseClicked(event -> stage.close());
-
-		//Configurar el área de arrastre
-		configureDrag(stage, dragArea);
+	    // Dragging logic (si aplica)
+	    dragArea.setOnMouseDragged(event -> {
+	        if (!stage.isMaximized()) {
+	            stage.setX(event.getScreenX());
+	            stage.setY(event.getScreenY());
+	        }
+	    });
 	}
+
 
 	/**
 	 * Método que configuras el area de arratre de la ventana
@@ -125,5 +141,31 @@ public class UtilsViews {
 		});
 	}
 
+	/**
+	 * Método que muestra un dialogo de error en la aplicación
+	 * @param clase
+	 * @param mensaje
+	 */
+	public static void mostrarDialogo(AlertType alertType, Class<?> clase, String header, String mensaje) {
+	    // Crear el Alert
+	    Alert alert = new Alert(alertType);
+	    alert.setHeaderText(header); // Encabezado
+	    alert.setContentText(mensaje); // Mensaje
+
+	    // Personalizar el DialogPane
+	    DialogPane dialogPane = alert.getDialogPane();
+	    dialogPane.getStylesheets().add(clase.getResource("/styles/styleDialog.css").toExternalForm());
+	    dialogPane.getStyleClass().add("dialog-pane");
+	    
+	    Stage stage = (Stage) dialogPane.getScene().getWindow();
+	    stage.getIcons().add(new Image(clase.getResourceAsStream("/images/logoPixelHub.png"))); // Ruta del ícono
+	    stage.setTitle(null);
+
+	    // Mostrar el Alert
+	    alert.showAndWait();
+	}
+
+
+	
 
 }

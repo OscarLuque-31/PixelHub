@@ -7,23 +7,23 @@ import jakarta.persistence.*;
 public class Capturas {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idCaptura;
+    private Integer id_captura;
     
     @ManyToOne
     @JoinColumn(name = "id_nuevo_juego", nullable = false)
     private JuegoNuevo juegoNuevo;
     
-    @Lob
+    @Column(columnDefinition = "TINYBLOB")
     private byte[] captura;
 
     
-    
-	public Integer getIdCaptura() {
-		return idCaptura;
+
+	public Integer getId_captura() {
+		return id_captura;
 	}
 
-	public void setIdCaptura(Integer idCaptura) {
-		this.idCaptura = idCaptura;
+	public void setId_captura(Integer id_captura) {
+		this.id_captura = id_captura;
 	}
 
 	public JuegoNuevo getJuegoNuevo() {

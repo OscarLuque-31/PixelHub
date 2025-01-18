@@ -1,5 +1,6 @@
 package models;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -8,39 +9,35 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "Usuario")
 public class Usuario {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    
-    @Column(nullable = false, length = 30)
-    private String username;
-    
-    @Column(nullable = false, length = 30)
-    private String nombre;
-    
-    @Column(nullable = false, length = 50)
-    private String apellidos;
-    
-    @Column(nullable = false, unique = true, length = 100)
-    private String email;
-    
-    @Temporal(TemporalType.DATE)
-    private Date fechaNacimiento;
-    
-    @Column(nullable = false, length = 255)
-    private String password;
-    
-    @Temporal(TemporalType.DATE)
-    private Date fechaCreacion;
-    
-    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Preferencias preferencias;
-    
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<JuegosBiblioteca> juegosBiblioteca;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
 
-    
-    
+	@Column(nullable = false, length = 30)
+	private String username;
+
+	@Column(nullable = false, length = 30)
+	private String nombre;
+
+	@Column(nullable = false, length = 50)
+	private String apellidos;
+
+	@Column(nullable = false, unique = true, length = 100)
+	private String email;
+
+	@Column(name = "fecha_nacimiento", columnDefinition = "Date")
+	private Date fecha_nacimiento;
+
+	@Column(nullable = false, length = 255)
+	private String password;
+
+	@Column(name = "fecha_creacion", columnDefinition = "Date")
+	private LocalDate fecha_creacion;
+
+
+	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<JuegosBiblioteca> juegosBiblioteca;
+
 	public Integer getId() {
 		return id;
 	}
@@ -81,12 +78,20 @@ public class Usuario {
 		this.email = email;
 	}
 
-	public Date getFechaNacimiento() {
-		return fechaNacimiento;
+	public Date getFecha_nacimiento() {
+		return fecha_nacimiento;
 	}
 
-	public void setFechaNacimiento(Date fechaNacimiento) {
-		this.fechaNacimiento = fechaNacimiento;
+	public void setFecha_nacimiento(Date fecha_nacimiento) {
+		this.fecha_nacimiento = fecha_nacimiento;
+	}
+
+	public LocalDate getFecha_creacion() {
+		return fecha_creacion;
+	}
+
+	public void setFecha_creacion(LocalDate fecha_creacion) {
+		this.fecha_creacion = fecha_creacion;
 	}
 
 	public String getPassword() {
@@ -97,21 +102,6 @@ public class Usuario {
 		this.password = password;
 	}
 
-	public Date getFechaCreacion() {
-		return fechaCreacion;
-	}
-
-	public void setFechaCreacion(Date fechaCreacion) {
-		this.fechaCreacion = fechaCreacion;
-	}
-
-	public Preferencias getPreferencias() {
-		return preferencias;
-	}
-
-	public void setPreferencias(Preferencias preferencias) {
-		this.preferencias = preferencias;
-	}
 
 	public List<JuegosBiblioteca> getJuegosBiblioteca() {
 		return juegosBiblioteca;
@@ -120,5 +110,15 @@ public class Usuario {
 	public void setJuegosBiblioteca(List<JuegosBiblioteca> juegosBiblioteca) {
 		this.juegosBiblioteca = juegosBiblioteca;
 	}
-    
+
+	@Override
+	public String toString() {
+		return "Usuario [id=" + id + ", username=" + username + ", nombre=" + nombre + ", apellidos=" + apellidos
+				+ ", email=" + email + ", fecha_nacimiento=" + fecha_nacimiento + ", password=" + password
+				+ ", fecha_creacion=" + fecha_creacion + ", juegosBiblioteca="
+				+ juegosBiblioteca + "]";
+	}
+	
+	
+
 }

@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=Tilt+Neon&family=Tilt+Warp&display=swap');
+
+.dialog-pane {
+    -fx-background-color: #212E36; /* Fondo del cuadro de diálogo */
+    -fx-border-color: #192229;   /* Borde oscuro */
+    -fx-border-width: 2.0px;
+	-fx-text-fill: white;         /* Color del texto del encabezado */
+	-fx-border-radius: 10.0px; /* Bordes redondeados */
+    -fx-background-radius: 10.0px; /* Bordes redondeados */
+	-fx-font-family: "Tilt Neon";
+
+}
+
+.dialog-pane .header-panel {
+    -fx-background-color: #52A5E0; /* Fondo del encabezado */         /* Color del texto del encabezado */
+    -fx-font-size: 18.0px; 
+	-fx-font-weight: bold; /* Hacer el texto en negrita */
+	-fx-font-family: "Tilt Warp";
+	
+}
+
+.dialog-pane .content {
+    -fx-text-fill: #E63946;         /* Color del texto del contenido */
+    -fx-font-size: 15.0px;          /* Tamaño de fuente del contenido */
+	-fx-font-family: "Tilt Neon";
+	-fx-padding: 10.0;
+	
+}
+
+.dialog-pane .button-bar {
+    -fx-background-color: #212E36; /* Fondo de la barra de botones */
+	-fx-text-fill: white;  
+	-fx-font-family: "Tilt Neon";
+	       /* Color del texto del encabezado */
+
+}
+
+.button {
+    -fx-background-color: #52A5E0; /* Fondo de los botones */
+    -fx-text-fill: white;          /* Color del texto de los botones */
+    -fx-font-size: 14.0px; 
+    -fx-background-radius: 5.0px;
+    -fx-font-family: "Tilt Neon";
+              /* Tamaño de fuente de los botones */
+}
+
+.button:hover {
+    -fx-background-color: #0095FF;
+    -fx-font-family: "Tilt Neon";
+     /* Fondo al pasar el ratón */
+}

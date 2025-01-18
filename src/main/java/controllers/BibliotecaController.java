@@ -15,6 +15,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import models.Usuario;
 import utils.NavigationUtils;
 import utils.UtilsViews;
 
@@ -28,12 +29,6 @@ public class BibliotecaController {
 
 	@FXML
 	private GridPane panelLateral;
-
-	@FXML
-	private Label lblRecomendaciones;
-
-	@FXML
-	private Label lblBuscarJuegos;
 
 	@FXML
 	private Button btnBiblioteca;
@@ -73,31 +68,42 @@ public class BibliotecaController {
 
 	@FXML
 	private ImageView imgLogo;
-	
+
 	@FXML
 	private Label lblTitulo;
-	
+
 	@FXML
-    private Button btnFiltro;
+	private Label lblNombreUsuario;
 
-    @FXML
-    private ImageView imgAdd;
+	@FXML
+	private ImageView imgFiltro;
 
-    @FXML
-    private ImageView imgLupa;
+	@FXML
+	private ImageView imgAdd;
 
-    @FXML
-    private TextField textFieldBusqueda;
+	@FXML
+	private ImageView imgUsuario;
 
-    @FXML
-    private Button btnModoTarjeta;
+	@FXML
+	private ImageView imgLupa;
 
-    @FXML
-    private Button btnModoLista;
+	@FXML
+	private TextField textFieldBusqueda;
+
+	@FXML
+	private ImageView imgModoTarjeta;
+
+	@FXML
+	private ImageView imgModoLista;
 
 	private Stage stage;
-	
-	
+
+	private Usuario usuario;
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
 
 	public void setStage(Stage stage) {
 		this.stage = stage;
@@ -112,6 +118,12 @@ public class BibliotecaController {
 		//Navegacion entre pantallas
 		navegacionEntreVentanas();
 
+		// Usa el objeto usuario solo si ya ha sido inicializado
+		if (usuario != null) {
+			lblNombreUsuario.setText(usuario.getUsername());
+		} else {
+			System.err.println("Usuario no inicializado antes de usar setStage.");
+		}
 	}
 
 	/**
@@ -150,5 +162,12 @@ public class BibliotecaController {
 		iconMinimizar.setImage(new Image(getClass().getResourceAsStream("/images/iconoMinimizar.png")));
 		iconMaximizar.setImage(new Image(getClass().getResourceAsStream("/images/iconoMaximizar.png")));
 		iconCerrar.setImage(new Image(getClass().getResourceAsStream("/images/iconoCerrar.png")));
+		imgAdd.setImage(new Image(getClass().getResourceAsStream("/images/CirculoMas.png")));
+		imgFiltro.setImage(new Image(getClass().getResourceAsStream("/images/filtro.png")));
+		imgLupa.setImage(new Image(getClass().getResourceAsStream("/images/lupa.png")));
+		imgModoLista.setImage(new Image(getClass().getResourceAsStream("/images/modoLista.png")));
+		imgModoTarjeta.setImage(new Image(getClass().getResourceAsStream("/images/modoTarjeta.png")));
+		imgUsuario.setImage(new Image(getClass().getResourceAsStream("/images/iconoUsuario.png")));
+
 	}
 }
