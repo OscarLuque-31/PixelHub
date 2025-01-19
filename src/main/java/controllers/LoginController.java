@@ -25,6 +25,7 @@ import javafx.stage.StageStyle;
 import models.Usuario;
 import utils.HibernateUtil;
 import utils.NavigationUtils;
+import utils.UtilsBcrypt;
 import utils.UtilsViews;
 
 public class LoginController {
@@ -123,14 +124,8 @@ public class LoginController {
 	 * Método que controla la navegación entre ventanas
 	 */
 	private void navegacionEntreVentanas() {
-		linkRegister.setOnMouseClicked(event -> {
-	        NavigationUtils.navigateTo(stage, "/views/Registro.fxml", "Registro");
-	        System.out.println("Cambiando a ventana de registro. Maximizado: " + stage.isMaximized());
-	    });
-	    linkPassword.setOnMouseClicked(event -> {
-	        NavigationUtils.navigateTo(stage, "/views/RecuperarContrasena.fxml", "Recuperar Contraseña");
-	        System.out.println("Cambiando a ventana de recuperación. Maximizado: " + stage.isMaximized());
-	    });;
+		linkRegister.setOnMouseClicked(event -> NavigationUtils.navigateTo(stage, "/views/Registro.fxml"));
+		linkPassword.setOnMouseClicked(event -> NavigationUtils.navigateTo(stage, "/views/RecuperarContrasena.fxml"));
 	}
 
 	public void setStage(Stage stage) {
@@ -150,94 +145,68 @@ public class LoginController {
 	}
 
 
-
 	/**
 	 * Método que inicia sesión si las credenciales son correctas
 	 */
 	private void inicioDeSesion() {
 		btnLogin.setOnMouseClicked(event -> {
 
-			if (iniciarSesion(txtUsername.getText(),txtPassword.getText())) {
-				NavigationUtils.navigateToBibliotecaWithUser(stage, "/views/Biblioteca.fxml", "Biblioteca", devolverUsuario(txtUsername.getText(),txtPassword.getText()));
-			} else if (!txtUsername.getText().isEmpty() && !txtPassword.getText().isEmpty()) {
-				UtilsViews.mostrarDialogo(Alert.AlertType.INFORMATION,getClass(),"No se ha encontrado al usuario","Porfavor compruebe que los datos son correctos");
-			}
+			String username = txtUsername.getText().trim();
+			String password = txtPassword.getText().trim();
 
+			if (validarCampos(username, password)) {
+
+				Usuario usuario = devolverUsuario(username);
+				
+				
+
+				try {
+
+					// Si el usuario no es nulo y la contraseña es correcta continua
+					if (usuario != null && UtilsBcrypt.checkPassword(password, usuario.getPassword())) {
+						// Usuario y contraseña correctos
+						NavigationUtils.navigateToBibliotecaWithUser(stage, "/views/Biblioteca.fxml", "Biblioteca", usuario);
+					} else {						
+						UtilsViews.mostrarDialogo(Alert.AlertType.INFORMATION,getClass(),"No se ha encontrado al usuario","Por favor, compruebe que los datos son correctos");
+					}
+					
+				} catch (IllegalArgumentException e) {	
+					UtilsViews.mostrarDialogo(Alert.AlertType.INFORMATION,getClass(),"No se ha encontrado al usuario","Por favor, compruebe que los datos son correctos");
+				}
+			}
 		});
 	}
 
-
 	/**
-	 * Método que devuelve el usuario si el logueo es correcto
-	 * @return
+	 * Método que devuelve el usuario si el nombre de usuario existe
+	 * @return Usuario encontrado o null
 	 */
-	private Usuario devolverUsuario(String correo, String contraseña)  {
+	private Usuario devolverUsuario(String username) {
 		UsuarioDaoImpl usuarioDao = new UsuarioDaoImpl(HibernateUtil.getSession());
-
-		List<Usuario> usuarios = usuarioDao.searchAll();
-
-		for (Usuario usuario : usuarios) {
-			if (correo.equals(usuario.getUsername()) && contraseña.equals(usuario.getPassword())) {
-
-				// Si lo encuentra devuelve true
-				return usuario;
-			}
-		}
-		// Si no hay retornará null
-		return null;
+		// Consulta directa por nombre de usuario
+		return usuarioDao.findByUsername(username);
 	}
-	
-	
+
 	/**
-	 * Método que comprueba las credenciales desde base de datos para afirmar que existen
-	 * @return true si ese usuario existe
+	 * Método que valida los campos de entrada
+	 * @return true si los campos son válidos
 	 */
-	private boolean iniciarSesion(String correo, String contraseña) {
-
-
-		if (validarCampos()) {
-			// Lista de empleados
-			
-
-			UsuarioDaoImpl usuarioDao = new UsuarioDaoImpl(HibernateUtil.getSession());
-
-			List<Usuario> usuarios = usuarioDao.searchAll();
-
-			for (Usuario usuario : usuarios) {
-				if (correo.equals(usuario.getUsername()) && contraseña.equals(usuario.getPassword())) {
-
-					// Si lo encuentra devuelve true
-					return true;
-				}
-			}
-
-		}
-
-		// Por defecto devolverá false
-		return false;
-	}
-
-
-	private boolean validarCampos() {
+	private boolean validarCampos(String username, String password) {
 		StringBuilder errores = new StringBuilder();
 
-		// 1. Validación del Nombre
-		if (txtUsername.getText().trim().isEmpty()) {
-			errores.append("El nombre no puede estar vacío.\n");
+		if (username.isEmpty()) {
+			errores.append("El nombre de usuario no puede estar vacío.\n");
 		}
 
-		// 2. Validación del Apellido
-		if (txtPassword.getText().trim().isEmpty()) {
-			errores.append("El apellido no puede estar vacío.\n");
+		if (password.isEmpty()) {
+			errores.append("La contraseña no puede estar vacía.\n");
 		}
-		
-		// Si hay errores, mostrar el diálogo
+
 		if (errores.length() > 0) {
-			UtilsViews.mostrarDialogo(Alert.AlertType.ERROR,getClass(),"Corrige estos errores porfavor",errores.toString());
+			UtilsViews.mostrarDialogo(Alert.AlertType.ERROR, getClass(), "Corrige estos errores, por favor", errores.toString());
 			return false;
 		}
 
-		// Si todas las validaciones son correctas
 		return true;
 	}
 

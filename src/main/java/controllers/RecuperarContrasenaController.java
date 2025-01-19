@@ -76,8 +76,8 @@ public class RecuperarContrasenaController {
      * Método que controla la navegación entre ventanas
      */
     private void navegacionEntreVentanas() {
-    	lblCancelar.setOnMouseClicked(event -> NavigationUtils.navigateTo(stage, "/views/Login.fxml", "Login"));
-    	btnEnviarCodigo.setOnMouseClicked(event -> NavigationUtils.navigateTo(stage, "/views/CodigoEmail.fxml", "Codigo"));
+    	lblCancelar.setOnMouseClicked(event -> NavigationUtils.navigateTo(stage, "/views/Login.fxml"));
+    	btnEnviarCodigo.setOnMouseClicked(event -> NavigationUtils.navigateTo(stage, "/views/CodigoEmail.fxml"));
     }
 
     public void setStage(Stage stage) {

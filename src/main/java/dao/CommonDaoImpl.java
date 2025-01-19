@@ -13,7 +13,7 @@ import java.util.List;
 public abstract class CommonDaoImpl<T> implements CommonDao<T> {
 
     private Class<T> entityClass;
-    private Session session;
+    protected Session session;
 
     @SuppressWarnings("unchecked")
     protected CommonDaoImpl(Session session) {
