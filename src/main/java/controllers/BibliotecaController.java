@@ -151,7 +151,7 @@ public class BibliotecaController {
 	 * Método que controla la navegación entre ventanas
 	 */
 	private void navegacionEntreVentanas() {
-		btnCerrarSesion.setOnMouseClicked(event -> NavigationUtils.navigateTo(stage, "/views/Login.fxml", "Login"));
+		btnCerrarSesion.setOnMouseClicked(event -> NavigationUtils.navigateTo(stage, "/views/Login.fxml"));
 	}
 
 	/**

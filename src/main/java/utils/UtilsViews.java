@@ -100,18 +100,11 @@ public class UtilsViews {
 	    btnMax.setOnMouseClicked(event -> {
 	        boolean maximized = stage.isMaximized();
 	        stage.setMaximized(!maximized);
-	        System.out.println("Maximización cambiada: " + !maximized);
 	    });
 
 	    btnClose.setOnMouseClicked(event -> stage.close());
-
-	    // Dragging logic (si aplica)
-	    dragArea.setOnMouseDragged(event -> {
-	        if (!stage.isMaximized()) {
-	            stage.setX(event.getScreenX());
-	            stage.setY(event.getScreenY());
-	        }
-	    });
+	    
+	    configureDrag(stage, dragArea);
 	}
 
 
@@ -158,6 +151,7 @@ public class UtilsViews {
 	    dialogPane.getStyleClass().add("dialog-pane");
 	    
 	    Stage stage = (Stage) dialogPane.getScene().getWindow();
+	    stage.initStyle(StageStyle.UNIFIED);
 	    stage.getIcons().add(new Image(clase.getResourceAsStream("/images/logoPixelHub.png"))); // Ruta del ícono
 	    stage.setTitle(null);
 

@@ -76,7 +76,7 @@ public class CodigoEmailController {
      * Método que controla la navegación entre ventanas
      */
     private void navegacionEntreVentanas() {
-    	lblCancelar.setOnMouseClicked(event -> NavigationUtils.navigateTo(stage, "/views/RecuperarContrasena.fxml", "Recuperar Contrasena"));
+    	lblCancelar.setOnMouseClicked(event -> NavigationUtils.navigateTo(stage, "/views/RecuperarContrasena.fxml"));
     }
 
     public void setStage(Stage stage) {

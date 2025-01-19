@@ -81,15 +81,15 @@
 				</HBox>
 				<HBox alignment="CENTER_LEFT" maxHeight="200.0" prefHeight="150.0" VBox.vgrow="ALWAYS">
 					<children>
-						<GridPane prefHeight="120.0" prefWidth="1365.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+						<GridPane prefHeight="120.0" prefWidth="1365.0" HBox.hgrow="ALWAYS" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
 							<columnConstraints>
 								<!-- Columna 0: Estática -->
-								<ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="110.0" minWidth="110.0" prefWidth="110.0" />
+								<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="110.0" minWidth="110.0" prefWidth="110.0" />
 								<!-- Columna 1: Responsive -->
-								<ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="100.0" prefWidth="1022.0" />
-                        <ColumnConstraints halignment="CENTER" hgrow="NEVER" maxWidth="93.0" minWidth="80.0" prefWidth="93.0" />
+								<ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="993.0" prefWidth="1012.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="161.0" minWidth="80.0" prefWidth="142.0" />
 								<!-- Columna 2: Estática -->
-								<ColumnConstraints halignment="LEFT" hgrow="ALWAYS" maxWidth="140.0" minWidth="140.0" prefWidth="140.0" />
+								<ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="140.0" minWidth="101.0" prefWidth="101.0" />
 							</columnConstraints>
 							<rowConstraints>
 								<RowConstraints vgrow="SOMETIMES" />
@@ -102,7 +102,7 @@
 										<Circle fx:id="circleLogo" fill="#2a3b47" radius="32.0" stroke="#2a3b47" strokeType="INSIDE" />
 										<ImageView fx:id="imgLogo" fitHeight="41.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true" />
 												<Label fx:id="lblNombreUsuario" GridPane.columnIndex="2" />
-												<ImageView fx:id="imgUsuario" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" />
+												<ImageView fx:id="imgUsuario" fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" />
 							</children>
 						</GridPane>
 					</children>
@@ -117,7 +117,7 @@
 					<top>
 						<GridPane prefWidth="1004.0" BorderPane.alignment="CENTER">
 							<columnConstraints>
-								<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" prefWidth="100.0" />
+								<ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="-Infinity" prefWidth="100.0" />
 								<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="100.0" />
 								<ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="-Infinity" prefWidth="627.0" />
 								<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="70.0" />
