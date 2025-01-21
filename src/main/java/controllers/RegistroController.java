@@ -102,6 +102,9 @@ public class RegistroController {
 	
 	@FXML
 	private Label lblPreferencias;
+	
+	@FXML
+	private Button btnCancel;
 
 	@FXML
 	private GridPane gridPane;
@@ -122,6 +125,7 @@ public class RegistroController {
 	 */
 	private void navegacionEntreVentanas() {
 		btnRegister.setOnMouseClicked(event -> NavigationUtils.navigateTo(stage, "/views/Login.fxml"));
+		btnCancel.setOnMouseClicked(event -> NavigationUtils.navigateTo(stage, "/views/Login.fxml"));
 	}
 
 	public void setStage(Stage stage) {
@@ -159,13 +163,9 @@ public class RegistroController {
 	 */
 	private void registroUsuario() {
 		btnRegister.setOnMouseClicked(event -> {
-
 			if (registrarUsuario()) {
 				NavigationUtils.navigateTo(stage, "/views/Login.fxml");
-			} else {
-				System.out.println("No se ha registrado al usuario");
-			}
-
+			} 
 		});
 
 	}
