@@ -3,6 +3,7 @@ package utils;
 import java.io.IOException;
 
 import javafx.animation.FadeTransition;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
@@ -139,7 +140,7 @@ public class UtilsViews {
 	 * @param clase
 	 * @param mensaje
 	 */
-	public static void mostrarDialogo(AlertType alertType, Class<?> clase, String header, String mensaje) {
+	public static void mostrarDialogo(Alert.AlertType alertType, Class<?> clase, String header, String mensaje) {
 	    // Crear el Alert
 	    Alert alert = new Alert(alertType);
 	    alert.setHeaderText(header); // Encabezado
@@ -149,15 +150,28 @@ public class UtilsViews {
 	    DialogPane dialogPane = alert.getDialogPane();
 	    dialogPane.getStylesheets().add(clase.getResource("/styles/styleDialog.css").toExternalForm());
 	    dialogPane.getStyleClass().add("dialog-pane");
-	    
+
+	    // Hacer transparente el Stage
 	    Stage stage = (Stage) dialogPane.getScene().getWindow();
-	    stage.initStyle(StageStyle.UNIFIED);
-	    stage.getIcons().add(new Image(clase.getResourceAsStream("/images/logoPixelHub.png"))); // Ruta del ícono
+	    stage.initStyle(StageStyle.TRANSPARENT); // Hace el Stage transparente
+
+	    // Ajustar el fondo del Scene para que también sea transparente
+	    dialogPane.getScene().setFill(Color.TRANSPARENT);
+
+	    // Configurar ícono y título (opcional)
+	    stage.getIcons().add(new Image(clase.getResourceAsStream("/images/logoPixelHub.png")));
 	    stage.setTitle(null);
 
-	    // Mostrar el Alert
+	    // Añadir efecto de desvanecimiento (fade)
+	    FadeTransition fadeIn = new FadeTransition(Duration.seconds(0.5), alert.getDialogPane());
+	    fadeIn.setFromValue(0);
+	    fadeIn.setToValue(1);
+	    fadeIn.play();
+
+	    // Mostrar el dialogo
 	    alert.showAndWait();
 	}
+
 
 
 	

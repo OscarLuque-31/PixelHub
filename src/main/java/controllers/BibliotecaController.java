@@ -59,6 +59,7 @@ public class BibliotecaController {
 
 	@FXML
 	private Button btnCerrar;
+	
 
 	@FXML
 	private ImageView iconCerrar;
