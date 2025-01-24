@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="CENTER_LEFT" spacing="10" style="-fx-background-color: #212E36; -fx-border-radius: 20px;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.GameItemCuadriculaController">
+
+    <!-- Imagen del juego -->
+    <ImageView fx:id="gameImage" fitHeight="200.0" fitWidth="320.0" />
+    
+    <!-- Plataformas -->
+    <HBox fx:id="gamePlatforms" prefHeight="0.0" prefWidth="200.0">
+      <opaqueInsets>
+         <Insets />
+      </opaqueInsets>
+      <padding>
+         <Insets left="10.0" />
+      </padding></HBox>
+    
+    <!-- Nombre del juego -->
+    <Label fx:id="gameTitle" style="-fx-text-fill: FFFFFF;">
+      <font>
+         <Font size="20.0" />
+      </font>
+    </Label>
+    
+    <!-- Rating del juego -->
+    <Label fx:id="gameRating" style="-fx-text-fill: #52A5E0;" />
+   <cursor>
+      <Cursor fx:constant="HAND" />
+   </cursor>
+
+</VBox>
