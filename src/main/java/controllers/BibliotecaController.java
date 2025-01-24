@@ -137,7 +137,7 @@ public class BibliotecaController {
 		//Navegacion entre pantallas
 		navegacionEntreVentanas();
 		//Obtener y cargar los juegos
-		showGames();
+		showGames(stage);
 
 		// Usa el objeto usuario solo si ya ha sido inicializado
 		if (usuario != null) {
@@ -173,8 +173,8 @@ public class BibliotecaController {
 	 */
 	private void navegacionEntreVentanas() {
 		btnCerrarSesion.setOnMouseClicked(event -> NavigationUtils.navigateTo(stage, "/views/Login.fxml"));
-		imgModoLista.setOnMouseClicked(event -> {showGames();setVistaLista(true);});
-		imgModoTarjeta.setOnMouseClicked(event -> {showGames();setVistaLista(false);});
+		imgModoLista.setOnMouseClicked(event -> {showGames(stage);setVistaLista(true);});
+		imgModoTarjeta.setOnMouseClicked(event -> {showGames(stage);setVistaLista(false);});
 	}
 
 	/**
@@ -197,7 +197,7 @@ public class BibliotecaController {
 	/**
 	 * Método que obtiene los juegos de la API y los muestra
 	 */
-	private void showGames() {
+	private void showGames(Stage stage) {
 		scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 		scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 		
@@ -210,6 +210,8 @@ public class BibliotecaController {
 				filaActual.setSpacing(20);
 				filaActual.setAlignment(Pos.CENTER); 
 				
+				int juegosPorFila = stage.isMaximized() ? 4 : 3;
+				
 				int contador = 0;
 				for (Game juego:listaJuegos) {
 					VBox bloqueJuego = crearBloqueVideojuego(juego);
@@ -217,7 +219,7 @@ public class BibliotecaController {
 					filaActual.getChildren().add(bloqueJuego);
 					contador++;
 
-					if (contador % 3 == 0) {
+					if (contador % juegosPorFila == 0) {
 						contenedorJuegos.setSpacing(20);
 						contenedorJuegos.setAlignment(Pos.CENTER); 
 						contenedorJuegos.getChildren().add(filaActual);
