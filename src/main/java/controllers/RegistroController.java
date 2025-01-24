@@ -99,10 +99,10 @@ public class RegistroController {
 
 	@FXML
 	private Circle circleLogo;
-	
+
 	@FXML
 	private Label lblPreferencias;
-	
+
 	@FXML
 	private Button btnCancel;
 
@@ -253,63 +253,73 @@ public class RegistroController {
 	 * @return true si son todos validos
 	 */
 	private boolean validarCampos() {
-	    StringBuilder errores = new StringBuilder();
+		StringBuilder errores = new StringBuilder();
 
-	    // 1. Validación del Nombre
-	    if (txtName.getText().trim().isEmpty() || txtName.getText().length() > 30) {
-	        errores.append("El nombre no puede estar vacío y debe tener un máximo de 30 caracteres.\n");
-	    }
+		// 1. Validación del Nombre
+		if (txtName.getText().trim().isEmpty() || txtName.getText().length() > 30) {
+			errores.append("El nombre no puede estar vacío y debe tener un máximo de 30 caracteres.\n");
+		}
 
-	    // 2. Validación del Apellido
-	    if (txtSurname.getText().trim().isEmpty() || txtSurname.getText().length() > 50) {
-	        errores.append("El apellido no puede estar vacío y debe tener un máximo de 50 caracteres.\n");
-	    }
+		// 2. Validación del Apellido
+		if (txtSurname.getText().trim().isEmpty() || txtSurname.getText().length() > 50) {
+			errores.append("El apellido no puede estar vacío y debe tener un máximo de 50 caracteres.\n");
+		}
 
-	    // 3. Validación del Nombre de Usuario
-	    if (txtUsername.getText().trim().isEmpty() || txtUsername.getText().length() > 30) {
-	        errores.append("El nombre de usuario no puede estar vacío y debe tener un máximo de 30 caracteres.\n");
-	    }
+		// 3. Validación del Nombre de Usuario
+		if (txtUsername.getText().trim().isEmpty() || txtUsername.getText().length() > 30) {
+			errores.append("El nombre de usuario no puede estar vacío y debe tener un máximo de 30 caracteres.\n");
+		}
 
-	    // 4. Validación del Email
-	    String email = txtEmail.getText().trim();
-	    if (email.isEmpty() || !email.matches("^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$")) {
-	        errores.append("El correo electrónico no es válido.\n");
-	    }
+		// 4. Validación del Email
+		String email = txtEmail.getText().trim();
+		if (email.isEmpty() || !email.matches("^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$")) {
+			errores.append("El correo electrónico no es válido.\n");
+		}
 
-	    // 5. Validación de la Contraseña
-	    String password = txtPassword.getText();
-	    if (password.isEmpty() || password.length() < 8 || !password.matches(".*\\d.*") || !password.matches(".*[A-Za-z].*")) {
-	        errores.append("La contraseña debe tener al menos 8 caracteres, incluir letras y números.\n");
-	    }
+		// 5. Validación de la Contraseña
+		String password = txtPassword.getText();
+		if (password.isEmpty() || password.length() < 8 || !password.matches(".*\\d.*") || !password.matches(".*[A-Za-z].*")) {
+			errores.append("La contraseña debe tener al menos 8 caracteres, incluir letras y números.\n");
+		}
 
-	    // 6. Validación de Confirmación de Contraseña
-	    if (!password.equals(txtConfirmPassword.getText())) {
-	        errores.append("Las contraseñas no coinciden.\n");
-	    }
+		// 6. Validación de Confirmación de Contraseña
+		if (!password.equals(txtConfirmPassword.getText())) {
+			errores.append("Las contraseñas no coinciden.\n");
+		}
 
-	    // 7. Validación de la Fecha de Nacimiento
-	    if (txtDate.getValue() == null) {
-	        errores.append("La fecha de nacimiento no puede estar vacía.\n");
-	    } else {
-	        LocalDate birthDate = txtDate.getValue();
-	        LocalDate minDate = LocalDate.now().minusYears(6);
-	        if (birthDate.isAfter(minDate)) {
-	            errores.append("Debe tener al menos 6 años para registrarse.\n");
-	        }
-	    }
+		// 7. Validación de la Fecha de Nacimiento
+		if (txtDate.getValue() == null) {
+			errores.append("La fecha de nacimiento no puede estar vacía.\n");
+		} else {
+			LocalDate birthDate = txtDate.getValue();
+			LocalDate minDate = LocalDate.now().minusYears(6);
+			if (birthDate.isAfter(minDate)) {
+				errores.append("Debe tener al menos 6 años para registrarse.\n");
+			}
+		}
 
-	    // Mostrar errores, si existen
-	    if (errores.length() > 0) {
-	        UtilsViews.mostrarDialogo(Alert.AlertType.ERROR, getClass(), "Corrige estos errores, por favor", errores.toString());
-	        return false;
-	    }
+		// 8. Validación de Género
+		if (cmbGender.getCheckModel().getCheckedItems().isEmpty()) {
+			errores.append("Debe seleccionar al menos un género.\n");
+		}
 
-	    // Si todas las validaciones son correctas
-	    return true;
+		// 9. Validación de Plataforma
+		if (cmbPlatform.getCheckModel().getCheckedItems().isEmpty()) {
+			errores.append("Debe seleccionar al menos una plataforma.\n");
+		}
+
+		// Mostrar errores, si existen
+		if (errores.length() > 0) {
+			UtilsViews.mostrarDialogo(Alert.AlertType.ERROR, getClass(), "Corrige estos errores, por favor", errores.toString());
+			return false;
+		}
+
+		// Si todas las validaciones son correctas
+		return true;
 	}
 
 
-	
+
 
 
 	/**
@@ -330,7 +340,7 @@ public class RegistroController {
 		iconMinimizar.setImage(new Image(getClass().getResourceAsStream("/images/iconoMinimizar.png")));
 		iconMaximizar.setImage(new Image(getClass().getResourceAsStream("/images/iconoMaximizar.png")));
 		iconCerrar.setImage(new Image(getClass().getResourceAsStream("/images/iconoCerrar.png")));
-//		imgFlechitaAtras.setImage(new Image(getClass().getResourceAsStream("/images/flechaAtras.png")));
+		//		imgFlechitaAtras.setImage(new Image(getClass().getResourceAsStream("/images/flechaAtras.png")));
 	}
 
 }
