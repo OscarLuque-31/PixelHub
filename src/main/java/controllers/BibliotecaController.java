@@ -29,6 +29,9 @@ public class BibliotecaController {
 
 	@FXML
 	private BorderPane borderPane;
+	
+	@FXML
+	private BorderPane borderPaneCentro;
 
 	@FXML
 	private VBox panelLateralContainer;
@@ -65,7 +68,7 @@ public class BibliotecaController {
 
 	@FXML
 	private Button btnCerrar;
-	
+
 
 	@FXML
 	private ImageView iconCerrar;
@@ -100,23 +103,25 @@ public class BibliotecaController {
 	@FXML
 	private ImageView imgModoTarjeta;
 
-	@FXML
-	private ImageView imgModoLista;
 	
 	@FXML
 	private VBox contenedorJuegos;
-	
+
 	@FXML
-    private ScrollPane scrollPane;
+	private ScrollPane scrollPane;
 
 	private Stage stage;
 
-	private Usuario usuario;
-	
+	private static Usuario usuario;
+
 	private boolean vistaLista;
 
 	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
+		BibliotecaController.usuario = usuario;
+	}
+	
+	public static Usuario getUsuario() {
+		return usuario;
 	}
 
 	public void setVistaLista(Boolean value) {
@@ -134,10 +139,12 @@ public class BibliotecaController {
 		initializeImagesBar();
 		//Efectos de hover
 		hoverEffect();
-		//Navegacion entre pantallas
-		navegacionEntreVentanas();
+		//Navegacion entre pestañas
+		//Por defecto estará en biblioteca
+		cambiarPestana(btnBiblioteca,"/views/BibliotecaJuegos.fxml");
+		navegacionEntrePestañas();
 		//Obtener y cargar los juegos
-		showGames(stage);
+//		showGames(stage);
 
 		// Usa el objeto usuario solo si ya ha sido inicializado
 		if (usuario != null) {
@@ -148,7 +155,7 @@ public class BibliotecaController {
 	}
 
 	/**
-	 * Método para cargar la hoja de estilos (CSS) de la ventana de login
+	 * Método para cargar la hoja de estilos (CSS) 
 	 */
 	private void cargarCSS() {
 		// Cargar el archivo de estilo para la ventana de login
@@ -166,16 +173,100 @@ public class BibliotecaController {
 		UtilsViews.hoverEffectButton(btnBuscarJuegos, "#415A6C", "#212E36");
 		UtilsViews.hoverEffectButton(btnCerrarSesion, "#415A6C", "#212E36");
 		UtilsViews.hoverEffectButton(btnRecomendaciones, "#415A6C", "#212E36");
+		
+		
+
+	    // Hover normal, pero solo si el botón NO está activo
+	    btnBiblioteca.setOnMouseEntered(e -> {
+	        if (!btnBiblioteca.getStyleClass().contains("btn-activo")) {
+	            btnBiblioteca.setStyle("-fx-background-color: #212E36;");
+	        }
+	    });
+	    btnBiblioteca.setOnMouseExited(e -> {
+	        if (!btnBiblioteca.getStyleClass().contains("btn-activo")) {
+	            btnBiblioteca.setStyle("-fx-background-color: transparent;");
+	        }
+	    });
+
+	    btnBuscarJuegos.setOnMouseEntered(e -> {
+	        if (!btnBuscarJuegos.getStyleClass().contains("btn-activo")) {
+	            btnBuscarJuegos.setStyle("-fx-background-color: #212E36;");
+	        }
+	    });
+	    btnBuscarJuegos.setOnMouseExited(e -> {
+	        if (!btnBuscarJuegos.getStyleClass().contains("btn-activo")) {
+	            btnBuscarJuegos.setStyle("-fx-background-color: transparent;");
+	        }
+	    });
+
+	    btnRecomendaciones.setOnMouseEntered(e -> {
+	        if (!btnRecomendaciones.getStyleClass().contains("btn-activo")) {
+	            btnRecomendaciones.setStyle("-fx-background-color: #212E36;");
+	        }
+	    });
+	    btnRecomendaciones.setOnMouseExited(e -> {
+	        if (!btnRecomendaciones.getStyleClass().contains("btn-activo")) {
+	            btnRecomendaciones.setStyle("-fx-background-color: transparent;");
+	        }
+	    });
 	}
 
 	/**
 	 * Método que controla la navegación entre ventanas
 	 */
-	private void navegacionEntreVentanas() {
+	private void navegacionEntrePestañas() {
+
+		btnBiblioteca.setOnMouseClicked(event -> cambiarPestana(btnBiblioteca,"/views/BibliotecaJuegos.fxml"));
+		btnRecomendaciones.setOnMouseClicked(event -> cambiarPestana(btnRecomendaciones,"/views/RecomendacionesJuegos.fxml"));
+		btnBuscarJuegos.setOnMouseClicked(event -> cambiarPestana(btnBuscarJuegos,"/views/BuscarJuegos.fxml"));
+
+
 		btnCerrarSesion.setOnMouseClicked(event -> NavigationUtils.navigateTo(stage, "/views/Login.fxml"));
-		imgModoLista.setOnMouseClicked(event -> {showGames(stage);setVistaLista(true);});
-		imgModoTarjeta.setOnMouseClicked(event -> {showGames(stage);setVistaLista(false);});
+		lblNombreUsuario.setOnMouseClicked(event -> cambiarContenidoCentro("/views/Perfil.fxml"));
+		
 	}
+	
+	/**
+	 * Método que cambia de pestaña
+	 * @param botonSeleccionado
+	 * @param rutaFXML
+	 */
+	private void cambiarPestana(Button botonSeleccionado, String rutaFXML) {
+	    // Eliminar la clase "btn-activo" de todos los botones
+	    btnBiblioteca.getStyleClass().remove("btn-activo");
+	    btnRecomendaciones.getStyleClass().remove("btn-activo");
+	    btnBuscarJuegos.getStyleClass().remove("btn-activo");
+
+	    // Resetear estilos para evitar colores manuales previos
+	    btnBiblioteca.setStyle("");
+	    btnRecomendaciones.setStyle("");
+	    btnBuscarJuegos.setStyle("");
+
+	    // Agregar la clase "btn-activo" solo al botón seleccionado
+	    botonSeleccionado.getStyleClass().add("btn-activo");
+
+	    // Cambiar la vista
+	    cambiarContenidoCentro(rutaFXML);
+	}
+
+	
+	/**
+	 * Método que cambia el contenido del centro
+	 * @param rutaFXML
+	 */
+	private void cambiarContenidoCentro(String rutaFXML) {
+	    try {
+	        FXMLLoader loader = new FXMLLoader(getClass().getResource(rutaFXML));
+	        BorderPane nuevoContenido = loader.load();
+	        borderPaneCentro.setCenter(nuevoContenido);
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        Label errorLabel = new Label("Error cargando contenido: " + rutaFXML);
+	        errorLabel.setStyle("-fx-text-fill: red; -fx-font-size: 16;");
+	        borderPaneCentro.setCenter(errorLabel);
+	    }
+	}
+
 
 	/**
 	 * Método que inicializa las imagenes
@@ -185,22 +276,16 @@ public class BibliotecaController {
 		iconMinimizar.setImage(new Image(getClass().getResourceAsStream("/images/iconoMinimizar.png")));
 		iconMaximizar.setImage(new Image(getClass().getResourceAsStream("/images/iconoMaximizar.png")));
 		iconCerrar.setImage(new Image(getClass().getResourceAsStream("/images/iconoCerrar.png")));
-		imgAdd.setImage(new Image(getClass().getResourceAsStream("/images/CirculoMas.png")));
-		imgFiltro.setImage(new Image(getClass().getResourceAsStream("/images/filtro.png")));
-		imgLupa.setImage(new Image(getClass().getResourceAsStream("/images/lupa.png")));
-		imgModoLista.setImage(new Image(getClass().getResourceAsStream("/images/modoLista.png")));
-		imgModoTarjeta.setImage(new Image(getClass().getResourceAsStream("/images/modoTarjeta.png")));
 		imgUsuario.setImage(new Image(getClass().getResourceAsStream("/images/iconoUsuario.png")));
-
 	}
-	
+
 	/**
 	 * Método que obtiene los juegos de la API y los muestra
 	 */
 	private void showGames(Stage stage) {
 		scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 		scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-		
+
 		try {
 			List<Game> listaJuegos = APIUtils.getGames();
 			contenedorJuegos.getChildren().clear();
@@ -209,9 +294,9 @@ public class BibliotecaController {
 				HBox filaActual = new HBox();
 				filaActual.setSpacing(20);
 				filaActual.setAlignment(Pos.CENTER); 
-				
+
 				int juegosPorFila = stage.isMaximized() ? 4 : 3;
-				
+
 				int contador = 0;
 				for (Game juego:listaJuegos) {
 					VBox bloqueJuego = crearBloqueVideojuego(juego);
@@ -223,7 +308,7 @@ public class BibliotecaController {
 						contenedorJuegos.setSpacing(20);
 						contenedorJuegos.setAlignment(Pos.CENTER); 
 						contenedorJuegos.getChildren().add(filaActual);
-						
+
 						filaActual = new HBox();
 						filaActual.setSpacing(20);
 						filaActual.setAlignment(Pos.CENTER); 
@@ -234,14 +319,14 @@ public class BibliotecaController {
 				} 
 			}else {
 				for (Game juego:listaJuegos) {
-			        contenedorJuegos.getChildren().add(crearFilaVideojuego(juego));
-			    }
+					contenedorJuegos.getChildren().add(crearFilaVideojuego(juego));
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private VBox crearBloqueVideojuego(Game juego) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/GameItemCuadricula.fxml"));
@@ -251,7 +336,7 @@ public class BibliotecaController {
 			GameItemCuadriculaController controller = loader.getController();
 			controller.setGameData(juego); // Método para asignar los datos del juego
 			controller.setGamesController(this);
-			
+
 			return gameItem;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -260,18 +345,18 @@ public class BibliotecaController {
 	}
 
 	private HBox crearFilaVideojuego(Game juego) {
-	    try {
-	        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/GameItemLista.fxml"));
-	        HBox gameItem = loader.load();
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/GameItemLista.fxml"));
+			HBox gameItem = loader.load();
 
-	        GameItemListaController controller = loader.getController();
-	        controller.setGameData(juego);
+			GameItemListaController controller = loader.getController();
+			controller.setGameData(juego);
 
-	        return gameItem;
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	        return new HBox(new Label("Error cargando juego"));
-	    }
+			return gameItem;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new HBox(new Label("Error cargando juego"));
+		}
 	}
-	
+
 }
