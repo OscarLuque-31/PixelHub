@@ -35,14 +35,45 @@
 	-fx-background-radius: 5;
 }
 
+
 #lblNombreUsuario{
 	-fx-text-fill: white;
 	-fx-font-family: "Tilt Warp";
 	-fx-font-size: 20;
 }
 
+.btn-activo {
+    -fx-background-color: #415A6C !important; /* Color de fondo */
+    -fx-text-fill: white; /* Color del texto */
+}
+
+.btn-activo:hover {
+    -fx-background-color: #415A6C !important; /* Asegurar que el hover no lo cambie */
+}
 
 
 
+.combo-box .text-field{
+	-fx-text-fill: #FFFFFF;
+	-fx-font-family: "Tilt Warp";
+}
+
+.combo-box .list-cell {
+    -fx-text-fill: #FFFFFF;
+	-fx-font-family: "Tilt Warp";
+}
+
+.comboBox{
+	-fx-background-color: #2A3B47;
+	-fx-text-fill: #FFFFFF;
+	-fx-font-family: "Tilt Warp";
+	-fx-font-size: 16;
+	-fx-background-radius: 5;
+}
+
+/* Estilo de la flecha */
+.comboBox .arrow {
+    -fx-background-color: white; /* Color de la flecha */
+}
 
 
