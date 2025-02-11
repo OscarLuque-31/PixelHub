@@ -65,15 +65,10 @@ public class BuscarJuegosController implements Initializable {
 		setComboContent();
 		// Establecer plataformas y géneros
 		setMapContent();
-		// Efectos de hover
-	    scrollPane.widthProperty().addListener((obs, oldValue, newValue) -> actualizarLayout());
-	    scrollPane.heightProperty().addListener((obs, oldValue, newValue) -> actualizarLayout());
+
 	}
 
-	private void actualizarLayout() {
-	    // Recargar los juegos cuando se cambia el tamaño de la ventana
-	    showGames(textFieldBusqueda.getText(), platforms.get(comboBoxPlataforma.getValue()), genres.get(comboBoxGenero.getValue()));
-	}
+	
 	
 	private void setMapContent() {
 		platforms = new HashMap<>();
@@ -169,68 +164,48 @@ public class BuscarJuegosController implements Initializable {
 	    });
 	}
 
-
 	private void mostrarJuegos(List<VBox> bloquesJuegos) {
 	    contenedorJuegos.getChildren().clear();
 
-	    // Crear una fila que se adaptará dinámicamente
 	    HBox filaActual = new HBox();
-	    filaActual.setSpacing(20); // Espaciado base
-	    filaActual.setAlignment(Pos.CENTER);
-
-	    // Ajustar el número de columnas por fila según el tamaño de la ventana
-	    double windowWidth = scrollPane.getWidth(); // Obtener el ancho de la ventana
-	    int numColumns = (int) (windowWidth / 300); // Calcular cuántos juegos caben por fila
-	    numColumns = Math.min(numColumns, 4); // Limitar a 4 columnas como máximo
-	    numColumns = Math.max(1, numColumns); // Asegurarse de que haya al menos 1 columna
+	    filaActual.setSpacing(20);
+	    filaActual.setAlignment(Pos.CENTER); 
 
 	    int contador = 0;
 	    for (VBox bloque : bloquesJuegos) {
 	        filaActual.getChildren().add(bloque);
 	        contador++;
 
-	        // Si hemos llegado al número de columnas, crear una nueva fila
-	        if (contador % numColumns == 0) {
+	        if (contador % 3 == 0) {
+	            contenedorJuegos.setSpacing(20);
+	            contenedorJuegos.setAlignment(Pos.CENTER); 
 	            contenedorJuegos.getChildren().add(filaActual);
+
 	            filaActual = new HBox();
-	            filaActual.setSpacing(30);
-	            filaActual.setAlignment(Pos.CENTER);
+	            filaActual.setSpacing(20);
+	            filaActual.setAlignment(Pos.CENTER); 
 	        }
 	    }
-
-	    // Añadir cualquier fila restante si no está vacía
 	    if (!filaActual.getChildren().isEmpty()) {
 	        contenedorJuegos.getChildren().add(filaActual);
 	    }
 	}
 
-
 	private VBox crearBloqueVideojuego(Game juego) {
-	    try {
-	        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/GameItemCuadricula.fxml"));
-	        VBox gameItem = loader.load();
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/GameItemCuadricula.fxml"));
+			VBox gameItem = loader.load();
 
-	        // Obtener el controlador del FXML
-	        GameItemCuadriculaController controller = loader.getController();
-	        controller.setGameData(juego);
-	        controller.setGamesController(this);
+			// Obtener el controlador del FXML
+			GameItemCuadriculaController controller = loader.getController();
+			controller.setGameData(juego);
+			controller.setGamesController(this);
 
-	        // Ajustar el ancho dinámicamente según el tamaño de la ventana
-	        gameItem.setMaxWidth(Double.MAX_VALUE); // Permitir que se expanda hasta el máximo ancho posible
-	        gameItem.setMinWidth(200); // Establecer el ancho mínimo
-
-	        // Utilizar bindings para ajustar el tamaño al contenedor
-	        gameItem.prefWidthProperty().bind(contenedorJuegos.widthProperty().divide(3).subtract(10)); // Divide el contenedor en 3 columnas con espaciado
-
-	        // Asegurar que las imágenes se ajusten de forma responsiva
-	        ImageView imageView = controller.getImageView(); // Asumiendo que tienes un método para obtener la imagen
-	        imageView.fitWidthProperty().bind(gameItem.widthProperty()); // Ajusta el ancho de la imagen al ancho del VBox
-
-	        return gameItem;
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	        return new VBox(new Label("Error cargando juego"));
-	    }
+			return gameItem;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new VBox(new Label("Error cargando juego"));
+		}
 	}
 
 
