@@ -24,6 +24,10 @@ public class GameItemCuadriculaController {
     
     private int gameId;
     private BuscarJuegosController buscarJuegosController;
+    
+    public ImageView getImageView() {
+		return this.gameImage;
+	}
 
     public void setGameData(Game game) {
     	mainBox.getStylesheets().add(getClass().getResource("/styles/styleGameItemCuadricula.css").toExternalForm());
@@ -90,5 +94,7 @@ public class GameItemCuadriculaController {
             }
         }
     }
+
+	
     
 }

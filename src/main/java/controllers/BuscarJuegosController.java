@@ -5,7 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -62,9 +66,15 @@ public class BuscarJuegosController implements Initializable {
 		// Establecer plataformas y géneros
 		setMapContent();
 		// Efectos de hover
-		hoverEffect();
+	    scrollPane.widthProperty().addListener((obs, oldValue, newValue) -> actualizarLayout());
+	    scrollPane.heightProperty().addListener((obs, oldValue, newValue) -> actualizarLayout());
 	}
 
+	private void actualizarLayout() {
+	    // Recargar los juegos cuando se cambia el tamaño de la ventana
+	    showGames(textFieldBusqueda.getText(), platforms.get(comboBoxPlataforma.getValue()), genres.get(comboBoxGenero.getValue()));
+	}
+	
 	private void setMapContent() {
 		platforms = new HashMap<>();
 		genres = new HashMap<>();
@@ -110,18 +120,6 @@ public class BuscarJuegosController implements Initializable {
 				"Lucha", "Familiar", "Juegos de mesa", "Educativo", "Cartas");
 	}
 
-	/**
-	 * Método que recopila todos los hoverEffect
-	 */
-	public void hoverEffect() {
-		// UtilsViews.hoverEffectButton(btnMinimizar, "#2a3b47", "#192229");
-		// UtilsViews.hoverEffectButton(btnMaximizar, "#2a3b47", "#192229");
-		// UtilsViews.hoverEffectButton(btnCerrar, "#c63637", "#192229");
-		// UtilsViews.hoverEffectButton(btnBiblioteca, "#415A6C", "#212E36");
-		// UtilsViews.hoverEffectButton(btnBuscarJuegos, "#415A6C", "#212E36");
-		// UtilsViews.hoverEffectButton(btnCerrarSesion, "#415A6C", "#212E36");
-		// UtilsViews.hoverEffectButton(btnRecomendaciones, "#415A6C", "#212E36");
-	}
 
 	/**
 	 * Método que inicializa las imagenes
@@ -130,65 +128,112 @@ public class BuscarJuegosController implements Initializable {
 		imgLupa.setImage(new Image(getClass().getResourceAsStream("/images/lupa.png")));
 	}
 
-	/**
-	 * Método que obtiene los juegos de la API y los muestra
-	 * @param title 
-	 * @param genre 
-	 * @param platfom 
-	 */
+
 	private void showGames(String title, Integer platform, Integer genre) {
-		scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-		scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+	    scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+	    scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
-		try {
-			List<Game> listaJuegos = APIUtils.getGames(title, platform, genre);
-			contenedorJuegos.getChildren().clear();
+	    // Crear un pool de hilos con el número óptimo de núcleos del sistema
+	    ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
-			HBox filaActual = new HBox();
-			filaActual.setSpacing(20);
-			filaActual.setAlignment(Pos.CENTER); 
+	    // Hilo para obtener los juegos de la API
+	    executor.submit(() -> {
+	        try {
+	            List<Game> listaJuegos = APIUtils.getGames(title, platform, genre);
 
-			int contador = 0;
-			for (Game juego:listaJuegos) {
-				VBox bloqueJuego = crearBloqueVideojuego(juego);
-				bloqueJuego.setMaxWidth(Double.MAX_VALUE);
-				filaActual.getChildren().add(bloqueJuego);
-				contador++;
+	            // Crear una lista de tareas para procesar cada juego en paralelo
+	            List<Future<VBox>> futures = listaJuegos.stream()
+	                .map(juego -> executor.submit(() -> crearBloqueVideojuego(juego)))
+	                .toList();
 
-				if (contador % 3 == 0) {
-					contenedorJuegos.setSpacing(20);
-					contenedorJuegos.setAlignment(Pos.CENTER); 
-					contenedorJuegos.getChildren().add(filaActual);
+	            // Obtener los resultados de los hilos
+	            List<VBox> bloquesJuegos = futures.stream()
+	                .map(future -> {
+	                    try {
+	                        return future.get(); // Obtener el resultado del hilo
+	                    } catch (Exception e) {
+	                        e.printStackTrace();
+	                        return new VBox(new Label("Error procesando juego"));
+	                    }
+	                })
+	                .toList();
 
-					filaActual = new HBox();
-					filaActual.setSpacing(20);
-					filaActual.setAlignment(Pos.CENTER); 
-				}
-			}
-			if (!filaActual.getChildren().isEmpty()) {
-				contenedorJuegos.getChildren().add(filaActual);
-			} 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	            // Actualizar la UI en el hilo principal
+	            Platform.runLater(() -> mostrarJuegos(bloquesJuegos));
+
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        } finally {
+	            executor.shutdown(); // Cerrar el pool de hilos
+	        }
+	    });
 	}
+
+
+	private void mostrarJuegos(List<VBox> bloquesJuegos) {
+	    contenedorJuegos.getChildren().clear();
+
+	    // Crear una fila que se adaptará dinámicamente
+	    HBox filaActual = new HBox();
+	    filaActual.setSpacing(20); // Espaciado base
+	    filaActual.setAlignment(Pos.CENTER);
+
+	    // Ajustar el número de columnas por fila según el tamaño de la ventana
+	    double windowWidth = scrollPane.getWidth(); // Obtener el ancho de la ventana
+	    int numColumns = (int) (windowWidth / 300); // Calcular cuántos juegos caben por fila
+	    numColumns = Math.min(numColumns, 4); // Limitar a 4 columnas como máximo
+	    numColumns = Math.max(1, numColumns); // Asegurarse de que haya al menos 1 columna
+
+	    int contador = 0;
+	    for (VBox bloque : bloquesJuegos) {
+	        filaActual.getChildren().add(bloque);
+	        contador++;
+
+	        // Si hemos llegado al número de columnas, crear una nueva fila
+	        if (contador % numColumns == 0) {
+	            contenedorJuegos.getChildren().add(filaActual);
+	            filaActual = new HBox();
+	            filaActual.setSpacing(30);
+	            filaActual.setAlignment(Pos.CENTER);
+	        }
+	    }
+
+	    // Añadir cualquier fila restante si no está vacía
+	    if (!filaActual.getChildren().isEmpty()) {
+	        contenedorJuegos.getChildren().add(filaActual);
+	    }
+	}
+
 
 	private VBox crearBloqueVideojuego(Game juego) {
-		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/GameItemCuadricula.fxml"));
-			VBox gameItem = loader.load();
+	    try {
+	        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/GameItemCuadricula.fxml"));
+	        VBox gameItem = loader.load();
 
-			// Obtener el controlador del FXML
-			GameItemCuadriculaController controller = loader.getController();
-			controller.setGameData(juego);
-			controller.setGamesController(this);
+	        // Obtener el controlador del FXML
+	        GameItemCuadriculaController controller = loader.getController();
+	        controller.setGameData(juego);
+	        controller.setGamesController(this);
 
-			return gameItem;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return new VBox(new Label("Error cargando juego"));
-		}
+	        // Ajustar el ancho dinámicamente según el tamaño de la ventana
+	        gameItem.setMaxWidth(Double.MAX_VALUE); // Permitir que se expanda hasta el máximo ancho posible
+	        gameItem.setMinWidth(200); // Establecer el ancho mínimo
+
+	        // Utilizar bindings para ajustar el tamaño al contenedor
+	        gameItem.prefWidthProperty().bind(contenedorJuegos.widthProperty().divide(3).subtract(10)); // Divide el contenedor en 3 columnas con espaciado
+
+	        // Asegurar que las imágenes se ajusten de forma responsiva
+	        ImageView imageView = controller.getImageView(); // Asumiendo que tienes un método para obtener la imagen
+	        imageView.fitWidthProperty().bind(gameItem.widthProperty()); // Ajusta el ancho de la imagen al ancho del VBox
+
+	        return gameItem;
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return new VBox(new Label("Error cargando juego"));
+	    }
 	}
+
+
 
 	private HBox crearFilaVideojuego(Game juego) {
 		try {

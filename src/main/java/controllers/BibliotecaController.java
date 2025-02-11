@@ -158,54 +158,39 @@ public class BibliotecaController {
 		borderPane.getStylesheets().addAll(getClass().getResource("/styles/styleBiblioteca.css").toExternalForm(),
 				getClass().getResource("/styles/styleTopBar.css").toExternalForm());
 	}
-	/**
-	 * Método que recopila todos los hoverEffect
-	 */
-	public void hoverEffect() {
-		UtilsViews.hoverEffectButton(btnMinimizar, "#2a3b47", "#192229");
-		UtilsViews.hoverEffectButton(btnMaximizar, "#2a3b47", "#192229");
-		UtilsViews.hoverEffectButton(btnCerrar, "#c63637", "#192229");
-		UtilsViews.hoverEffectButton(btnBiblioteca, "#415A6C", "#212E36");
-		UtilsViews.hoverEffectButton(btnBuscarJuegos, "#415A6C", "#212E36");
-		UtilsViews.hoverEffectButton(btnCerrarSesion, "#415A6C", "#212E36");
-		UtilsViews.hoverEffectButton(btnRecomendaciones, "#415A6C", "#212E36");
-		
-		
+	
+	  /**
+     * Método que recopila todos los hoverEffects
+     */
+    public void hoverEffect() {
+        // Aplicamos hover a los botones usando métodos del archivo UtilsViews
+        UtilsViews.hoverEffectButton(btnMinimizar, "#2a3b47", "#192229");
+        UtilsViews.hoverEffectButton(btnMaximizar, "#2a3b47", "#192229");
+        UtilsViews.hoverEffectButton(btnCerrar, "#c63637", "#192229");
+        UtilsViews.hoverEffectButton(btnBiblioteca, "#415A6C", "#212E36");
+        UtilsViews.hoverEffectButton(btnBuscarJuegos, "#415A6C", "#212E36");
+        UtilsViews.hoverEffectButton(btnCerrarSesion, "#415A6C", "#212E36");
+        UtilsViews.hoverEffectButton(btnRecomendaciones, "#415A6C", "#212E36");
 
-	    // Hover normal, pero solo si el botón NO está activo
-	    btnBiblioteca.setOnMouseEntered(e -> {
-	        if (!btnBiblioteca.getStyleClass().contains("btn-activo")) {
-	            btnBiblioteca.setStyle("-fx-background-color: #212E36;");
-	        }
-	    });
-	    btnBiblioteca.setOnMouseExited(e -> {
-	        if (!btnBiblioteca.getStyleClass().contains("btn-activo")) {
-	            btnBiblioteca.setStyle("-fx-background-color: transparent;");
-	        }
-	    });
+        // Hover para botones con un estado activo, asegurando que no interfiera con el hover
+        configureHoverForButton(btnBiblioteca);
+        configureHoverForButton(btnBuscarJuegos);
+        configureHoverForButton(btnRecomendaciones);
+    }
 
-	    btnBuscarJuegos.setOnMouseEntered(e -> {
-	        if (!btnBuscarJuegos.getStyleClass().contains("btn-activo")) {
-	            btnBuscarJuegos.setStyle("-fx-background-color: #212E36;");
-	        }
-	    });
-	    btnBuscarJuegos.setOnMouseExited(e -> {
-	        if (!btnBuscarJuegos.getStyleClass().contains("btn-activo")) {
-	            btnBuscarJuegos.setStyle("-fx-background-color: transparent;");
-	        }
-	    });
-
-	    btnRecomendaciones.setOnMouseEntered(e -> {
-	        if (!btnRecomendaciones.getStyleClass().contains("btn-activo")) {
-	            btnRecomendaciones.setStyle("-fx-background-color: #212E36;");
-	        }
-	    });
-	    btnRecomendaciones.setOnMouseExited(e -> {
-	        if (!btnRecomendaciones.getStyleClass().contains("btn-activo")) {
-	            btnRecomendaciones.setStyle("-fx-background-color: transparent;");
-	        }
-	    });
-	}
+    private void configureHoverForButton(Button button) {
+        // Aplicamos el efecto hover manualmente solo si el botón NO está activo
+        button.setOnMouseEntered(e -> {
+            if (!button.getStyleClass().contains("btn-activo")) {
+                button.setStyle("-fx-background-color: #212E36;");
+            }
+        });
+        button.setOnMouseExited(e -> {
+            if (!button.getStyleClass().contains("btn-activo")) {
+                button.setStyle("-fx-background-color: transparent;");
+            }
+        });
+    }
 
 	/**
 	 * Método que controla la navegación entre ventanas
