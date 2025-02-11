@@ -4,11 +4,14 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER_LEFT" onMouseClicked="#showGameDetails" spacing="10" style="-fx-background-color: #212E36; -fx-border-radius: 20px;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.GameItemCuadriculaController">
+<VBox fx:id="mainBox" alignment="CENTER_LEFT" onMouseClicked="#showGameDetails" spacing="10" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.GameItemCuadriculaController">
 
     <!-- Imagen del juego -->
     <ImageView fx:id="gameImage" fitHeight="200.0" fitWidth="320.0" />
@@ -20,22 +23,42 @@
       </opaqueInsets>
       <padding>
          <Insets left="10.0" />
-      </padding></HBox>
+      </padding>
+    </HBox>
     
     <!-- Nombre del juego -->
-    <Label fx:id="gameTitle" style="-fx-text-fill: FFFFFF;">
+    <Label fx:id="gameTitle">
       <font>
          <Font size="20.0" />
       </font>
+      <padding>
+         <Insets left="10.0" />
+      </padding>
     </Label>
-   <HBox>
+   <HBox />
+   <GridPane>
+     <columnConstraints>
+       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+       <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+     </columnConstraints>
+     <rowConstraints>
+       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+     </rowConstraints>
       <children>
           
           <!-- Rating del juego -->
-          <Label fx:id="gameRating" style="-fx-text-fill: #52A5E0;" />
-         <ImageView fx:id="addButton" fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
+          <Label fx:id="gameRating">
+            <GridPane.margin>
+               <Insets bottom="25.0" left="10.0" />
+            </GridPane.margin>
+          </Label>
+         <ImageView fx:id="addButton" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+            <GridPane.margin>
+               <Insets bottom="25.0" right="10.0" />
+            </GridPane.margin>
+         </ImageView>
       </children>
-   </HBox>
+   </GridPane>
    <cursor>
       <Cursor fx:constant="HAND" />
    </cursor>

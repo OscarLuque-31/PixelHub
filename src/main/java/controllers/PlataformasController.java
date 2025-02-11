@@ -23,7 +23,7 @@ public class PlataformasController {
 		for(String name:plataformas) {
 			Label label = new Label(name);
 			
-			label.setStyle("-fx-text-fill: FFFFFF");//Estilo del texto
+			label.setStyle("-fx-text-fill: FFFFFF");
 			
 			platforms.getChildren().add(label);
 		}
@@ -45,6 +45,8 @@ public class PlataformasController {
 			try {
 				image.setImage(new Image(getClass().getResource("/images/" + getImage(name) + ".png").toExternalForm()));
 				
+				image.setFitWidth(20);
+		        image.setFitHeight(20);
 				platforms.getChildren().add(image);
 				contadorPlataformas++;
 			} catch (Exception e) {
