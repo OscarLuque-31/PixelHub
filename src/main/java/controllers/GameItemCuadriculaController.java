@@ -7,7 +7,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.SVGPath;
 import models.Game;
 import utils.APIUtils;
 
@@ -17,16 +19,18 @@ public class GameItemCuadriculaController {
     @FXML private HBox gamePlatforms;
     @FXML private Label gameTitle;
     @FXML private Label gameRating;
+    @FXML private ImageView addButton;
+    @FXML private VBox mainBox;
     
     private int gameId;
     private BuscarJuegosController buscarJuegosController;
 
     public void setGameData(Game game) {
+    	mainBox.getStylesheets().add(getClass().getResource("/styles/styleGameItemCuadricula.css").toExternalForm());
+    	
     	gameId = game.getId();
         gameTitle.setText(game.getName());
-        
         gameRating.setText("⭐ " + game.getRating());
-        
         gamePlatforms.getChildren().add(crearBloquePlataformas(game));
 
         try {
@@ -34,13 +38,25 @@ public class GameItemCuadriculaController {
         } catch (Exception e) {
             gameImage.setImage(new Image(getClass().getResource("/images/error.png").toExternalForm()));
         }
+        gameImage.setPreserveRatio(false);
+        gameImage.setSmooth(true);
+        gameImage.setCache(true);
 
+        double width = gameImage.getFitWidth();
+        double height = gameImage.getFitHeight();
+
+        // Crear un clip con una ruta SVG para redondear solo las esquinas superiores
+        SVGPath clip = new SVGPath();
+        clip.setContent("M0," + 15 + " " + 
+                        "Q0,0 " + 15 + ",0 " + 
+                        "L" + (width - 15) + ",0 " +
+                        "Q" + width + ",0 " + width + "," + 15 + 
+                        "L" + width + "," + height + 
+                        "L0," + height + "Z");
+
+        gameImage.setClip(clip);
         
-//        gameImage.setFitWidth(300); // Ancho fijo
-//        gameImage.setFitHeight(200); // Alto fijo
-        gameImage.setPreserveRatio(false); // Evita que la imagen se ajuste al tamaño cambiando su relación de aspecto
-        gameImage.setSmooth(true); // Suaviza la imagen
-        gameImage.setCache(true);  // Optimiza la carga
+        addButton.setImage(new Image(getClass().getResource("/images/CirculoMas.png").toExternalForm()));
     }
     
     private HBox crearBloquePlataformas(Game game) {

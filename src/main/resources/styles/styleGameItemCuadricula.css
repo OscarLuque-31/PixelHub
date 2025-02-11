@@ -1,32 +1,37 @@
-/* Estilos para el VBox principal */
-.vbox-container {
-    -fx-alignment: center-left;
-    -fx-spacing: 10;
+@import url('https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=Tilt+Neon&family=Tilt+Warp&display=swap');
+
+/* Estilos para el contenedor principal */
+#mainBox {
     -fx-background-color: #212E36;
-    -fx-border-radius: 20px;
+    -fx-background-radius: 15px;
+    -fx-cursor: hand;
 }
 
-/* Estilos para la imagen del juego */
-#gameImage {
-    -fx-fit-height: 200.0;
-    -fx-fit-width: 320.0;
+/* Estilos para Label del título del juego */
+#gameTitle {
+    -fx-text-fill: #FFFFFF;
+    -fx-font-family: "Tilt Neon";
+    -fx-font-size: 20.0px;
+    -fx-padding: 0 0 0 10.0px;
 }
 
-/* Estilos para el HBox de plataformas */
+/* Estilos para HBox de plataformas */
 #gamePlatforms {
     -fx-pref-height: 0.0;
     -fx-pref-width: 200.0;
-    -fx-padding: 0 0 0 10px; /* left padding */
-}
-
-/* Estilos para el título del juego */
-#gameTitle {
-    -fx-text-fill: #FFFFFF;
-    -fx-font-size: 20.0;
+    -fx-padding: 0 0 0 10.0px;
 }
 
 /* Estilos para el rating del juego */
 #gameRating {
     -fx-text-fill: #52A5E0;
-    -fx-cursor: hand; /* Cursor de mano */
+    -fx-font-family: "Tilt Neon";
+    -fx-margin: 0 0 25.0px 10.0px;
+}
+
+/* Estilos para el botón de agregar */
+#addButton {
+    -fx-fit-height: 20.0px;
+    -fx-fit-width: 20.0px;
+    -fx-margin: 0 10.0px 25.0px 0;
 }
