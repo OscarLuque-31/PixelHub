@@ -3,6 +3,7 @@ package controllers;
 import java.util.List;
 
 import dao.UsuarioDaoImpl;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -98,6 +99,19 @@ public class LoginController {
 			primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/logoPixelHub.png")));
 
 
+			// Tarea en segundo plano para inicializar Hibernate
+			Task<Void> initTask = new Task<>() {
+				@Override
+				protected Void call() {
+					HibernateUtil.getSession();  // Forzamos la carga de Hibernate
+					return null;
+				}
+			};
+
+			// Ejecutar la tarea en un hilo separado para evitar que la interfaz se congele
+			new Thread(initTask).start();
+
+
 			// Configuración del Stage
 			primaryStage.setTitle("PixelHub");
 			primaryStage.initStyle(StageStyle.TRANSPARENT);
@@ -157,8 +171,8 @@ public class LoginController {
 			if (validarCampos(username, password)) {
 
 				Usuario usuario = devolverUsuario(username);
-				
-				
+
+
 
 				try {
 
@@ -169,7 +183,7 @@ public class LoginController {
 					} else {						
 						UtilsViews.mostrarDialogo(Alert.AlertType.INFORMATION,getClass(),"No se ha encontrado al usuario","Por favor, compruebe que los datos son correctos");
 					}
-					
+
 				} catch (IllegalArgumentException e) {	
 					UtilsViews.mostrarDialogo(Alert.AlertType.INFORMATION,getClass(),"No se ha encontrado al usuario","Por favor, compruebe que los datos son correctos");
 				}

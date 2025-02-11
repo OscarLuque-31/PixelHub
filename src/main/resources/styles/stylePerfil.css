@@ -1,0 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=Tilt+Neon&family=Tilt+Warp&display=swap'); 
+
+
+/* Estilos generales para el contenedor VBox */
+#vboxContainer {
+    -fx-background-color: #212E36; /* Fondo de color suave */
+    -fx-padding: 20px;
+    -fx-spacing: 15px; /* Espaciado entre los elementos */
+}
+
+.vboxContainer {
+    -fx-background-color: #212E36; /* Fondo de color suave */
+    -fx-padding: 20px;
+    -fx-spacing: 15px; /* Espaciado entre los elementos */
+}
+
+
+#lblPerfil {
+	-fx-text-fill: #52A5E0;
+	-fx-font-family: "Silkscreen";
+	-fx-font-size: 30;
+}
+
+#lblPreferencias{
+	-fx-text-fill: #52A5E0;
+	-fx-font-family: "Silkscreen";
+	-fx-font-size: 20;
+}
+
+.lblGeneroPlataforma{
+	-fx-text-fill: #52A5E0;
+	-fx-font-family: "Silkscreen";
+	-fx-font-size: 18;
+}
+
+.lblsEspecificaciones{
+	-fx-text-fill: #52A5E0;
+	-fx-font-family: "Tilt Warp";
+	-fx-font-size: 18;
+}
+
+.txtFDatos{
+	-fx-text-fill: #52A5E0;
+	-fx-font-family: "Tilt Neon";
+	-fx-font-size: 16;
+	-fx-background-radius: 5;
+}
+

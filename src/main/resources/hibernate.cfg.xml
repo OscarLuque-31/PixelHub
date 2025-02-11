@@ -2,7 +2,9 @@
 
 <hibernate-configuration>
     <session-factory>
+
         <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+
         <property name="hibernate.connection.url">
             jdbc:mysql://root:xtDqfqdGpFIFhvhVqQvMroGAQiIbqsoU@viaduct.proxy.rlwy.net:59483/railway</property>
         <property name="hibernate.connection.username">root</property>
