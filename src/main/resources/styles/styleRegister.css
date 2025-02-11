@@ -1,4 +1,4 @@
-	@import url('https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=Tilt+Neon&family=Tilt+Warp&display=swap'); 
+@import url('https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=Tilt+Neon&family=Tilt+Warp&display=swap'); 
 
 .root{
 	-fx-background-color: #192229;
@@ -26,6 +26,19 @@
 #btnRegister{
 	-fx-background-color: #52A5E0;
 	-fx-text-fill: white;
+	-fx-font-family: "Tilt Warp";
+	-fx-font-size: 16;
+}
+
+#btnCancel{
+	-fx-background-color: #FFFFFF;
+	-fx-text-fill: #52A5E0;
+	-fx-font-family: "Tilt Warp";
+	-fx-font-size: 16;
+}
+
+#btnCancel:hover{
+	-fx-background-color: #E8EFF3;
 }
 
 .txtField{

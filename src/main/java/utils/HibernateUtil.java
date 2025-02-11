@@ -5,52 +5,35 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.context.internal.ThreadLocalSessionContext;
 
 public class HibernateUtil {
+    private static SessionFactory sessionFactory;
 
-	private static SessionFactory sessionFactory;
-	private static Session session;
-	
-	/**
-	 * M�todo que devuelve el objeto Session.
-	 * @return
-	 * <ul>
-	 * <li>Si la sesi�n no est� creada: la crea y la abre.</li> 
-	 * <li>Si la sesi�n est� creada: simplemente devuelve la sesi�n abierta.</li>
-	 * </ul>
-	 */
-	public static Session getSession() {
-		if (sessionFactory == null) {
-			session = getSessionFactory().openSession();
-		}
-				
-		return session;
-	}
+    // Inicializa Hibernate al cargar la clase
+    static {
+        try {
+            StandardServiceRegistry registry = new StandardServiceRegistryBuilder().configure().build();
+            sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
+        } catch (Exception ex) {
+            System.err.println("Error al iniciar Hibernate: " + ex);
+            throw new ExceptionInInitializerError(ex);
+        }
+    }
 
-	/**
-	 * M�todo que cierra el objeto Session de HibernateUtil y el SessionFactory
-	 */
-	public static void closeSession() {
-		Session session = ThreadLocalSessionContext.unbind(sessionFactory);
-		if (session != null) {
-			session.close();
-		}
-		closeSessionFactory();
-	}
-	
-	private static SessionFactory getSessionFactory() {
-		if (sessionFactory == null) {
-			StandardServiceRegistry sr = new StandardServiceRegistryBuilder().configure().build();
-			sessionFactory = new MetadataSources(sr).buildMetadata().buildSessionFactory();
-		}
-		return sessionFactory;
-	}
+    /**
+     * Devuelve una nueva sesión de Hibernate.
+     * @return Objeto Session.
+     */
+    public static Session getSession() {
+        return sessionFactory.openSession();
+    }
 
-	private static void closeSessionFactory() {
-		if ((sessionFactory != null) && (sessionFactory.isClosed() == false)) {
-			sessionFactory.close();
-		}
-	}
-
+    /**
+     * Cierra el SessionFactory.
+     */
+    public static void closeSessionFactory() {
+        if (sessionFactory != null && !sessionFactory.isClosed()) {
+            sessionFactory.close();
+        }
+    }
 }
