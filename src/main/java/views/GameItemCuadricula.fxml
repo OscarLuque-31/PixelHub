@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER_LEFT" spacing="10" style="-fx-background-color: #212E36; -fx-border-radius: 20px;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.GameItemCuadriculaController">
+<VBox alignment="CENTER_LEFT" onMouseClicked="#showGameDetails" spacing="10" style="-fx-background-color: #212E36; -fx-border-radius: 20px;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.GameItemCuadriculaController">
 
     <!-- Imagen del juego -->
     <ImageView fx:id="gameImage" fitHeight="200.0" fitWidth="320.0" />
@@ -28,9 +28,14 @@
          <Font size="20.0" />
       </font>
     </Label>
-    
-    <!-- Rating del juego -->
-    <Label fx:id="gameRating" style="-fx-text-fill: #52A5E0;" />
+   <HBox>
+      <children>
+          
+          <!-- Rating del juego -->
+          <Label fx:id="gameRating" style="-fx-text-fill: #52A5E0;" />
+         <ImageView fx:id="addButton" fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
+      </children>
+   </HBox>
    <cursor>
       <Cursor fx:constant="HAND" />
    </cursor>

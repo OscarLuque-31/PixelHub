@@ -5,6 +5,7 @@ import java.util.List;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -110,11 +111,9 @@ public class BibliotecaController {
 	@FXML
 	private ScrollPane scrollPane;
 
-	private Stage stage;
+	private static Stage stage;
 
 	private static Usuario usuario;
-
-	private boolean vistaLista;
 
 	public void setUsuario(Usuario usuario) {
 		BibliotecaController.usuario = usuario;
@@ -123,14 +122,13 @@ public class BibliotecaController {
 	public static Usuario getUsuario() {
 		return usuario;
 	}
-
-	public void setVistaLista(Boolean value) {
-		this.vistaLista = value;
+	
+	public static Stage getStage() {
+		return stage;
 	}
 
 	public void setStage(Stage stage) {
 		this.stage = stage;
-		this.vistaLista = false;
 
 		UtilsViews.funBtnsBar(btnMinimizar, btnMaximizar, btnCerrar, dragArea, stage);
 		//Cargar el CSS de la ventana de login
@@ -143,8 +141,6 @@ public class BibliotecaController {
 		//Por defecto estará en biblioteca
 		cambiarPestana(btnBiblioteca,"/views/BibliotecaJuegos.fxml");
 		navegacionEntrePestañas();
-		//Obtener y cargar los juegos
-//		showGames(stage);
 
 		// Usa el objeto usuario solo si ya ha sido inicializado
 		if (usuario != null) {
@@ -277,86 +273,6 @@ public class BibliotecaController {
 		iconMaximizar.setImage(new Image(getClass().getResourceAsStream("/images/iconoMaximizar.png")));
 		iconCerrar.setImage(new Image(getClass().getResourceAsStream("/images/iconoCerrar.png")));
 		imgUsuario.setImage(new Image(getClass().getResourceAsStream("/images/iconoUsuario.png")));
-	}
-
-	/**
-	 * Método que obtiene los juegos de la API y los muestra
-	 */
-	private void showGames(Stage stage) {
-		scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-		scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-
-		try {
-			List<Game> listaJuegos = APIUtils.getGames();
-			contenedorJuegos.getChildren().clear();
-
-			if (!vistaLista) {
-				HBox filaActual = new HBox();
-				filaActual.setSpacing(20);
-				filaActual.setAlignment(Pos.CENTER); 
-
-				int juegosPorFila = stage.isMaximized() ? 4 : 3;
-
-				int contador = 0;
-				for (Game juego:listaJuegos) {
-					VBox bloqueJuego = crearBloqueVideojuego(juego);
-					bloqueJuego.setMaxWidth(Double.MAX_VALUE);
-					filaActual.getChildren().add(bloqueJuego);
-					contador++;
-
-					if (contador % juegosPorFila == 0) {
-						contenedorJuegos.setSpacing(20);
-						contenedorJuegos.setAlignment(Pos.CENTER); 
-						contenedorJuegos.getChildren().add(filaActual);
-
-						filaActual = new HBox();
-						filaActual.setSpacing(20);
-						filaActual.setAlignment(Pos.CENTER); 
-					}
-				}
-				if (!filaActual.getChildren().isEmpty()) {
-					contenedorJuegos.getChildren().add(filaActual);
-				} 
-			}else {
-				for (Game juego:listaJuegos) {
-					contenedorJuegos.getChildren().add(crearFilaVideojuego(juego));
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	private VBox crearBloqueVideojuego(Game juego) {
-		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/GameItemCuadricula.fxml"));
-			VBox gameItem = loader.load();
-
-			// Obtener el controlador del FXML
-			GameItemCuadriculaController controller = loader.getController();
-			controller.setGameData(juego); // Método para asignar los datos del juego
-			controller.setGamesController(this);
-
-			return gameItem;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return new VBox(new Label("Error cargando juego"));
-		}
-	}
-
-	private HBox crearFilaVideojuego(Game juego) {
-		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/GameItemLista.fxml"));
-			HBox gameItem = loader.load();
-
-			GameItemListaController controller = loader.getController();
-			controller.setGameData(juego);
-
-			return gameItem;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return new HBox(new Label("Error cargando juego"));
-		}
 	}
 
 }

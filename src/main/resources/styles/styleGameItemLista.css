@@ -1,0 +1,41 @@
+/* Estilos para el HBox principal */
+.hbox-container {
+    -fx-alignment: center-left;
+    -fx-pref-height: 70.0;
+    -fx-background-color: #212E36;
+    -fx-cursor: hand; /* Cursor de mano */
+}
+
+/* Estilos para la imagen del juego */
+#gameImage {
+    -fx-fit-height: 70.0;
+    -fx-fit-width: 140.0;
+    -fx-pick-on-bounds: true;
+    -fx-preserve-ratio: true;
+    -fx-margin-right: 30px; /* Margen derecho */
+}
+
+/* Estilos para el título del juego */
+#gameTitle {
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 20.0;
+    -fx-min-width: 380.0;
+}
+
+/* Estilos para el HBox de plataformas */
+#gamePlatforms {
+    -fx-alignment: center-left;
+    -fx-min-width: 380.0;
+    -fx-pref-height: 42.0;
+    -fx-pref-width: 275.0;
+    -fx-margin-left: 10px; /* Margen izquierdo */
+    -fx-margin-right: 10px; /* Margen derecho */
+}
+
+/* Estilos para el rating del juego */
+#gameRating {
+    -fx-text-fill: #52A5E0;
+    -fx-font-size: 20.0;
+    -fx-alignment: center-right;
+    -fx-content-display: right;
+}

@@ -19,7 +19,7 @@ public class GameItemCuadriculaController {
     @FXML private Label gameRating;
     
     private int gameId;
-    private BibliotecaController bibliotecaController;
+    private BuscarJuegosController buscarJuegosController;
 
     public void setGameData(Game game) {
     	gameId = game.getId();
@@ -59,20 +59,20 @@ public class GameItemCuadriculaController {
         }
     }
     
-    public void setGamesController(BibliotecaController controller) {
-        this.bibliotecaController = controller;
+    public void setGamesController(BuscarJuegosController controller) {
+        this.buscarJuegosController = controller;
     }
     
-//    @FXML
-//    void showGameDetails(MouseEvent event) {
-//    	if (bibliotecaController != null) {
-//            try {
-//                Game game = APIUtils.getGameDetails(gameId);
-//                bibliotecaController.mostrarDetallesJuego(game);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
-//    }
+    @FXML
+    void showGameDetails(MouseEvent event) {
+    	if (buscarJuegosController != null) {
+            try {
+                Game game = APIUtils.getGameDetails(gameId);
+                buscarJuegosController.mostrarDetallesJuego(game);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
     
 }

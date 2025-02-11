@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
@@ -11,7 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.BuscarJuegosController">
+<BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.BuscarJuegosController">
    <top>
       <GridPane prefWidth="1004.0" BorderPane.alignment="CENTER">
          <columnConstraints>
@@ -25,14 +26,26 @@
             <RowConstraints prefHeight="50.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <ImageView fx:id="imgLupa" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="imgLupa" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#buscarJuegos" pickOnBounds="true" preserveRatio="true">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></ImageView>
             <TextField fx:id="textFieldBusqueda" minHeight="-Infinity" minWidth="300.0" prefHeight="40.0" prefWidth="300.0" promptText="Buscar..." GridPane.columnIndex="1">
                <GridPane.margin>
                   <Insets left="10.0" right="10.0" />
                </GridPane.margin></TextField>
-         <ComboBox fx:id="comboBoxOrdenar" prefHeight="40.0" prefWidth="150.0" promptText="Ordenar" styleClass="comboBox" GridPane.columnIndex="2" />
-<ComboBox fx:id="comboBoxPlataforma" prefHeight="40.0" prefWidth="150.0" promptText="Plataforma" styleClass="comboBox" GridPane.columnIndex="3" />
-<ComboBox fx:id="comboBoxGenero" prefHeight="40.0" prefWidth="150.0" promptText="Género" styleClass="comboBox" GridPane.columnIndex="4" />
+         <ComboBox fx:id="comboBoxOrdenar" prefHeight="40.0" prefWidth="150.0" promptText="Ordenar" styleClass="comboBox" GridPane.columnIndex="2">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></ComboBox>
+<ComboBox fx:id="comboBoxPlataforma" prefHeight="40.0" prefWidth="150.0" promptText="Plataforma" styleClass="comboBox" GridPane.columnIndex="3">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></ComboBox>
+<ComboBox fx:id="comboBoxGenero" prefHeight="40.0" prefWidth="150.0" promptText="Género" styleClass="comboBox" GridPane.columnIndex="4">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></ComboBox>
          </children>
          <BorderPane.margin>
             <Insets />
