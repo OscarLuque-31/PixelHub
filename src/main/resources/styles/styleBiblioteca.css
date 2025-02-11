@@ -52,28 +52,50 @@
 }
 
 
-
-.combo-box .text-field{
-	-fx-text-fill: #FFFFFF;
-	-fx-font-family: "Tilt Warp";
+/* Estilo del TextField dentro del ComboBox */
+.combo-box .text-field {
+    -fx-background-color: #2A3B47; /* Fondo del text-field */
+    -fx-text-fill: #FFFFFF; /* Color del texto */
+    -fx-font-family: "Tilt Warp"; /* Fuente personalizada */
+    -fx-font-size: 16; /* Tamaño del texto */
 }
 
-.combo-box .list-cell {
-    -fx-text-fill: #FFFFFF;
-	-fx-font-family: "Tilt Warp";
+/* Estilo general del ComboBox */
+.comboBox {
+    -fx-background-color: #2A3B47; /* Fondo del ComboBox */
+    -fx-text-fill: #FFFFFF; /* Color del texto */
+    -fx-font-family: "Tilt Warp"; /* Fuente personalizada */
+    -fx-font-size: 16; /* Tamaño del texto */
+    -fx-background-radius: 5; /* Bordes redondeados */
 }
 
-.comboBox{
-	-fx-background-color: #2A3B47;
-	-fx-text-fill: #FFFFFF;
-	-fx-font-family: "Tilt Warp";
-	-fx-font-size: 16;
-	-fx-background-radius: 5;
-}
-
-/* Estilo de la flecha */
+/* Estilo de la flecha del ComboBox */
 .comboBox .arrow {
-    -fx-background-color: white; /* Color de la flecha */
+    -fx-background-color: #FFFFFF; /* Color de la flecha */
+    -fx-border-color: transparent; /* Eliminar el borde por defecto */
 }
 
+/* Cambiar el fondo de la lista desplegada */
+.combo-box .list-view {
+    -fx-background-color: #2A3B47; /* Fondo de la lista desplegada */
+    -fx-border-color: #2A3B47; /* Color del borde */
+}
+
+/* Cambiar el fondo de las celdas de la lista (cuando no se seleccionan) */
+.combo-box .list-cell {
+    -fx-text-fill: #FFFFFF; /* Color del texto de las celdas */
+    -fx-font-family: "Tilt Warp"; /* Fuente personalizada */
+    -fx-background-color: #2A3B47; /* Fondo de la celda no seleccionada */
+}
+
+/* Estilo cuando el ratón pasa sobre una celda */
+.combo-box .list-cell:hover {
+    -fx-background-color: #4A6274; /* Fondo cuando el ratón pasa sobre la celda */
+}
+
+/* Cambiar el fondo de la celda seleccionada */
+.combo-box .list-cell:selected {
+    -fx-background-color: #2A3B47; /* Fondo de la celda seleccionada */
+    -fx-text-fill: #FFFFFF; /* Color del texto en la celda seleccionada */
+}
 
