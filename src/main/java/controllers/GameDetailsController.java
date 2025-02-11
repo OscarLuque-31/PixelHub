@@ -1,6 +1,7 @@
 package controllers;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.jsoup.Jsoup;
 
@@ -40,7 +41,7 @@ public class GameDetailsController {
     private BuscarJuegosController buscarJuegosController;
     private int gameId;
     
-	public void setGameDetails(Game game) {
+	public void setGameDetails(Game game, List<String> screenshots, List<Game> dlcs) {
 		gameTitle.setText(game.getName());
 		descriptionText.setText(extractSpanishDescription(game.getDescription()));
         gameRating.setText("⭐ " + game.getRating());
