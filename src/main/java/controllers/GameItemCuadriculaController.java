@@ -20,6 +20,10 @@ public class GameItemCuadriculaController {
     
     private int gameId;
     private BuscarJuegosController buscarJuegosController;
+    
+    public ImageView getImageView() {
+		return this.gameImage;
+	}
 
     public void setGameData(Game game) {
     	gameId = game.getId();
@@ -74,5 +78,7 @@ public class GameItemCuadriculaController {
             }
         }
     }
+
+	
     
 }
