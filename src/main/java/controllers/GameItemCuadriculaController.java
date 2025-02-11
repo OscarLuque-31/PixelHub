@@ -1,5 +1,7 @@
 package controllers;
 
+import java.util.List;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
@@ -88,7 +90,9 @@ public class GameItemCuadriculaController {
     	if (buscarJuegosController != null) {
             try {
                 Game game = APIUtils.getGameDetails(gameId);
-                buscarJuegosController.mostrarDetallesJuego(game);
+                List<String> screenshots = APIUtils.getGameScreenshots(gameId);
+                List<Game> dlcs = APIUtils.getGameDLCs(gameId);
+                buscarJuegosController.mostrarDetallesJuego(game, screenshots, dlcs);
             } catch (Exception e) {
                 e.printStackTrace();
             }

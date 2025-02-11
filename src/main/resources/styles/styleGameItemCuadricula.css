@@ -25,6 +25,7 @@
 /* Estilos para el rating del juego */
 #gameRating {
     -fx-text-fill: #52A5E0;
+    -fx-font-size: 14px;
     -fx-font-family: "Tilt Neon";
     -fx-margin: 0 0 25.0px 10.0px;
 }
