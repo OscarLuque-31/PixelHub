@@ -8,6 +8,7 @@ import org.jsoup.Jsoup;
 import com.google.gson.Gson;
 
 import configuration.Config;
+import javafx.scene.control.TextField;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -19,13 +20,18 @@ public class APIUtils {
 	
 	/**
 	 * Hace una llamada a la API esperando una lista de juegos
+	 * @param title 
+	 * @param genre 
+	 * @param platform 
 	 * 
 	 * @return Una lista de los juegos que devuelve la API
 	 * @throws Exception
 	 */
-	public static List<Game> getGames() throws Exception {
+	public static List<Game> getGames(String title, Integer platform, Integer genre) throws Exception {
+		String plataforma = platform == null ? "" : Config.API_PLATFORM + String.valueOf(platform);
+		String genero = genre == null ? "" : Config.API_GENRE + String.valueOf(genre);
 		//Url de llamada a la API
-		String url = Config.API_URL + Config.API_KEY + Config.API_SEARCH + Config.API_PAGE_SIZE + Config.API_PAGE + 1;
+		String url = Config.API_URL + Config.API_KEY + Config.API_SEARCH + title + plataforma + genero + Config.API_PAGE_SIZE + Config.API_PAGE + 1;
 
 		Request request = new Request.Builder()
 				.url(url)

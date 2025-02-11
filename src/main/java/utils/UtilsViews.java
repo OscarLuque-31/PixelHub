@@ -1,7 +1,11 @@
 package utils;
 
 import java.io.IOException;
+import java.util.List;
 
+import controllers.BibliotecaController;
+import controllers.GameItemCuadriculaController;
+import controllers.GameItemListaController;
 import javafx.animation.FadeTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -17,6 +21,7 @@ import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -28,6 +33,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
+import models.Game;
 
 public class UtilsViews {
 
@@ -75,15 +81,15 @@ public class UtilsViews {
 	 * @param hexColorOnExit
 	 */
 	public static void hoverEffectButton(Button btn, String hexColorOnHover, String hexColorOnExit) {
-	    btn.setOnMouseEntered((MouseEvent event) -> {
-	        btn.setStyle("-fx-background-color: " + hexColorOnHover + ";");
-	        btn.setCursor(Cursor.HAND); // Cambiar el cursor a mano
-	    });
+		btn.setOnMouseEntered((MouseEvent event) -> {
+			btn.setStyle("-fx-background-color: " + hexColorOnHover + ";");
+			btn.setCursor(Cursor.HAND); // Cambiar el cursor a mano
+		});
 
-	    btn.setOnMouseExited((MouseEvent event) -> {
-	        btn.setStyle("-fx-background-color: " + hexColorOnExit + ";");
-	        btn.setCursor(Cursor.DEFAULT); // Restaurar el cursor
-	    });
+		btn.setOnMouseExited((MouseEvent event) -> {
+			btn.setStyle("-fx-background-color: " + hexColorOnExit + ";");
+			btn.setCursor(Cursor.DEFAULT); // Restaurar el cursor
+		});
 	}
 
 
@@ -96,16 +102,16 @@ public class UtilsViews {
 	 * @param stage
 	 */
 	public static void funBtnsBar(Button btnMin, Button btnMax, Button btnClose, HBox dragArea, Stage stage) {
-	    btnMin.setOnMouseClicked(event -> stage.setIconified(true));
+		btnMin.setOnMouseClicked(event -> stage.setIconified(true));
 
-	    btnMax.setOnMouseClicked(event -> {
-	        boolean maximized = stage.isMaximized();
-	        stage.setMaximized(!maximized);
-	    });
+		btnMax.setOnMouseClicked(event -> {
+			boolean maximized = stage.isMaximized();
+			stage.setMaximized(!maximized);
+		});
 
-	    btnClose.setOnMouseClicked(event -> stage.close());
-	    
-	    configureDrag(stage, dragArea);
+		btnClose.setOnMouseClicked(event -> stage.close());
+
+		configureDrag(stage, dragArea);
 	}
 
 
@@ -141,39 +147,39 @@ public class UtilsViews {
 	 * @param mensaje
 	 */
 	public static void mostrarDialogo(Alert.AlertType alertType, Class<?> clase, String header, String mensaje) {
-	    // Crear el Alert
-	    Alert alert = new Alert(alertType);
-	    alert.setHeaderText(header); // Encabezado
-	    alert.setContentText(mensaje); // Mensaje
+		// Crear el Alert
+		Alert alert = new Alert(alertType);
+		alert.setHeaderText(header); // Encabezado
+		alert.setContentText(mensaje); // Mensaje
 
-	    // Personalizar el DialogPane
-	    DialogPane dialogPane = alert.getDialogPane();
-	    dialogPane.getStylesheets().add(clase.getResource("/styles/styleDialog.css").toExternalForm());
-	    dialogPane.getStyleClass().add("dialog-pane");
+		// Personalizar el DialogPane
+		DialogPane dialogPane = alert.getDialogPane();
+		dialogPane.getStylesheets().add(clase.getResource("/styles/styleDialog.css").toExternalForm());
+		dialogPane.getStyleClass().add("dialog-pane");
 
-	    // Hacer transparente el Stage
-	    Stage stage = (Stage) dialogPane.getScene().getWindow();
-	    stage.initStyle(StageStyle.TRANSPARENT); // Hace el Stage transparente
+		// Hacer transparente el Stage
+		Stage stage = (Stage) dialogPane.getScene().getWindow();
+		stage.initStyle(StageStyle.TRANSPARENT); // Hace el Stage transparente
 
-	    // Ajustar el fondo del Scene para que también sea transparente
-	    dialogPane.getScene().setFill(Color.TRANSPARENT);
+		// Ajustar el fondo del Scene para que también sea transparente
+		dialogPane.getScene().setFill(Color.TRANSPARENT);
 
-	    // Configurar ícono y título (opcional)
-	    stage.getIcons().add(new Image(clase.getResourceAsStream("/images/logoPixelHub.png")));
-	    stage.setTitle(null);
+		// Configurar ícono y título (opcional)
+		stage.getIcons().add(new Image(clase.getResourceAsStream("/images/logoPixelHub.png")));
+		stage.setTitle(null);
 
-	    // Añadir efecto de desvanecimiento (fade)
-	    FadeTransition fadeIn = new FadeTransition(Duration.seconds(0.5), alert.getDialogPane());
-	    fadeIn.setFromValue(0);
-	    fadeIn.setToValue(1);
-	    fadeIn.play();
+		// Añadir efecto de desvanecimiento (fade)
+		FadeTransition fadeIn = new FadeTransition(Duration.seconds(0.5), alert.getDialogPane());
+		fadeIn.setFromValue(0);
+		fadeIn.setToValue(1);
+		fadeIn.play();
 
-	    // Mostrar el dialogo
-	    alert.showAndWait();
+		// Mostrar el dialogo
+		alert.showAndWait();
 	}
 
-
-
 	
+
+
 
 }

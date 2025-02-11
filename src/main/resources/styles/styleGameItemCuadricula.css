@@ -1,0 +1,32 @@
+/* Estilos para el VBox principal */
+.vbox-container {
+    -fx-alignment: center-left;
+    -fx-spacing: 10;
+    -fx-background-color: #212E36;
+    -fx-border-radius: 20px;
+}
+
+/* Estilos para la imagen del juego */
+#gameImage {
+    -fx-fit-height: 200.0;
+    -fx-fit-width: 320.0;
+}
+
+/* Estilos para el HBox de plataformas */
+#gamePlatforms {
+    -fx-pref-height: 0.0;
+    -fx-pref-width: 200.0;
+    -fx-padding: 0 0 0 10px; /* left padding */
+}
+
+/* Estilos para el título del juego */
+#gameTitle {
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 20.0;
+}
+
+/* Estilos para el rating del juego */
+#gameRating {
+    -fx-text-fill: #52A5E0;
+    -fx-cursor: hand; /* Cursor de mano */
+}

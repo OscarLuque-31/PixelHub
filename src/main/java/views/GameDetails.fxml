@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
+
+<HBox maxHeight="500.0" maxWidth="900.0" minHeight="500.0" minWidth="900.0" prefHeight="500.0" prefWidth="900.0" style="-fx-background-color: #212E36;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.GameDetailsController">
+   <children>
+      <VBox>
+         <children>
+            <ImageView fx:id="arrowBack" fitHeight="50.0" fitWidth="50.0" onMouseClicked="#turnBack" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </VBox>
+      <VBox fx:id="detailsContainer">
+         <children>
+            <HBox>
+               <children>
+                  <ImageView fx:id="gameImage" fitHeight="250.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" />
+                  <VBox>
+                     <children>
+                        <Label fx:id="gameTitle" textFill="WHITE" />
+                        <TextFlow fx:id="gameDescription">
+                           <children>
+                              <Text fx:id="descriptionText" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" />
+                           </children>
+                        </TextFlow>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <HBox maxWidth="850.0" minWidth="850.0" prefWidth="850.0">
+               <children>
+                  <VBox>
+                     <children>
+                        <HBox prefWidth="300.0">
+                           <children>
+                              <HBox fx:id="gamePlatforms" />
+                              <Label fx:id="gameRating" contentDisplay="RIGHT" textFill="#52a5e0" />
+                           </children>
+                        </HBox>
+                        <Label contentDisplay="CENTER" prefHeight="18.0" prefWidth="300.0" text="DLC's" textFill="WHITE" />
+                        <VBox fx:id="gameDLC" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="TOP_RIGHT">
+                     <children>
+                        <HBox alignment="CENTER">
+                           <children>
+                              <ImageView fx:id="previous" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" />
+                              <Label text="Imágenes" textFill="WHITE" />
+                              <ImageView fx:id="next" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </HBox>
+                        <ImageView fx:id="gameScreenshots" fitHeight="150.0" fitWidth="275.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</HBox>
