@@ -193,6 +193,12 @@ public class RegistroController {
 				UsuarioDaoImpl usuarioDao = new UsuarioDaoImpl(sesion);
 				PreferenciasDaoImpl preferenciasDao = new PreferenciasDaoImpl(sesion);
 
+				if (usuarioDao.existeUsuario(txtUsername.getText(), txtEmail.getText())) {
+					UtilsViews.mostrarDialogo(Alert.AlertType.ERROR, getClass(), "Error de Registro",
+							"El nombre de usuario o el correo electrónico ya están en uso.");
+					return false;
+				}
+
 				// Crear el nuevo usuario
 				Usuario newUsuario = new Usuario();
 				newUsuario.setNombre(txtName.getText());
@@ -340,7 +346,6 @@ public class RegistroController {
 		iconMinimizar.setImage(new Image(getClass().getResourceAsStream("/images/iconoMinimizar.png")));
 		iconMaximizar.setImage(new Image(getClass().getResourceAsStream("/images/iconoMaximizar.png")));
 		iconCerrar.setImage(new Image(getClass().getResourceAsStream("/images/iconoCerrar.png")));
-		//		imgFlechitaAtras.setImage(new Image(getClass().getResourceAsStream("/images/flechaAtras.png")));
 	}
 
 }
