@@ -1,6 +1,7 @@
 package controllers;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.jsoup.Jsoup;
 
@@ -24,23 +25,25 @@ import utils.NavigationUtils;
 
 public class GameDetailsController {
 
-	@FXML private ImageView arrowBack;
-	@FXML private VBox detailsContainer;
-	@FXML private VBox gameDLC;
-	@FXML private TextFlow gameDescription;
-	@FXML private Text descriptionText;
-	@FXML private ImageView gameImage;
-	@FXML private HBox gamePlatforms;
-	@FXML private Label gameRating;
-	@FXML private ImageView gameScreenshots;
-	@FXML private Label gameTitle;
-	@FXML private ImageView next;
-	@FXML private ImageView previous;
 
-	private BuscarJuegosController buscarJuegosController;
-	private int gameId;
 
-	public void setGameDetails(Game game) {
+    @FXML private ImageView arrowBack;
+    @FXML private VBox detailsContainer;
+    @FXML private VBox gameDLC;
+    @FXML private TextFlow gameDescription;
+    @FXML private Text descriptionText;
+    @FXML private ImageView gameImage;
+    @FXML private HBox gamePlatforms;
+    @FXML private Label gameRating;
+    @FXML private ImageView gameScreenshots;
+    @FXML private Label gameTitle;
+    @FXML private ImageView next;
+    @FXML private ImageView previous;
+    
+    private BuscarJuegosController buscarJuegosController;
+    private int gameId;
+    
+	public void setGameDetails(Game game, List<String> screenshots, List<Game> dlcs) {
 		gameTitle.setText(game.getName());
 		descriptionText.setText(extractSpanishDescription(game.getDescription()));
 		gameRating.setText("⭐ " + game.getRating());

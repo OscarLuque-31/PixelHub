@@ -40,7 +40,7 @@ public class BuscarJuegosController implements Initializable {
 	private TextField textFieldBusqueda;
 
 	@FXML
-	private ComboBox<?> comboBoxOrdenar;
+	private ComboBox<String> comboBoxOrdenar;
 
 	@FXML
 	private ComboBox<String> comboBoxPlataforma;
@@ -56,6 +56,7 @@ public class BuscarJuegosController implements Initializable {
 
 	private Map<String, Integer> platforms;
 	private Map<String, Integer> genres;
+	private Map<String, String> order;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -65,7 +66,6 @@ public class BuscarJuegosController implements Initializable {
 		setComboContent();
 		// Establecer plataformas y géneros
 		setMapContent();
-
 	}
 
 	
@@ -73,7 +73,8 @@ public class BuscarJuegosController implements Initializable {
 	private void setMapContent() {
 		platforms = new HashMap<>();
 		genres = new HashMap<>();
-
+		order = new HashMap<>();
+		
 		platforms.put("PC", 1);
 		platforms.put("PlayStation", 2);
 		platforms.put("Xbox", 3);
@@ -103,6 +104,14 @@ public class BuscarJuegosController implements Initializable {
 		genres.put("Juegos de mesa", 28);
 		genres.put("Educativo", 34);
 		genres.put("Cartas", 17);
+		
+		order.put("A - Z", "-name");
+		order.put("Z - A", "name");
+		order.put("Newest - Oldest", "-released");
+		order.put("Oldest - Newest", "released");
+		order.put("Best - Worst", "-rating");
+		order.put("Worst - Best", "rating");
+
 	}
 
 	private void setComboContent() {
@@ -113,6 +122,7 @@ public class BuscarJuegosController implements Initializable {
 				"Shooter", "Casual", "Simulación", "Puzzle", "Arcade", 
 				"Plataformas", "Multijugador", "Carreras", "Deportes", 
 				"Lucha", "Familiar", "Juegos de mesa", "Educativo", "Cartas");
+		comboBoxOrdenar.getItems().addAll("A - Z", "Z - A", "Newest - Oldest", "Oldest - Newest", "Best - Worst", "Worst - Best");
 	}
 
 
@@ -124,7 +134,7 @@ public class BuscarJuegosController implements Initializable {
 	}
 
 
-	private void showGames(String title, Integer platform, Integer genre) {
+	private void showGames(String title, Integer platform, Integer genre, String order) {
 	    scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 	    scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
@@ -134,7 +144,7 @@ public class BuscarJuegosController implements Initializable {
 	    // Hilo para obtener los juegos de la API
 	    executor.submit(() -> {
 	        try {
-	            List<Game> listaJuegos = APIUtils.getGames(title, platform, genre);
+	            List<Game> listaJuegos = APIUtils.getGames(title, platform, genre, order);
 
 	            // Crear una lista de tareas para procesar cada juego en paralelo
 	            List<Future<VBox>> futures = listaJuegos.stream()
@@ -225,14 +235,14 @@ public class BuscarJuegosController implements Initializable {
 		}
 	}
 
-	public void mostrarDetallesJuego(Game game) {
+	public void mostrarDetallesJuego(Game game, List<String> screenshots, List<Game> dlcs) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/GameDetails.fxml"));
 			HBox gameDetails = loader.load();
 
 			// Obtener el controlador del detalle
 			GameDetailsController controller = loader.getController();
-			controller.setGameDetails(game);
+			controller.setGameDetails(game, screenshots, dlcs);
 
 			// Reemplazar el contenido del contenedor principal con la nueva vista
 			contenedorJuegos.getChildren().clear();
@@ -246,7 +256,7 @@ public class BuscarJuegosController implements Initializable {
 
 	@FXML
 	void buscarJuegos(MouseEvent event) {
-		showGames(textFieldBusqueda.getText(), platforms.get(comboBoxPlataforma.getValue()), genres.get(comboBoxGenero.getValue())); 
+		showGames(textFieldBusqueda.getText(), platforms.get(comboBoxPlataforma.getValue()), genres.get(comboBoxGenero.getValue()), order.get(comboBoxOrdenar.getValue())); 
 	}
 
 }

@@ -9,4 +9,6 @@ public class Config {
     public static final String API_PAGE = "&page=";
     public static final String API_PLATFORM = "&parent_platforms=";
     public static final String API_GENRE = "&genres=";
+    public static final String API_DLCS = "&additions=";
+    public static final String API_ORDER = "&ordering=";
 }
