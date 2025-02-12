@@ -28,11 +28,11 @@ public class APIUtils {
 	 * @return Una lista de los juegos que devuelve la API
 	 * @throws Exception
 	 */
-	public static List<Game> getGames(String title, Integer platform, Integer genre, String order) throws Exception {
+	public static List<Game> getGames(String title, Integer platform, Integer genre, String order, int pageSize) throws Exception {
 		String plataforma = platform == null ? "" : Config.API_PLATFORM + String.valueOf(platform);
 		String genero = genre == null ? "" : Config.API_GENRE + String.valueOf(genre);
 		//Url de llamada a la API
-		String url = Config.API_URL + Config.API_KEY + Config.API_SEARCH + title + plataforma + genero + Config.API_ORDER + order + Config.API_PAGE_SIZE + Config.API_PAGE + 1;
+		String url = Config.API_URL + Config.API_KEY + Config.API_SEARCH + title + plataforma + genero + Config.API_ORDER + order + Config.API_PAGE_SIZE + pageSize + Config.API_PAGE + 1;
 
 		Request request = new Request.Builder()
 				.url(url)
