@@ -172,7 +172,6 @@ public class RecomendacionesJuegosController implements Initializable {
 		scrollPaneFila.setStyle("-fx-background: transparent; -fx-background-color: transparent;");
 		//scrollPaneFila.lookup(".scroll-bar").setStyle("-fx-opacity: 0; -fx-background-color: transparent;");
 
-<<<<<<< HEAD
 		scrollPaneFila.setPrefWidth(scrollPane.getWidth() - 20);
 
 		vboxCompleto.getChildren().add(scrollPaneFila);
@@ -219,49 +218,5 @@ public class RecomendacionesJuegosController implements Initializable {
 			contenedorJuegos.getChildren().add(new Label("Error al cargar los detalles del juego."));
 		}
 	}
-=======
-    private void mostrarJuegos(VBox juegosConTitulo) {
-        listaDeJuegosVBox.getChildren().add(juegosConTitulo); // Agrega los juegos dentro del VBox
-    }
-    
-    public void setGamesController(BuscarJuegosController controller) {
-        this.buscarJuegosController = controller;
-    }
-    
-//    private void showGameDetails(int gameId) {
-//    	if (buscarJuegosController != null) {
-//            try {
-//                Game game = APIUtils.getGameDetails(gameId);
-//                List<String> screenshots = APIUtils.getGameScreenshots(gameId);
-//                List<Game> dlcs = APIUtils.getGameDLCs(gameId);
-//                buscarJuegosController.mostrarDetallesJuego(game, screenshots, dlcs);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
-//    }
-    
 
-//    private void showGameDetails(int gameId) {
-//    	try {
-//            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/GameDetails.fxml"));
-//            Parent root = loader.load();
-//
-//            GameDetailsController controller = loader.getController();
-//            Game game = APIUtils.getGameDetails(gameId);
-//          List<String> screenshots = APIUtils.getGameScreenshots(gameId);
-//          List<Game> dlcs = APIUtils.getGameDLCs(gameId);
-//          buscarJuegosController.mostrarDetallesJuego(game, screenshots, dlcs);
-//            controller.setGameDetails(gameId ); // Pasar el objeto Game
-//
-//            Stage stage = new Stage();
-//            stage.setScene(new Scene(root));
-//            stage.show();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
-
-  
->>>>>>> 4b4639e5d19c58021f37fb970a9ff40ac7037eb7
 }
