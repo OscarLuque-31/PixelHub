@@ -90,7 +90,7 @@ public class APIUtils {
 	    
 	    try (Response response = client.newCall(request).execute()) {
 	        if (!response.isSuccessful()) {
-	            throw new Exception("Error en la solicitud: " + response.code());
+	            return new ArrayList<>();
 	        }
 	        
 	        Gson gson = new Gson();
@@ -126,7 +126,7 @@ public class APIUtils {
 				return games;
 				
 			} else {
-				throw new Exception("Error en la solicitud: " + response.code());
+				return new ArrayList<>();
 			}
 		}
 	}
