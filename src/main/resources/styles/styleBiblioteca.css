@@ -147,3 +147,9 @@
 	-fx-font-size: 14;
 }
 
+#scrollPane{
+		-fx-background-color: #2A3B47; /* Fondo de la celda seleccionada */
+	
+}
+
+

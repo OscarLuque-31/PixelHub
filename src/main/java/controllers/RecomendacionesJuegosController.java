@@ -56,12 +56,15 @@ public class RecomendacionesJuegosController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         listaDeJuegosVBox = new VBox();
-        listaDeJuegosVBox.setSpacing(30);  // Espaciado entre bloques de juegos
+        listaDeJuegosVBox.setSpacing(20);  // Espaciado entre bloques de juegos
         listaDeJuegosVBox.setAlignment(Pos.CENTER); 
         
-        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+	    scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 	    
-	    contenedorJuegos.setCenter(listaDeJuegosVBox);
+	    scrollPane.setContent(listaDeJuegosVBox);
+	    
+	    scrollPane.setStyle("-fx-background: #192229; -fx-background-color: #192229;");
 	    
 	    setMaps();
 	    
@@ -112,7 +115,7 @@ public class RecomendacionesJuegosController implements Initializable {
 
     private void cargarJuegosPorCategoria(String titulo, Integer platform, Integer genre, String order) {
         try {
-            List<Game> listaJuegos = APIUtils.getGames(null, platform, genre, order, 4);
+            List<Game> listaJuegos = APIUtils.getGames(null, platform, genre, order, 12);
             VBox juegosConTitulo = crearFilaJuegosConTitulo(titulo, listaJuegos);
 
             Platform.runLater(() -> mostrarJuegos(juegosConTitulo));
@@ -148,12 +151,22 @@ public class RecomendacionesJuegosController implements Initializable {
             hboxJuegos.getChildren().add(imageViewJuego);
             
             imageViewJuego.setOnMouseClicked((MouseEvent event) -> {
-            	showGameDetails(game.getId());
+            	//showGameDetails(game.getId());
             });
             
         }
 
-        vboxCompleto.getChildren().add(hboxJuegos);
+     // Crear un ScrollPane para la fila de juegos
+        ScrollPane scrollPaneFila = new ScrollPane(hboxJuegos);
+        scrollPaneFila.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS); // Mostrar barra solo cuando sea necesario
+        scrollPaneFila.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPaneFila.setFitToHeight(true);
+        scrollPaneFila.setPannable(true); // Permitir arrastrar con el mouse
+        scrollPaneFila.setStyle("-fx-background: transparent; -fx-background-color: transparent;");
+
+        scrollPaneFila.setPrefWidth(scrollPane.getWidth() - 20);
+        
+        vboxCompleto.getChildren().add(scrollPaneFila);
 
         return vboxCompleto;
     }
@@ -179,23 +192,26 @@ public class RecomendacionesJuegosController implements Initializable {
 //        }
 //    }
     
-    private void showGameDetails(int gameId) {
-    	try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/GameDetails.fxml"));
-            Parent root = loader.load();
 
-            GameDetailsController controller = loader.getController();
-            Game game = APIUtils.getGameDetails(gameId);
-          List<String> screenshots = APIUtils.getGameScreenshots(gameId);
-          List<Game> dlcs = APIUtils.getGameDLCs(gameId);
-          buscarJuegosController.mostrarDetallesJuego(game, screenshots, dlcs);
+//    private void showGameDetails(int gameId) {
+//    	try {
+//            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/GameDetails.fxml"));
+//            Parent root = loader.load();
+//
+//            GameDetailsController controller = loader.getController();
+//            Game game = APIUtils.getGameDetails(gameId);
+//          List<String> screenshots = APIUtils.getGameScreenshots(gameId);
+//          List<Game> dlcs = APIUtils.getGameDLCs(gameId);
+//          buscarJuegosController.mostrarDetallesJuego(game, screenshots, dlcs);
 //            controller.setGameDetails(gameId ); // Pasar el objeto Game
+//
+//            Stage stage = new Stage();
+//            stage.setScene(new Scene(root));
+//            stage.show();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+  
 }
