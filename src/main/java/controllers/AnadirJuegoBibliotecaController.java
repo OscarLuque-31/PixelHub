@@ -44,7 +44,7 @@ public class AnadirJuegoBibliotecaController implements Initializable {
         // Configurar el reescalado dinámico de las imágenes
         configurarReescalado();
 
-        // Aplicar bordes redondeados a los ImageView
+        // Aplicar bordes redondeados a los ImageView1
         aplicarBordesRedondeados(imageViewAnadirImagen);
         aplicarBordesRedondeados(imageViewAnadirScreenshot);
     }
