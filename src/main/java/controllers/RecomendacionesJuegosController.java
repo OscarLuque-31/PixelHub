@@ -189,7 +189,7 @@ public class RecomendacionesJuegosController implements Initializable {
           List<String> screenshots = APIUtils.getGameScreenshots(gameId);
           List<Game> dlcs = APIUtils.getGameDLCs(gameId);
           buscarJuegosController.mostrarDetallesJuego(game, screenshots, dlcs);
-            controller.setGameDetails(gameId ); // Pasar el objeto Game
+//            controller.setGameDetails(gameId ); // Pasar el objeto Game
 
             Stage stage = new Stage();
             stage.setScene(new Scene(root));

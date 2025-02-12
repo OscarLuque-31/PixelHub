@@ -1,11 +1,16 @@
 package controllers;
 
+
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -15,110 +20,130 @@ import javafx.stage.Stage;
 
 public class AnadirJuegoBibliotecaController implements Initializable {
 
-    @FXML
-    private GridPane gridPaneAnadir;
+	@FXML
+	private GridPane gridPaneAnadir;
 
-    @FXML
-    private ImageView flechitaAtras;
+	@FXML
+	private ImageView imageViewAnadirImagen;
 
-    @FXML
-    private ImageView imageViewAnadirImagen;
+	@FXML
+	private ComboBox<?> dropDownPlataformas;
 
-    @FXML
-    private ImageView imageViewAnadirScreenshot;
+	@FXML
+	private ComboBox<?> dropDownGenero;
 
-    @FXML
-    private ImageView imagenAnterior;
+	@FXML
+	private TextField txtRating;
 
-    @FXML
-    private ImageView siguienteImagen;
+	@FXML
+	private TextArea txtComentario;
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        initializeImagesBar();
+	@FXML
+	private Button btnAnadirJuegoCancelar;
 
-        // Hacer que las imágenes sean clicables para subir una nueva imagen
-        imageViewAnadirImagen.setOnMouseClicked(event -> subirImagen(imageViewAnadirImagen));
-        imageViewAnadirScreenshot.setOnMouseClicked(event -> subirImagen(imageViewAnadirScreenshot));
+	@FXML
+	private Button btnAgregarJuego;
 
-        // Configurar el reescalado dinámico de las imágenes
-        configurarReescalado();
+	@FXML
+	private TextField txtTitulo;
 
-        // Aplicar bordes redondeados a los ImageView
-        aplicarBordesRedondeados(imageViewAnadirImagen);
-        aplicarBordesRedondeados(imageViewAnadirScreenshot);
-    }
+	@FXML
+	private TextArea txtDescripcion;
 
-    /**
-     * Método que inicializa las imágenes
-     */
-    public void initializeImagesBar() {
-        flechitaAtras.setImage(new Image(getClass().getResourceAsStream("/images/arrow_back.png")));
-        imagenAnterior.setImage(new Image(getClass().getResourceAsStream("/images/imagenAnterior.png")));
-        siguienteImagen.setImage(new Image(getClass().getResourceAsStream("/images/siguienteImagen.png")));
-        imageViewAnadirImagen.setImage(new Image(getClass().getResourceAsStream("/images/anadir_imagen.png")));
-        imageViewAnadirScreenshot.setImage(new Image(getClass().getResourceAsStream("/images/anadir_screenshot.png")));
-    }
+	@FXML
+	private ImageView imagenAnterior;
 
-    /**
-     * Método para subir una imagen y mostrarla en los ImageView
-     */
-    private void subirImagen(ImageView imageView) {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Seleccionar Imagen");
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Imágenes", "*.png", "*.jpg", "*.jpeg"));
+	@FXML
+	private ImageView siguienteImagen;
 
-        Stage stage = (Stage) gridPaneAnadir.getScene().getWindow();
-        File file = fileChooser.showOpenDialog(stage);
+	@FXML
+	private ImageView imageViewAnadirScreenshot;
 
-        if (file != null) {
-            Image imagen = new Image(file.toURI().toString());
-            imageView.setImage(imagen);
-        }
-    }
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		initializeImagesBar();
 
-    /**
-     * Configurar el reescalado dinámico de los ImageView
-     */
-    private void configurarReescalado() {
-        // Hacer que los ImageView se ajusten al tamaño del GridPane
-        gridPaneAnadir.widthProperty().addListener((obs, oldVal, newVal) -> {
-            imageViewAnadirImagen.setFitWidth(newVal.doubleValue() * 0.4);
-            imageViewAnadirScreenshot.setFitWidth(newVal.doubleValue() * 0.4);
-            aplicarBordesRedondeados(imageViewAnadirImagen); // Actualizar bordes redondeados
-            aplicarBordesRedondeados(imageViewAnadirScreenshot); // Actualizar bordes redondeados
-        });
+		// Hacer que las imágenes sean clicables para subir una nueva imagen
+		imageViewAnadirImagen.setOnMouseClicked(event -> subirImagen(imageViewAnadirImagen));
+		imageViewAnadirScreenshot.setOnMouseClicked(event -> subirImagen(imageViewAnadirScreenshot));
 
-        gridPaneAnadir.heightProperty().addListener((obs, oldVal, newVal) -> {
-            imageViewAnadirImagen.setFitHeight(newVal.doubleValue() * 0.4);
-            imageViewAnadirScreenshot.setFitHeight(newVal.doubleValue() * 0.4);
-            aplicarBordesRedondeados(imageViewAnadirImagen); // Actualizar bordes redondeados
-            aplicarBordesRedondeados(imageViewAnadirScreenshot); // Actualizar bordes redondeados
-        });
+		// Configurar el reescalado dinámico de las imágenes
+		configurarReescalado();
 
-        // Desactivar preserveRatio para que las imágenes ocupen todo el espacio del ImageView
-        imageViewAnadirImagen.setPreserveRatio(false);
-        imageViewAnadirScreenshot.setPreserveRatio(false);
-    }
+		// Aplicar bordes redondeados a los ImageView
+		aplicarBordesRedondeados(imageViewAnadirImagen);
+		aplicarBordesRedondeados(imageViewAnadirScreenshot);
+	}
 
-    /**
-     * Método para aplicar bordes redondeados a un ImageView
-     */
-    private void aplicarBordesRedondeados(ImageView imageView) {
-        Rectangle clip = new Rectangle();
-        clip.setWidth(imageView.getFitWidth());
-        clip.setHeight(imageView.getFitHeight());
-        clip.setArcWidth(20); // Radio de los bordes redondeados
-        clip.setArcHeight(20); // Radio de los bordes redondeados
+	/**
+	 * Método que inicializa las imágenes
+	 */
+	public void initializeImagesBar() {
+		imagenAnterior.setImage(new Image(getClass().getResourceAsStream("/images/imagenAnterior.png")));
+		siguienteImagen.setImage(new Image(getClass().getResourceAsStream("/images/siguienteImagen.png")));
+		imageViewAnadirImagen.setImage(new Image(getClass().getResourceAsStream("/images/anadir_imagen.png")));
+		imageViewAnadirScreenshot.setImage(new Image(getClass().getResourceAsStream("/images/anadir_screenshot.png")));
+	}
 
-        // Vincular el tamaño del clip al tamaño del ImageView
-        imageView.fitWidthProperty().addListener((obs, oldVal, newVal) -> {
-            clip.setWidth(newVal.doubleValue());
-        });
-        imageView.fitHeightProperty().addListener((obs, oldVal, newVal) -> {
-            clip.setHeight(newVal.doubleValue());
-        });
+	/**
+	 * Método para subir una imagen y mostrarla en los ImageView
+	 */
+	private void subirImagen(ImageView imageView) {
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Seleccionar Imagen");
+		fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Imágenes", "*.png", "*.jpg", "*.jpeg"));
 
-        imageView.setClip(clip);
-    }
+		Stage stage = (Stage) gridPaneAnadir.getScene().getWindow();
+		File file = fileChooser.showOpenDialog(stage);
+
+		if (file != null) {
+			Image imagen = new Image(file.toURI().toString());
+			imageView.setImage(imagen);
+		}
+	}
+
+	/**
+	 * Configurar el reescalado dinámico de los ImageView
+	 */
+	private void configurarReescalado() {
+		// Hacer que los ImageView se ajusten al tamaño del GridPane
+		gridPaneAnadir.widthProperty().addListener((obs, oldVal, newVal) -> {
+			imageViewAnadirImagen.setFitWidth(newVal.doubleValue() * 0.4);
+			imageViewAnadirScreenshot.setFitWidth(newVal.doubleValue() * 0.4);
+			aplicarBordesRedondeados(imageViewAnadirImagen); // Actualizar bordes redondeados
+			aplicarBordesRedondeados(imageViewAnadirScreenshot); // Actualizar bordes redondeados
+		});
+
+		gridPaneAnadir.heightProperty().addListener((obs, oldVal, newVal) -> {
+			imageViewAnadirImagen.setFitHeight(newVal.doubleValue() * 0.4);
+			imageViewAnadirScreenshot.setFitHeight(newVal.doubleValue() * 0.4);
+			aplicarBordesRedondeados(imageViewAnadirImagen); // Actualizar bordes redondeados
+			aplicarBordesRedondeados(imageViewAnadirScreenshot); // Actualizar bordes redondeados
+		});
+
+		// Desactivar preserveRatio para que las imágenes ocupen todo el espacio del ImageView
+		imageViewAnadirImagen.setPreserveRatio(false);
+		imageViewAnadirScreenshot.setPreserveRatio(false);
+	}
+
+	/**
+	 * Método para aplicar bordes redondeados a un ImageView
+	 */
+	private void aplicarBordesRedondeados(ImageView imageView) {
+		Rectangle clip = new Rectangle();
+		clip.setWidth(imageView.getFitWidth());
+		clip.setHeight(imageView.getFitHeight());
+		clip.setArcWidth(20); // Radio de los bordes redondeados
+		clip.setArcHeight(20); // Radio de los bordes redondeados
+
+		// Vincular el tamaño del clip al tamaño del ImageView
+		imageView.fitWidthProperty().addListener((obs, oldVal, newVal) -> {
+			clip.setWidth(newVal.doubleValue());
+		});
+		imageView.fitHeightProperty().addListener((obs, oldVal, newVal) -> {
+			clip.setHeight(newVal.doubleValue());
+		});
+
+		imageView.setClip(clip);
+	}
 }

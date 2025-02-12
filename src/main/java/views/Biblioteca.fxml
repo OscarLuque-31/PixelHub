@@ -49,31 +49,27 @@
 			<children>
 				<HBox fx:id="dragArea" alignment="CENTER_RIGHT" spacing="9">
 					<children>
-						<GridPane>
+						<GridPane fx:id="gridPane">
 							<columnConstraints>
-								<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
-								<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
-								<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
+								<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="50.0" />
+								<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="50.0" />
 							</columnConstraints>
 							<rowConstraints>
-								<RowConstraints vgrow="SOMETIMES" />
+								<RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
 							</rowConstraints>
 							<children>
-								<Button fx:id="btnMinimizar" mnemonicParsing="false" prefWidth="50.0" style="-fx-background-color: #192229;">
-									<graphic>
-										<ImageView fx:id="iconMinimizar" fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true" />
-									</graphic>
-								</Button>
-								<Button fx:id="btnMaximizar" mnemonicParsing="false" prefWidth="50.0" style="-fx-background-color: #192229;" GridPane.columnIndex="1">
-									<graphic>
-										<ImageView fx:id="iconMaximizar" fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true" />
-									</graphic>
-								</Button>
-								<Button fx:id="btnCerrar" mnemonicParsing="false" prefWidth="50.0" style="-fx-background-color: #192229;" GridPane.columnIndex="2">
-									<graphic>
-										<ImageView fx:id="iconCerrar" fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true" />
-									</graphic>
-								</Button>
+                        <Button fx:id="btnMinimizar" mnemonicParsing="false" prefWidth="50.0" style="-fx-background-color: #192229;" styleClass="btnNavegacion">
+                           <graphic>
+      								<!-- Icono Minimizar -->
+      								<ImageView fx:id="iconMinimizar" fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true" />
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnCerrar" mnemonicParsing="false" prefWidth="50.0" style="-fx-background-color: #192229;" styleClass="btnNavegacion" GridPane.columnIndex="1">
+                           <graphic>
+      								<!-- Icono Cerrar -->
+      								<ImageView fx:id="iconCerrar" fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true" />
+                           </graphic>
+                        </Button>
 							</children>
 						</GridPane>
 					</children>

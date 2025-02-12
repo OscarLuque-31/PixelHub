@@ -67,11 +67,6 @@ public class LoginController {
 	@FXML
 	private ImageView iconMinimizar;
 
-	@FXML
-	private Button btnMaximizar;
-
-	@FXML
-	private ImageView iconMaximizar;
 
 	@FXML
 	private Button btnCerrar;
@@ -116,6 +111,7 @@ public class LoginController {
 			primaryStage.setTitle("PixelHub");
 			primaryStage.initStyle(StageStyle.TRANSPARENT);
 			primaryStage.setScene(scene);
+			primaryStage.setMaximized(true);
 
 			// Mostrar la ventana
 			primaryStage.show();
@@ -145,7 +141,7 @@ public class LoginController {
 	public void setStage(Stage stage) {
 		this.stage = stage;
 		// Funciones de los botones de la barra de navegacion
-		UtilsViews.funBtnsBar(btnMinimizar, btnMaximizar, btnCerrar, dragArea, stage);
+		UtilsViews.funBtnsBar(btnMinimizar, btnCerrar, stage);
 		// Cargar el CSS de la ventana de login
 		cargarCSS();
 		// Inicializar imágenes
@@ -234,7 +230,6 @@ public class LoginController {
 		UtilsViews.hoverEffectText(linkRegister, "#0095FF", "#52A5E0");
 		UtilsViews.hoverEffectButton(btnLogin, "#0095FF", "#52A5E0");
 		UtilsViews.hoverEffectButton(btnMinimizar, "#2a3b47", "#192229");
-		UtilsViews.hoverEffectButton(btnMaximizar, "#2a3b47", "#192229");
 		UtilsViews.hoverEffectButton(btnCerrar, "#c63637", "#192229");
 	}
 
@@ -244,7 +239,6 @@ public class LoginController {
 	public void initializeImagesBar() {
 		imgLogo.setImage(new Image(getClass().getResourceAsStream("/images/logoPixelHub.png")));
 		iconMinimizar.setImage(new Image(getClass().getResourceAsStream("/images/iconoMinimizar.png")));
-		iconMaximizar.setImage(new Image(getClass().getResourceAsStream("/images/iconoMaximizar.png")));
 		iconCerrar.setImage(new Image(getClass().getResourceAsStream("/images/iconoCerrar.png")));
 	}
 
