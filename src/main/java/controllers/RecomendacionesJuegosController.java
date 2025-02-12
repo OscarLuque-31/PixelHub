@@ -192,6 +192,7 @@ public class RecomendacionesJuegosController implements Initializable {
 //        }
 //    }
     
+
 //    private void showGameDetails(int gameId) {
 //    	try {
 //            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/GameDetails.fxml"));
@@ -211,4 +212,6 @@ public class RecomendacionesJuegosController implements Initializable {
 //            e.printStackTrace();
 //        }
 //    }
+
+  
 }

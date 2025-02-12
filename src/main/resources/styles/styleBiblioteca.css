@@ -112,10 +112,40 @@
 	   -fx-background-radius: 20px; /* Redondeo del fondo */
 	            -fx-padding: 10px; /* Espaciado interno para mejorar la apariencia */
 	        
-	    
+}
+
+#btn{
+	-fx-background-color: #52A5E0;
+	-fx-text-fill: white;
+	-fx-font-family: "Tilt Warp";
+	-fx-font-size: 16;
+}
+
+#btnAgregarJuego{
+	-fx-background-color: #52A5E0;
+	-fx-text-fill: white;
+	-fx-font-family: "Tilt Warp";
+	-fx-font-size: 16;
+}
+
+#btnAnadirJuegoCancelar{
+	-fx-background-color: #F24245;
+	-fx-text-fill: white;
+	-fx-font-family: "Tilt Warp";
+	-fx-font-size: 16;
+}
+
+#btnAnadirJuegoCancelar:hover{
+		-fx-background-color: #9E181B;
 	
 }
 
+#txtRating, #txtComentario,#txtTitulo,#txtDescripcion {
+	-fx-background-color: #E8EFF3;
+	-fx-text-fill: #000000;
+	-fx-font-family: "Tilt Warp";
+	-fx-font-size: 14;
+}
 
 #scrollPane{
 		-fx-background-color: #2A3B47; /* Fondo de la celda seleccionada */

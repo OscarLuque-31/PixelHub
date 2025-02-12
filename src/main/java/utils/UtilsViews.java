@@ -101,45 +101,13 @@ public class UtilsViews {
 	 * @param dragArea
 	 * @param stage
 	 */
-	public static void funBtnsBar(Button btnMin, Button btnMax, Button btnClose, HBox dragArea, Stage stage) {
+	public static void funBtnsBar(Button btnMin, Button btnClose, Stage stage) {
 		btnMin.setOnMouseClicked(event -> stage.setIconified(true));
-
-		btnMax.setOnMouseClicked(event -> {
-			boolean maximized = stage.isMaximized();
-			stage.setMaximized(!maximized);
-		});
 
 		btnClose.setOnMouseClicked(event -> stage.close());
 
-		configureDrag(stage, dragArea);
 	}
 
-
-	/**
-	 * Método que configuras el area de arratre de la ventana
-	 * @param stage
-	 * @param dragArea
-	 */
-	private static void configureDrag(Stage stage, HBox dragArea) {
-		dragArea.setOnMousePressed(event -> {
-			if (!stage.isMaximized()) {
-				xOffset = event.getSceneX();
-				yOffset = event.getSceneY();
-			}
-		});
-
-		dragArea.setOnMouseDragged(event -> {
-			if (!stage.isMaximized()) {
-				stage.setX(event.getScreenX() - xOffset);
-				stage.setY(event.getScreenY() - yOffset);
-			} else {
-				stage.setMaximized(false);
-				isMaximized = false;
-				stage.setX(event.getScreenX() - xOffset);
-				stage.setY(event.getScreenY() - yOffset);
-			}
-		});
-	}
 
 	/**
 	 * Método que muestra un dialogo de error en la aplicación
