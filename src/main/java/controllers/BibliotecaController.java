@@ -30,9 +30,9 @@ public class BibliotecaController {
 
 	@FXML
 	private BorderPane borderPane;
-	
+
 	@FXML
-	private BorderPane borderPaneCentro;
+	protected  BorderPane borderPaneCentro;
 
 	@FXML
 	private VBox panelLateralContainer;
@@ -104,7 +104,7 @@ public class BibliotecaController {
 	@FXML
 	private ImageView imgModoTarjeta;
 
-	
+
 	@FXML
 	private VBox contenedorJuegos;
 
@@ -115,14 +115,18 @@ public class BibliotecaController {
 
 	private static Usuario usuario;
 
+
+	
+
 	public void setUsuario(Usuario usuario) {
 		BibliotecaController.usuario = usuario;
 	}
-	
+
+
 	public static Usuario getUsuario() {
 		return usuario;
 	}
-	
+
 	public static Stage getStage() {
 		return stage;
 	}
@@ -158,39 +162,39 @@ public class BibliotecaController {
 		borderPane.getStylesheets().addAll(getClass().getResource("/styles/styleBiblioteca.css").toExternalForm(),
 				getClass().getResource("/styles/styleTopBar.css").toExternalForm());
 	}
-	
-	  /**
-     * Método que recopila todos los hoverEffects
-     */
-    public void hoverEffect() {
-        // Aplicamos hover a los botones usando métodos del archivo UtilsViews
-        UtilsViews.hoverEffectButton(btnMinimizar, "#2a3b47", "#192229");
-        UtilsViews.hoverEffectButton(btnMaximizar, "#2a3b47", "#192229");
-        UtilsViews.hoverEffectButton(btnCerrar, "#c63637", "#192229");
-        UtilsViews.hoverEffectButton(btnBiblioteca, "#415A6C", "#212E36");
-        UtilsViews.hoverEffectButton(btnBuscarJuegos, "#415A6C", "#212E36");
-        UtilsViews.hoverEffectButton(btnCerrarSesion, "#415A6C", "#212E36");
-        UtilsViews.hoverEffectButton(btnRecomendaciones, "#415A6C", "#212E36");
 
-        // Hover para botones con un estado activo, asegurando que no interfiera con el hover
-        configureHoverForButton(btnBiblioteca);
-        configureHoverForButton(btnBuscarJuegos);
-        configureHoverForButton(btnRecomendaciones);
-    }
+	/**
+	 * Método que recopila todos los hoverEffects
+	 */
+	public void hoverEffect() {
+		// Aplicamos hover a los botones usando métodos del archivo UtilsViews
+		UtilsViews.hoverEffectButton(btnMinimizar, "#2a3b47", "#192229");
+		UtilsViews.hoverEffectButton(btnMaximizar, "#2a3b47", "#192229");
+		UtilsViews.hoverEffectButton(btnCerrar, "#c63637", "#192229");
+		UtilsViews.hoverEffectButton(btnBiblioteca, "#415A6C", "#212E36");
+		UtilsViews.hoverEffectButton(btnBuscarJuegos, "#415A6C", "#212E36");
+		UtilsViews.hoverEffectButton(btnCerrarSesion, "#415A6C", "#212E36");
+		UtilsViews.hoverEffectButton(btnRecomendaciones, "#415A6C", "#212E36");
 
-    private void configureHoverForButton(Button button) {
-        // Aplicamos el efecto hover manualmente solo si el botón NO está activo
-        button.setOnMouseEntered(e -> {
-            if (!button.getStyleClass().contains("btn-activo")) {
-                button.setStyle("-fx-background-color: #212E36;");
-            }
-        });
-        button.setOnMouseExited(e -> {
-            if (!button.getStyleClass().contains("btn-activo")) {
-                button.setStyle("-fx-background-color: transparent;");
-            }
-        });
-    }
+		// Hover para botones con un estado activo, asegurando que no interfiera con el hover
+		configureHoverForButton(btnBiblioteca);
+		configureHoverForButton(btnBuscarJuegos);
+		configureHoverForButton(btnRecomendaciones);
+	}
+
+	private void configureHoverForButton(Button button) {
+		// Aplicamos el efecto hover manualmente solo si el botón NO está activo
+		button.setOnMouseEntered(e -> {
+			if (!button.getStyleClass().contains("btn-activo")) {
+				button.setStyle("-fx-background-color: #212E36;");
+			}
+		});
+		button.setOnMouseExited(e -> {
+			if (!button.getStyleClass().contains("btn-activo")) {
+				button.setStyle("-fx-background-color: transparent;");
+			}
+		});
+	}
 
 	/**
 	 * Método que controla la navegación entre ventanas
@@ -204,48 +208,50 @@ public class BibliotecaController {
 
 		btnCerrarSesion.setOnMouseClicked(event -> NavigationUtils.navigateTo(stage, "/views/Login.fxml"));
 		lblNombreUsuario.setOnMouseClicked(event -> cambiarContenidoCentro("/views/Perfil.fxml"));
-		
+
+
+
 	}
-	
+
 	/**
 	 * Método que cambia de pestaña
 	 * @param botonSeleccionado
 	 * @param rutaFXML
 	 */
 	private void cambiarPestana(Button botonSeleccionado, String rutaFXML) {
-	    // Eliminar la clase "btn-activo" de todos los botones
-	    btnBiblioteca.getStyleClass().remove("btn-activo");
-	    btnRecomendaciones.getStyleClass().remove("btn-activo");
-	    btnBuscarJuegos.getStyleClass().remove("btn-activo");
+		// Eliminar la clase "btn-activo" de todos los botones
+		btnBiblioteca.getStyleClass().remove("btn-activo");
+		btnRecomendaciones.getStyleClass().remove("btn-activo");
+		btnBuscarJuegos.getStyleClass().remove("btn-activo");
 
-	    // Resetear estilos para evitar colores manuales previos
-	    btnBiblioteca.setStyle("");
-	    btnRecomendaciones.setStyle("");
-	    btnBuscarJuegos.setStyle("");
+		// Resetear estilos para evitar colores manuales previos
+		btnBiblioteca.setStyle("");
+		btnRecomendaciones.setStyle("");
+		btnBuscarJuegos.setStyle("");
 
-	    // Agregar la clase "btn-activo" solo al botón seleccionado
-	    botonSeleccionado.getStyleClass().add("btn-activo");
+		// Agregar la clase "btn-activo" solo al botón seleccionado
+		botonSeleccionado.getStyleClass().add("btn-activo");
 
-	    // Cambiar la vista
-	    cambiarContenidoCentro(rutaFXML);
+		// Cambiar la vista
+		cambiarContenidoCentro(rutaFXML);
 	}
 
-	
+
 	/**
 	 * Método que cambia el contenido del centro
 	 * @param rutaFXML
 	 */
 	private void cambiarContenidoCentro(String rutaFXML) {
-	    try {
-	        FXMLLoader loader = new FXMLLoader(getClass().getResource(rutaFXML));
-	        BorderPane nuevoContenido = loader.load();
-	        borderPaneCentro.setCenter(nuevoContenido);
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	        Label errorLabel = new Label("Error cargando contenido: " + rutaFXML);
-	        errorLabel.setStyle("-fx-text-fill: red; -fx-font-size: 16;");
-	        borderPaneCentro.setCenter(errorLabel);
-	    }
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(rutaFXML));
+			BorderPane nuevoContenido = loader.load();
+			borderPaneCentro.setCenter(nuevoContenido);
+		} catch (Exception e) {
+			e.printStackTrace();
+			Label errorLabel = new Label("Error cargando contenido: " + rutaFXML);
+			errorLabel.setStyle("-fx-text-fill: red; -fx-font-size: 16;");
+			borderPaneCentro.setCenter(errorLabel);
+		}
 	}
 
 
@@ -258,6 +264,7 @@ public class BibliotecaController {
 		iconMaximizar.setImage(new Image(getClass().getResourceAsStream("/images/iconoMaximizar.png")));
 		iconCerrar.setImage(new Image(getClass().getResourceAsStream("/images/iconoCerrar.png")));
 		imgUsuario.setImage(new Image(getClass().getResourceAsStream("/images/iconoUsuario.png")));
+
 	}
 
 }
