@@ -152,10 +152,13 @@ public class RegistroController {
 	private void rellenarComboBox() {
 		cmbGender.setTitle("Género");
 		cmbPlatform.setTitle("Plataformas");
-		cmbGender.getItems().addAll("Acción", "Indie", "Aventura", "RPG", "Estrategia", "Disparos", "Casual",
-				"Simulación", "Rompecabezas", "Arcade", "Plataformas", "Multijugador masivo", "Carreras", "Deportes",
-				"Peleas", "Familiar", "Juegos de mesa", "Educativos", "Cartas");
-		cmbPlatform.getItems().addAll("PC", "PlayStation", "Xbox", "Móvil", "Nintento");
+		cmbGender.getItems().addAll("Acción", "Indie", "Aventura", "RPG", "Estrategia", 
+				"Shooter", "Casual", "Simulación", "Puzzle", "Arcade", 
+				"Plataformas", "Multijugador", "Carreras", "Deportes", 
+				"Lucha", "Familiar", "Juegos de mesa", "Educativo", "Cartas");
+		cmbPlatform.getItems().addAll("PC", "PlayStation", "Xbox",
+				"iOS", "Apple Macintosh", "Linux",
+				"Nintendo", "Android", "Web");
 	}
 
 	/**
