@@ -28,8 +28,6 @@ public class CodigoEmailController {
     @FXML
     private ImageView iconMinimizar;
 
-    @FXML
-    private Button btnMaximizar;
 
     @FXML
     private ImageView iconMaximizar;
@@ -82,7 +80,7 @@ public class CodigoEmailController {
     public void setStage(Stage stage) {
         this.stage = stage;
         //Funcionalidad de los botones
-        UtilsViews.funBtnsBar(btnMinimizar, btnMaximizar, btnCerrar, dragArea, stage);
+        UtilsViews.funBtnsBar(btnMinimizar, btnCerrar, stage);
         //Cargar el CSS de la ventana de login
         cargarCSS();
         // Inicializar imágenes
@@ -98,7 +96,6 @@ public class CodigoEmailController {
      */
     public void hoverEffect() {
     	UtilsViews.hoverEffectButton(btnMinimizar, "#2a3b47", "#192229");
-		UtilsViews.hoverEffectButton(btnMaximizar, "#2a3b47", "#192229");
 		UtilsViews.hoverEffectButton(btnCerrar, "#c63637", "#192229");
     }
 
@@ -108,7 +105,6 @@ public class CodigoEmailController {
     public void initializeImagesBar() {
         imgLogo.setImage(new Image(getClass().getResourceAsStream("/images/logoPixelHub.png")));
         iconMinimizar.setImage(new Image(getClass().getResourceAsStream("/images/iconoMinimizar.png")));
-        iconMaximizar.setImage(new Image(getClass().getResourceAsStream("/images/iconoMaximizar.png")));
         iconCerrar.setImage(new Image(getClass().getResourceAsStream("/images/iconoCerrar.png")));
     }
 

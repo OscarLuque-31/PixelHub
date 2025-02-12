@@ -31,14 +31,14 @@
 }
 
 #btnCancel{
-	-fx-background-color: #FFFFFF;
-	-fx-text-fill: #52A5E0;
+	-fx-background-color: #F24245;
+	-fx-text-fill: WHITE;
 	-fx-font-family: "Tilt Warp";
 	-fx-font-size: 16;
 }
 
 #btnCancel:hover{
-	-fx-background-color: #E8EFF3;
+	-fx-background-color: #9E181B;
 }
 
 .txtField{

@@ -62,9 +62,6 @@ public class BibliotecaController {
 	private ImageView iconMinimizar;
 
 	@FXML
-	private Button btnMaximizar;
-
-	@FXML
 	private ImageView iconMaximizar;
 
 	@FXML
@@ -134,7 +131,7 @@ public class BibliotecaController {
 	public void setStage(Stage stage) {
 		this.stage = stage;
 
-		UtilsViews.funBtnsBar(btnMinimizar, btnMaximizar, btnCerrar, dragArea, stage);
+		UtilsViews.funBtnsBar(btnMinimizar, btnCerrar, stage);
 		//Cargar el CSS de la ventana de login
 		cargarCSS();
 		// Inicializar imágenes
@@ -169,7 +166,6 @@ public class BibliotecaController {
 	public void hoverEffect() {
 		// Aplicamos hover a los botones usando métodos del archivo UtilsViews
 		UtilsViews.hoverEffectButton(btnMinimizar, "#2a3b47", "#192229");
-		UtilsViews.hoverEffectButton(btnMaximizar, "#2a3b47", "#192229");
 		UtilsViews.hoverEffectButton(btnCerrar, "#c63637", "#192229");
 		UtilsViews.hoverEffectButton(btnBiblioteca, "#415A6C", "#212E36");
 		UtilsViews.hoverEffectButton(btnBuscarJuegos, "#415A6C", "#212E36");
@@ -261,7 +257,6 @@ public class BibliotecaController {
 	public void initializeImagesBar() {
 		imgLogo.setImage(new Image(getClass().getResourceAsStream("/images/logoPixelHub.png")));
 		iconMinimizar.setImage(new Image(getClass().getResourceAsStream("/images/iconoMinimizar.png")));
-		iconMaximizar.setImage(new Image(getClass().getResourceAsStream("/images/iconoMaximizar.png")));
 		iconCerrar.setImage(new Image(getClass().getResourceAsStream("/images/iconoCerrar.png")));
 		imgUsuario.setImage(new Image(getClass().getResourceAsStream("/images/iconoUsuario.png")));
 

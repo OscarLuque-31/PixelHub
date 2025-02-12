@@ -82,7 +82,6 @@
 							<columnConstraints>
 								<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="50.0" />
 								<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="50.0" />
-								<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="50.0" />
 							</columnConstraints>
 							<rowConstraints>
 								<RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
@@ -94,13 +93,7 @@
       								<ImageView fx:id="iconMinimizar" fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true" />
                            </graphic>
                         </Button>
-                        <Button fx:id="btnMaximizar" mnemonicParsing="false" prefWidth="50.0" style="-fx-background-color: #192229;" styleClass="btnNavegacion" GridPane.columnIndex="1">
-                           <graphic>
-      								<!-- Icono Maximizar -->
-      								<ImageView fx:id="iconMaximizar" fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true" />
-                           </graphic>
-                        </Button>
-                        <Button fx:id="btnCerrar" mnemonicParsing="false" prefWidth="50.0" style="-fx-background-color: #192229;" styleClass="btnNavegacion" GridPane.columnIndex="2">
+                        <Button fx:id="btnCerrar" mnemonicParsing="false" prefWidth="50.0" style="-fx-background-color: #192229;" styleClass="btnNavegacion" GridPane.columnIndex="1">
                            <graphic>
       								<!-- Icono Cerrar -->
       								<ImageView fx:id="iconCerrar" fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true" />

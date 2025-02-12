@@ -22,9 +22,6 @@ public class NavigationUtils {
 	public static void navigateTo(Stage stage, String fxmlPath) {
 		try {
 
-			// Guarda el estado actual de maximización
-			boolean wasMaximized = stage.isMaximized();
-
 			// Carga el nuevo contenido FXML
 			FXMLLoader loader = new FXMLLoader(NavigationUtils.class.getResource(fxmlPath));
 			Parent newRoot = loader.load();
@@ -43,7 +40,7 @@ public class NavigationUtils {
 				((CodigoEmailController) controller).setStage(stage);
 			}
 
-			prepararStage(stage, newRoot, wasMaximized);
+			prepararStage(stage, newRoot);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -59,8 +56,7 @@ public class NavigationUtils {
 	 */
 	public static void navigateToBibliotecaWithUser(Stage stage, String fxmlPath, String title, Usuario usuario) {
 		try {
-			// Guardar el estado actual de maximización
-			boolean wasMaximized = stage.isMaximized();
+			
 
 			// Cargar el nuevo contenido FXML
 			FXMLLoader loader = new FXMLLoader(NavigationUtils.class.getResource(fxmlPath));
@@ -73,7 +69,7 @@ public class NavigationUtils {
 				((BibliotecaController) controller).setStage(stage);
 			}
 
-			prepararStage(stage, newRoot, wasMaximized);
+			prepararStage(stage, newRoot);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -89,7 +85,7 @@ public class NavigationUtils {
 	 * @param scene
 	 * @param title
 	 */
-	private static void prepararStage(Stage stage, Parent newRoot, boolean wasMaximized) {
+	private static void prepararStage(Stage stage, Parent newRoot) {
 
 		// Cambia la raíz de la escena actual
 		Scene sceneActual = stage.getScene();
@@ -101,7 +97,7 @@ public class NavigationUtils {
 		}
 
 		// Restaurar el estado de maximización
-		stage.setMaximized(wasMaximized);
+		stage.setMaximized(true);
 
 		stage.show();
 	}
