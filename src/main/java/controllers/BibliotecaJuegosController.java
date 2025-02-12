@@ -12,6 +12,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import models.Usuario;
@@ -44,13 +46,16 @@ public class BibliotecaJuegosController implements Initializable{
 
 	@FXML
 	private VBox contenedorJuegos;
-	    
+	
+	@FXML
+	private BorderPane borderPaneCentro;
+
+	
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
-		
-		
+				
 		// Inicializar imágenes
 		initializeImagesBar();
 		//Efectos de hover
@@ -64,7 +69,7 @@ public class BibliotecaJuegosController implements Initializable{
 	 */
 	private void navegacionEntrePestañas() {
 
-		imgAdd.setOnMouseClicked(event -> cambiarContenidoCentro("/views/AñadirJuegoBiblioteca.fxml"));
+		imgAdd.setOnMouseClicked(event -> cambiarContenidoCentro("/views/AnadirJuegoBiblioteca.fxml"));
 		
 		
 
@@ -79,12 +84,12 @@ public class BibliotecaJuegosController implements Initializable{
 	    try {
 	        FXMLLoader loader = new FXMLLoader(getClass().getResource(rutaFXML));
 	        BorderPane nuevoContenido = loader.load();
-            BibliotecaController.getInstance().getBorderPaneCentro().setCenter(nuevoContenido);
+	        borderPaneCentro.setCenter(nuevoContenido);
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	        Label errorLabel = new Label("Error cargando contenido: " + rutaFXML);
 	        errorLabel.setStyle("-fx-text-fill: red; -fx-font-size: 16;");
-            BibliotecaController.getInstance().getBorderPaneCentro().setCenter(errorLabel);
+	        borderPaneCentro.setCenter(errorLabel);
 	    }
 	}
 	

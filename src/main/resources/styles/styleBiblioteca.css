@@ -99,3 +99,21 @@
     -fx-text-fill: #FFFFFF; /* Color del texto en la celda seleccionada */
 }
 
+.lblsAnadirJuego{
+	-fx-text-fill: #52A5E0;
+	-fx-font-family: "Tilt Warp";
+	-fx-font-size: 18;
+	
+}
+
+#gridPaneAnadir{
+	-fx-background-color: #2A3B47; /* Fondo de la celda seleccionada */
+	    -fx-border-radius: 20px; /* Redondeo de los bordes */
+	   -fx-background-radius: 20px; /* Redondeo del fondo */
+	            -fx-padding: 10px; /* Espaciado interno para mejorar la apariencia */
+	        
+	    
+	
+}
+
+

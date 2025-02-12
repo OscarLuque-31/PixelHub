@@ -115,22 +115,8 @@ public class BibliotecaController {
 
 	private static Usuario usuario;
 
-	private static BibliotecaController instance;
 
-	private BibliotecaController() {
-		// Constructor privado para evitar instanciación externa
-	}
-
-	public static BibliotecaController getInstance() {
-		if (instance == null) {
-			instance = new BibliotecaController();
-		}
-		return instance;
-	}
-
-	public BorderPane getBorderPaneCentro() {
-		return this.borderPaneCentro;
-	}
+	
 
 	public void setUsuario(Usuario usuario) {
 		BibliotecaController.usuario = usuario;

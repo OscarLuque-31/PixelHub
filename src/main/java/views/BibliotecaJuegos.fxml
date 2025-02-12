@@ -9,45 +9,72 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.BibliotecaJuegosController">
+<BorderPane xmlns="http://javafx.com/javafx/8.0.171"
+	xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="controllers.BibliotecaJuegosController">
 
-    <!-- Top Section -->
-    <top>
-        <GridPane prefWidth="1004.0" BorderPane.alignment="CENTER">
-            <columnConstraints>
-                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="-Infinity" prefWidth="100.0" />
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="100.0" />
-                <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="-Infinity" prefWidth="627.0" />
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="70.0" />
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="70.0" />
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="70.0" />
-            </columnConstraints>
-            <rowConstraints>
-                <RowConstraints prefHeight="50.0" vgrow="SOMETIMES" />
-            </rowConstraints>
-            <children>
-                <ImageView fx:id="imgFiltro" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3">
-                    <cursor>
-                        <Cursor fx:constant="HAND" />
-                    </cursor>
-                </ImageView>
-                <ImageView fx:id="imgAdd" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
-                <ImageView fx:id="imgLupa" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" />
-                <TextField fx:id="textFieldBusqueda" minHeight="-Infinity" minWidth="400.0" prefHeight="40.0" prefWidth="400.0" promptText="Buscar..." GridPane.columnIndex="2" />
-                <ImageView fx:id="imgModoTarjeta" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4">
-                    <cursor>
-                        <Cursor fx:constant="HAND" />
-                    </cursor>
-                </ImageView>
-                <ImageView fx:id="imgModoLista" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5">
-                    <cursor>
-                        <Cursor fx:constant="HAND" />
-                    </cursor>
-                </ImageView>
-            </children>
-            <BorderPane.margin>
-                <Insets />
-            </BorderPane.margin>
-        </GridPane>
-    </top>
+	<!-- Top Section -->
+	<top>
+		<GridPane prefWidth="1004.0" BorderPane.alignment="CENTER">
+			<columnConstraints>
+				<ColumnConstraints halignment="RIGHT"
+					hgrow="SOMETIMES" maxWidth="-Infinity" prefWidth="100.0" />
+				<ColumnConstraints halignment="CENTER"
+					hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity"
+					prefWidth="100.0" />
+				<ColumnConstraints halignment="CENTER"
+					hgrow="ALWAYS" minWidth="-Infinity" prefWidth="627.0" />
+				<ColumnConstraints halignment="CENTER"
+					hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity"
+					prefWidth="70.0" />
+				<ColumnConstraints halignment="CENTER"
+					hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity"
+					prefWidth="70.0" />
+				<ColumnConstraints halignment="CENTER"
+					hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity"
+					prefWidth="70.0" />
+			</columnConstraints>
+			<rowConstraints>
+				<RowConstraints prefHeight="50.0" vgrow="SOMETIMES" />
+			</rowConstraints>
+			<children>
+				<ImageView fx:id="imgFiltro" fitHeight="30.0"
+					fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
+					GridPane.columnIndex="3">
+					<cursor>
+						<Cursor fx:constant="HAND" />
+					</cursor>
+				</ImageView>
+				<ImageView fx:id="imgAdd" fitHeight="30.0" fitWidth="30.0"
+					pickOnBounds="true" preserveRatio="true" />
+				<ImageView fx:id="imgLupa" fitHeight="30.0"
+					fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
+					GridPane.columnIndex="1" />
+				<TextField fx:id="textFieldBusqueda" minHeight="-Infinity"
+					minWidth="400.0" prefHeight="40.0" prefWidth="400.0"
+					promptText="Buscar..." GridPane.columnIndex="2" />
+				<ImageView fx:id="imgModoTarjeta" fitHeight="30.0"
+					fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
+					GridPane.columnIndex="4">
+					<cursor>
+						<Cursor fx:constant="HAND" />
+					</cursor>
+				</ImageView>
+				<ImageView fx:id="imgModoLista" fitHeight="30.0"
+					fitWidth="30.0" pickOnBounds="true" preserveRatio="true"
+					GridPane.columnIndex="5">
+					<cursor>
+						<Cursor fx:constant="HAND" />
+					</cursor>
+				</ImageView>
+			</children>
+			<BorderPane.margin>
+				<Insets />
+			</BorderPane.margin>
+		</GridPane>
+	</top>
+	<center>
+		<BorderPane fx:id="borderPaneCentro"
+			BorderPane.alignment="CENTER"/>
+	</center>
 </BorderPane>
