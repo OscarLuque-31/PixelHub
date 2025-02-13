@@ -1,56 +1,129 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<HBox maxHeight="500.0" maxWidth="900.0" minHeight="500.0" minWidth="900.0" prefHeight="500.0" prefWidth="900.0" style="-fx-background-color: #212E36;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.GameDetailsController">
+<HBox style="-fx-background-color: #212E36;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.GameDetailsController">
    <children>
-      <VBox>
-         <children>
-            <ImageView fx:id="arrowBack" fitHeight="50.0" fitWidth="50.0" onMouseClicked="#turnBack" pickOnBounds="true" preserveRatio="true" />
-         </children>
-      </VBox>
-      <VBox fx:id="detailsContainer">
+      <VBox fx:id="detailsContainer" HBox.hgrow="ALWAYS">
          <children>
             <HBox>
                <children>
-                  <ImageView fx:id="gameImage" fitHeight="250.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="gameImage" fitHeight="275.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" />
                   <VBox>
                      <children>
-                        <Label fx:id="gameTitle" textFill="WHITE" />
+                        <Label fx:id="gameTitle" textFill="WHITE">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </VBox.margin></Label>
                         <TextFlow fx:id="gameDescription">
                            <children>
                               <Text fx:id="descriptionText" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" />
                            </children>
+                           <VBox.margin>
+                              <Insets bottom="10.0" left="10.0" right="10.0" />
+                           </VBox.margin>
                         </TextFlow>
                      </children>
                   </VBox>
                </children>
             </HBox>
-            <HBox maxWidth="850.0" minWidth="850.0" prefWidth="850.0">
+            <GridPane>
+              <columnConstraints>
+                <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+              </rowConstraints>
                <children>
                   <VBox>
                      <children>
-                        <HBox prefWidth="300.0">
+                        <GridPane fx:id="plataformasYRating" alignment="CENTER_RIGHT">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                            <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
                            <children>
                               <HBox fx:id="gamePlatforms" />
-                              <Label fx:id="gameRating" contentDisplay="RIGHT" textFill="#52a5e0" />
+                              <Label fx:id="gameRating" alignment="CENTER_RIGHT" contentDisplay="RIGHT" textFill="#52a5e0" GridPane.columnIndex="1">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font></Label>
                            </children>
-                        </HBox>
-                        <Label contentDisplay="CENTER" prefHeight="18.0" prefWidth="300.0" text="DLC's" textFill="WHITE" />
-                        <VBox fx:id="gameDLC" />
+                           <VBox.margin>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </VBox.margin>
+                        </GridPane>
+                        <Label contentDisplay="CENTER" text="DLC's" textFill="WHITE">
+                           <VBox.margin>
+                              <Insets bottom="10.0" left="10.0" right="10.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font size="18.0" />
+                           </font></Label>
+                        <GridPane style="-fx-background-color: #212E36;">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints vgrow="ALWAYS" />
+                            <RowConstraints vgrow="ALWAYS" />
+                          </rowConstraints>
+                           <children>
+                              <HBox style="-fx-background-color: #212E36;">
+                                 <children>
+                                    <ImageView fx:id="fotoDlcUno" fitHeight="50.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
+                                    <Label fx:id="nombreDlcUno" textFill="WHITE" />
+                                 </children>
+                              </HBox>
+                              <HBox style="-fx-background-color: #212E36;" GridPane.columnIndex="1">
+                                 <children>
+                                    <ImageView fx:id="fotoDlcDos" fitHeight="50.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
+                                    <Label fx:id="nombreDlcDos" textFill="WHITE" />
+                                 </children>
+                              </HBox>
+                              <HBox style="-fx-background-color: #212E36;" GridPane.rowIndex="1">
+                                 <children>
+                                    <ImageView fx:id="fotoDlcTres" fitHeight="50.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
+                                    <Label fx:id="nombreDlcTres" textFill="WHITE" />
+                                 </children>
+                              </HBox>
+                              <HBox style="-fx-background-color: #212E36;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                 <children>
+                                    <ImageView fx:id="fotoDlcCuatro" fitHeight="50.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
+                                    <Label fx:id="nombreDlcCuatro" textFill="WHITE" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </GridPane>
                      </children>
                   </VBox>
-                  <VBox alignment="TOP_RIGHT">
+                  <VBox alignment="TOP_RIGHT" GridPane.columnIndex="1">
                      <children>
-                        <HBox alignment="CENTER">
+                        <HBox alignment="CENTER" style="-fx-spacing: 30px;">
                            <children>
                               <ImageView fx:id="previous" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" />
-                              <Label text="Imágenes" textFill="WHITE" />
+                              <Label text="Imágenes" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font></Label>
                               <ImageView fx:id="next" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" />
                            </children>
                         </HBox>
@@ -58,8 +131,12 @@
                      </children>
                   </VBox>
                </children>
-            </HBox>
+            </GridPane>
+            <HBox maxWidth="850.0" minWidth="850.0" prefWidth="850.0" VBox.vgrow="ALWAYS" />
          </children>
       </VBox>
    </children>
+   <padding>
+      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+   </padding>
 </HBox>

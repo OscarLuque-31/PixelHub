@@ -165,7 +165,7 @@ public class RecomendacionesJuegosController implements Initializable {
 
 		// Crear un ScrollPane para la fila de juegos
 		ScrollPane scrollPaneFila = new ScrollPane(hboxJuegos);
-		scrollPaneFila.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+		scrollPaneFila.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 		scrollPaneFila.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 		scrollPaneFila.setFitToHeight(true);
 		scrollPaneFila.setPannable(true); // Permitir arrastrar con el mouse

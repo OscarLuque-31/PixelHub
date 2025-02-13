@@ -67,6 +67,8 @@ public class BuscarJuegosController implements Initializable {
 		setComboContent();
 		// Establecer plataformas y géneros
 		setMaps();
+		// Traer juegos por defecto
+		buscarJuegos(null);
 	}
 
 	private void setMaps() {
@@ -149,7 +151,7 @@ public class BuscarJuegosController implements Initializable {
 	        contador++;
 
 	        if (contador % 3 == 0) {
-	            contenedorJuegos.setSpacing(20);
+	            contenedorJuegos.setSpacing(30);
 	            contenedorJuegos.setAlignment(Pos.CENTER); 
 	            contenedorJuegos.getChildren().add(filaActual);
 

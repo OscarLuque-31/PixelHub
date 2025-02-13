@@ -85,7 +85,7 @@ public class APIUtils {
 	}
 	
 	public static List<String> getGameScreenshots(int gameId) throws Exception {
-	    String url = Config.API_URL + "games/" + gameId + "/screenshots?key=" + Config.API_KEY;
+	    String url = Config.API_URL + "/" + gameId + Config.API_SCREENSHOTS + Config.API_KEY;
 	    Request request = new Request.Builder().url(url).build();
 	    
 	    try (Response response = client.newCall(request).execute()) {
