@@ -119,6 +119,12 @@ public class Game {
 				+ ", genres=" + genres + ", shortScreenshots=" + shortScreenshots + "]";
 	}
 	
-	
+	public List<Screenshot> getShortScreenshots() {
+	    return shortScreenshots;
+	}
+
+	public void setShortScreenshots(List<Screenshot> shortScreenshots) {
+	    this.shortScreenshots = shortScreenshots;
+	}
     
 }

@@ -15,9 +15,12 @@ public class Capturas {
     private JuegosBiblioteca juego;
 
     @Lob
-    @Column(nullable = false, columnDefinition = "LONGBLOB")
+    @Column(nullable = true, columnDefinition = "LONGBLOB")
     private byte[] captura;
 
+    @Column(name = "url_imagen", nullable = true)
+    private String urlImagen;
+    
     // Getters y Setters
     public Integer getIdCaptura() {
         return idCaptura;
@@ -42,4 +45,14 @@ public class Capturas {
     public void setCaptura(byte[] captura) {
         this.captura = captura;
     }
+
+	public String getUrlImagen() {
+		return urlImagen;
+	}
+
+	public void setUrlImagen(String urlImagen) {
+		this.urlImagen = urlImagen;
+	}
+    
+    
 }
