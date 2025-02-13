@@ -4,22 +4,20 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ProgressIndicator?>
-<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.StackPane?> <!-- Importa StackPane para detalles del juego -->
 
+<BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.RecomendacionesJuegosController">
+    <center>
+        <!-- VBox para mostrar los juegos o los detalles -->
+        <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" style="-fx-background-color: #192229;" BorderPane.alignment="CENTER">
+            <content>
+                <VBox fx:id="contenedorJuegos" alignment="CENTER" style="-fx-background-color: #192229;">
+                </VBox>
+            </content>
+        </ScrollPane>
+    </center>
 
-<BorderPane fx:id="contenedorJuegos" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.RecomendacionesJuegosController">
-   <center>
-   	  <StackPane BorderPane.alignment="CENTER">
-    <ScrollPane fx:id="scrollPane" />
-    <VBox fx:id="pantallaCarga" alignment="CENTER" spacing="10" BorderPane.alignment="CENTER">
-        <Label text="Cargando recomendaciones..." style="-fx-font-size: 18px; -fx-text-fill: white;" />
-        <ProgressIndicator />
-    </VBox>
-</StackPane>
-   </center>
-   <padding>
-      <Insets left="10.0" />
-   </padding>
+    <padding>
+        <Insets left="40.0" />
+    </padding>
 </BorderPane>
