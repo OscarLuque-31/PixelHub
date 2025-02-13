@@ -101,7 +101,7 @@
 
 .lblsAnadirJuego{
 	-fx-text-fill: #52A5E0;
-	-fx-font-family: "Tilt Warp";
+	-fx-font-family: "Tilt Neon";
 	-fx-font-size: 18;
 	
 }
@@ -114,12 +114,7 @@
 	        
 }
 
-#btn{
-	-fx-background-color: #52A5E0;
-	-fx-text-fill: white;
-	-fx-font-family: "Tilt Warp";
-	-fx-font-size: 16;
-}
+
 
 #btnAgregarJuego{
 	-fx-background-color: #52A5E0;
@@ -144,7 +139,7 @@
 	-fx-background-color: #E8EFF3;
 	-fx-text-fill: #000000;
 	-fx-font-family: "Tilt Warp";
-	-fx-font-size: 14;
+	-fx-font-size: 16;
 }
 
 #scrollPane{

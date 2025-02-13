@@ -7,40 +7,38 @@ import jakarta.persistence.*;
 public class Plataformas {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_plataforma;
-    
+    @Column(name = "id_plataforma")
+    private Integer idPlataforma;
+
     @ManyToOne
-    @JoinColumn(name = "id_nuevo_juego", nullable = false)
-    private JuegoNuevo juegoNuevo;
-    
+    @JoinColumn(name = "id_juego", nullable = false)
+    private JuegosBiblioteca juego;
+
     @Column(nullable = false, length = 50)
     private String plataforma;
 
-    
-	public Integer getId_plataforma() {
-		return id_plataforma;
-	}
+    // Getters y Setters
+    public Integer getIdPlataforma() {
+        return idPlataforma;
+    }
 
-	public void setId_plataforma(Integer id_plataforma) {
-		this.id_plataforma = id_plataforma;
-	}
+    public void setIdPlataforma(Integer idPlataforma) {
+        this.idPlataforma = idPlataforma;
+    }
 
-	
+    public JuegosBiblioteca getJuego() {
+        return juego;
+    }
 
-	public JuegoNuevo getJuegoNuevo() {
-		return juegoNuevo;
-	}
+    public void setJuego(JuegosBiblioteca juego) {
+        this.juego = juego;
+    }
 
-	public void setJuegoNuevo(JuegoNuevo juegoNuevo) {
-		this.juegoNuevo = juegoNuevo;
-	}
+    public String getPlataforma() {
+        return plataforma;
+    }
 
-	public String getPlataforma() {
-		return plataforma;
-	}
-
-	public void setPlataforma(String plataforma) {
-		this.plataforma = plataforma;
-	}
-    
+    public void setPlataforma(String plataforma) {
+        this.plataforma = plataforma;
+    }
 }
