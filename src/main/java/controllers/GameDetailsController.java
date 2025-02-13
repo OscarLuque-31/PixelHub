@@ -132,7 +132,6 @@ public class GameDetailsController {
 		} catch (Exception e) {
 
 		}
-		plataformasYRating.setPrefWidth(gameImage.getFitWidth());
 	}
 
 	private HBox crearBloquePlataformas(Game game) {

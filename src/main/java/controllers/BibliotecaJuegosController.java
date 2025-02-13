@@ -1,22 +1,34 @@
 package controllers;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import models.Game;
+import models.JuegosBiblioteca;
 import models.Usuario;
+import utils.APIUtils;
 import utils.NavigationUtils;
 import utils.UtilsViews;
 
@@ -53,9 +65,7 @@ public class BibliotecaJuegosController implements Initializable{
 	
 
 	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-
-				
+	public void initialize(URL location, ResourceBundle resources) {	
 		// Inicializar imágenes
 		initializeImagesBar();
 		//Efectos de hover
@@ -121,8 +131,94 @@ public class BibliotecaJuegosController implements Initializable{
 		imgLupa.setImage(new Image(getClass().getResourceAsStream("/images/lupa.png")));
 	}
 
+	public void mostrarDetallesJuego(JuegosBiblioteca game) {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/GameDetails.fxml"));
+			HBox gameDetails = loader.load();
+
+			// Obtener el controlador del detalle
+			//
+			GameDetailsBibliotecaController controller = loader.getController();
+			controller.setGameDetails(game);
+
+			// Reemplazar el contenido del contenedor principal con la nueva vista
+			contenedorJuegos.getChildren().clear();
+			contenedorJuegos.getChildren().add(gameDetails);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			contenedorJuegos.getChildren().add(new Label("Error al cargar los detalles del juego."));
+		}
+	}
 
 
+	@FXML
+    void buscarJuegos(MouseEvent event) {
+		showGames(textFieldBusqueda.getText()); 
+    }
+	
+	private void showGames(String title) {
+	    scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+	    scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
+	        try {
+	            List<JuegosBiblioteca> games = new ArrayList<>(); //LLAMADA BD --> igualar a resultado
+	        	
+	        	List<VBox> bloques = new ArrayList<>();
+	        	for (JuegosBiblioteca game:games) {
+	        		bloques.add(crearBloqueVideojuego(game));
+				}
+	        	
+	        	mostrarJuegos(bloques);
+
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+
+	}
+	
+	private void mostrarJuegos(List<VBox> bloquesJuegos) {
+	    contenedorJuegos.getChildren().clear();
+
+	    HBox filaActual = new HBox();
+	    filaActual.setSpacing(20);
+	    filaActual.setAlignment(Pos.CENTER); 
+
+	    int contador = 0;
+	    for (VBox bloque:bloquesJuegos) {
+	        filaActual.getChildren().add(bloque);
+	        contador++;
+
+	        if (contador % 3 == 0) {
+	            contenedorJuegos.setSpacing(30);
+	            contenedorJuegos.setAlignment(Pos.CENTER); 
+	            contenedorJuegos.getChildren().add(filaActual);
+
+	            filaActual = new HBox();
+	            filaActual.setSpacing(20);
+	            filaActual.setAlignment(Pos.CENTER); 
+	        }
+	    }
+	    if (!filaActual.getChildren().isEmpty()) {
+	        contenedorJuegos.getChildren().add(filaActual);
+	    }
+	}
+	
+	private VBox crearBloqueVideojuego(JuegosBiblioteca game) {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/GameItemCuadriculaBiblioteca.fxml"));
+			VBox gameItem = loader.load();
+
+			// Obtener el controlador del FXML
+			GameItemCuadriculaBibliotecaController controller = loader.getController();
+			controller.setGameData(game);
+			controller.setGamesController(this);
+
+			return gameItem;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new VBox(new Label("Error cargando juego"));
+		}
+	}
 
 }
