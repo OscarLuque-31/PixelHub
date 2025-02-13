@@ -103,9 +103,6 @@ public class GameItemCuadriculaController implements Initializable{
                 Game game = APIUtils.getGameDetails(gameId);
                 List<String> screenshots = APIUtils.getGameScreenshots(gameId);
                 List<Game> dlcs = APIUtils.getGameDLCs(gameId);
-                for (Game juego:dlcs) {
-                	System.out.println(juego.getName());
-                }
                 buscarJuegosController.mostrarDetallesJuego(game, screenshots, dlcs);
                 
             } catch (Exception e) {
