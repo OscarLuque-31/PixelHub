@@ -2,7 +2,9 @@ package controllers;
 
 import java.io.File;
 import java.net.URL;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -105,6 +107,8 @@ public class AnadirJuegoBibliotecaController implements Initializable {
 
 		// Configurar el botón para agregar el juego
 		btnAgregarJuego.setOnAction(event -> agregarJuegoABaseDeDatos());
+		btnAnadirJuegoCancelar.setOnAction(event -> limpiarCampos());
+
 	}
 
 	private void rellenarDropdowns() {
@@ -222,8 +226,8 @@ public class AnadirJuegoBibliotecaController implements Initializable {
 		} else {
 			try {
 				int rating = Integer.parseInt(txtRating.getText());
-				if (rating < 0 || rating > 10) {
-					errores.append("El rating debe estar entre 0 y 10.\n");
+				if (rating < 0 || rating > 5) {
+					errores.append("El rating debe estar entre 0 y 5.\n");
 				}
 			} catch (NumberFormatException e) {
 				errores.append("El rating debe ser un número.\n");
@@ -247,10 +251,8 @@ public class AnadirJuegoBibliotecaController implements Initializable {
 		if (deseado && comprado && jugado) {
 			errores.append("No puede estar comprado, jugado y deseado al mismo tiempo.\n");
 		} else if (deseado && comprado) {
-			errores.append("No puede estar comprado y deseado al mismo tiempo.\n");
-		} else if (deseado && jugado) {
-			errores.append("No puede estar jugado y deseado al mismo tiempo.\n");
-		}
+			errores.append("No puede estar comprado y deseado \nal mismo tiempo.\n");
+		} 
 
 		// Mostrar errores si existen
 		if (errores.length() > 0) {
@@ -312,6 +314,7 @@ public class AnadirJuegoBibliotecaController implements Initializable {
 	        newGame.setTitulo(txtTitulo.getText());
 	        newGame.setDescripcion(txtDescripcion.getText());
 	        newGame.setRating(Integer.parseInt(txtRating.getText()));
+	        newGame.setFechaAñadido(new java.util.Date());
 	        newGame.setComentario(txtComentario.getText());
 	        newGame.setComprado(checkBoxComprado.isSelected());
 	        newGame.setDeseado(checkBoxDeseado.isSelected());

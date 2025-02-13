@@ -28,7 +28,6 @@
 }
 
 .dialog-pane .content {
-    -fx-text-fill: #E63946;        /* Color del texto del contenido */
     -fx-font-size: 15.0px;         /* Tamaño de la fuente del contenido */
     -fx-font-family: "Tilt Neon"; /* Fuente personalizada para el contenido */
     -fx-padding: 10.0;             /* Espaciado interno */
@@ -51,3 +50,24 @@
     -fx-background-color: #0095FF;    /* Fondo al pasar el ratón */
     -fx-font-family: "Tilt Neon";     /* Fuente personalizada */
 }
+
+/* Estilo para alertas de ERROR */
+.alert-error .content {
+    -fx-text-fill: #ff0000; /* Texto en rojo */
+}
+
+
+
+/* Estilo para alertas de WARNING */
+.alert-warning .content {
+    -fx-text-fill: #ffa500; /* Texto en naranja */
+}
+
+
+
+/* Estilo para alertas de INFO */
+.alert-info .content {
+    -fx-text-fill: #008000; /* Texto en verde */
+}
+
+

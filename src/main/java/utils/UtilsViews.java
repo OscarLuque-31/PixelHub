@@ -124,6 +124,21 @@ public class UtilsViews {
 		DialogPane dialogPane = alert.getDialogPane();
 		dialogPane.getStylesheets().add(clase.getResource("/styles/styleDialog.css").toExternalForm());
 		dialogPane.getStyleClass().add("dialog-pane");
+		
+		 // Asignar una clase CSS específica según el tipo de alerta
+	    switch (alertType) {
+	        case ERROR:
+	            dialogPane.getStyleClass().add("alert-error");
+	            break;
+	        case WARNING:
+	            dialogPane.getStyleClass().add("alert-warning");
+	            break;
+	        case INFORMATION:
+	            dialogPane.getStyleClass().add("alert-info");
+	            break;
+		default:
+			break;
+	    }
 
 		// Hacer transparente el Stage
 		Stage stage = (Stage) dialogPane.getScene().getWindow();
