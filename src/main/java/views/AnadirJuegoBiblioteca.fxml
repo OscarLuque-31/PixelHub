@@ -35,12 +35,12 @@
                      <VBox.margin>
                         <Insets left="20.0" top="20.0" />
                      </VBox.margin></ImageView>
-                  <HBox alignment="CENTER" maxWidth="400.0" minHeight="45.0" prefHeight="45.0" style="-fx-background-color: #415A6C; -fx-background-radius: 20px;" VBox.vgrow="ALWAYS">
+                  <HBox alignment="CENTER" maxWidth="400.0" minHeight="45.0" prefHeight="45.0" spacing="40.0" style="-fx-background-color: #415A6C; -fx-background-radius: 20px;" VBox.vgrow="ALWAYS">
                      <children>
-                        <ComboBox fx:id="dropDownPlataformas" minHeight="35.0" prefWidth="180.0" promptText="Plataformas" styleClass="comboBox" />
-                        <ComboBox fx:id="dropDownGenero" minHeight="35.0" prefWidth="150.0" promptText="Género" styleClass="comboBox">
+                        <ComboBox fx:id="dropDownPlataformas" minHeight="35.0" prefWidth="180.0" promptText="Plataformas" style="-fx-background-radius: 20px;" styleClass="comboBox" />
+                        <ComboBox fx:id="dropDownGenero" minHeight="35.0" prefWidth="150.0" promptText="Género" style="-fx-background-radius: 20;" styleClass="comboBox">
                            <HBox.margin>
-                              <Insets left="50.0" />
+                              <Insets />
                            </HBox.margin></ComboBox>
                      </children>
                      <VBox.margin>
