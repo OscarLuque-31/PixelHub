@@ -19,6 +19,10 @@ public class JuegosBiblioteca {
 
     @Column(name = "fecha_añadido")
     private Date fechaAñadido;
+    
+    @Column(columnDefinition = "TEXT")
+    private String url_imagen;
+
 
     @Column(nullable = false)
     private Integer rating;
@@ -42,7 +46,7 @@ public class JuegosBiblioteca {
     private Boolean deseado;
 
     @Lob
-    @Column(nullable = false, columnDefinition = "LONGBLOB")
+    @Column(columnDefinition = "LONGBLOB")
     private byte[] imagen;
 
     @OneToMany(mappedBy = "juego", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -74,6 +78,15 @@ public class JuegosBiblioteca {
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
+    
+    public String getUrlImagen() {
+        return url_imagen;
+    }
+
+    public void setUrlImagen(String urlImagen) {
+        this.url_imagen = urlImagen;
+    }
+
 
     public Date getFechaAñadido() {
         return fechaAñadido;

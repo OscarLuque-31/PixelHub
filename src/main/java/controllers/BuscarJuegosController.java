@@ -217,6 +217,7 @@ public class BuscarJuegosController implements Initializable {
 			HBox gameDetails = loader.load();
 
 			// Obtener el controlador del detalle
+			//
 			GameDetailsController controller = loader.getController();
 			controller.setGameDetails(game, screenshots, dlcs);
 
