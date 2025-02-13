@@ -177,11 +177,11 @@ public class LoginController {
 						// Usuario y contraseña correctos
 						NavigationUtils.navigateToBibliotecaWithUser(stage, "/views/Biblioteca.fxml", "Biblioteca", usuario);
 					} else {						
-						UtilsViews.mostrarDialogo(Alert.AlertType.INFORMATION,getClass(),"No se ha encontrado al usuario","Por favor, compruebe que los datos son correctos");
+						UtilsViews.mostrarDialogo(Alert.AlertType.WARNING,getClass(),"No se ha encontrado al usuario","Por favor, compruebe que los datos son correctos");
 					}
 
 				} catch (IllegalArgumentException e) {	
-					UtilsViews.mostrarDialogo(Alert.AlertType.INFORMATION,getClass(),"No se ha encontrado al usuario","Por favor, compruebe que los datos son correctos");
+					UtilsViews.mostrarDialogo(Alert.AlertType.WARNING,getClass(),"No se ha encontrado al usuario","Por favor, compruebe que los datos son correctos");
 				}
 			}
 		});
