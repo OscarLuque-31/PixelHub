@@ -43,12 +43,8 @@
 }
 
 .btn-activo {
-    -fx-background-color: #415A6C !important; /* Color de fondo */
+    -fx-background-color: #415A6C; /* Color de fondo */
     -fx-text-fill: white; /* Color del texto */
-}
-
-.btn-activo:hover {
-    -fx-background-color: #415A6C !important; /* Asegurar que el hover no lo cambie */
 }
 
 

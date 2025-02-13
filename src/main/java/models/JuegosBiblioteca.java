@@ -20,7 +20,7 @@ public class JuegosBiblioteca {
     @Column(name = "fecha_añadido")
     private Date fechaAñadido;
     
-    @Column(columnDefinition = "TEXT")
+    @Column(name = "url_imagen", nullable = true)
     private String url_imagen;
 
 

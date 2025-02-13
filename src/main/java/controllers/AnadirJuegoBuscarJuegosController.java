@@ -1,6 +1,8 @@
 package controllers;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import org.hibernate.Session;
@@ -19,8 +21,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import models.Capturas;
 import models.Game;
 import models.JuegosBiblioteca;
+import utils.APIUtils;
 import utils.HibernateUtil;
 import utils.UtilsViews;
 
@@ -76,6 +80,8 @@ public class AnadirJuegoBuscarJuegosController implements Initializable {
 	        primaryStage.setX((screenWidth - primaryStage.getWidth()) / 2);
 	        primaryStage.setY((screenHeight - primaryStage.getHeight()) / 2);
 	    }
+	    
+	    hoverEffect();
 	}
 	
 	private void cerrarVentana(){
@@ -139,6 +145,11 @@ public class AnadirJuegoBuscarJuegosController implements Initializable {
 
 		return true;
 	}
+	
+	public void hoverEffect() {
+		UtilsViews.hoverEffectButton(btnAgregar, "#0095FF", "#52A5E0");
+		UtilsViews.hoverEffectButton(btnCancelar, "#9E181B", "#F24245");
+	}
 
 	// Método para limpiar los campos del formulario
 	private void limpiarCampos() {
@@ -153,67 +164,85 @@ public class AnadirJuegoBuscarJuegosController implements Initializable {
 
 	// Método para agregar el juego a la base de datos
 	private void agregarJuegoABaseDeDatos() {
-		if (!validarCampos()) {
-			return; // Si los campos no son válidos, no continuamos
-		}
+	    if (!validarCampos()) {
+	        return; // Si los campos no son válidos, no continuamos
+	    }
 
-		System.out.println("GUARDAR JUEGO");
-		System.out.println("-------------");
+	    Session sesion = null;
+	    try {
+	        sesion = HibernateUtil.getSession();
+	        JuegosBibliotecaDaoImpl juegoDao = new JuegosBibliotecaDaoImpl(sesion);
 
-		Session sesion = null;
-		try {
-			// Iniciar sesión
-			sesion = HibernateUtil.getSession();
+	        boolean existe = juegoDao.existeJuegoEnBiblioteca(BibliotecaController.getUsuario(), game.getName());
+	        if (existe) {
+	            UtilsViews.mostrarDialogo(Alert.AlertType.WARNING, getClass(), "Juego duplicado", "Este juego ya está en tu biblioteca.");
+	            return;
+	        }
 
-			// Verifica si ya existe una transacción activa antes de iniciar una nueva
-			if (!sesion.getTransaction().isActive()) {
-				sesion.beginTransaction();
-			}
+	        if (!sesion.getTransaction().isActive()) {
+	            sesion.beginTransaction();
+	        }
 
-			// Crear el objeto JuegosBiblioteca con los datos
-			JuegosBiblioteca newGame = new JuegosBiblioteca();
-			newGame.setTitulo(game.getName()); // Usamos el nombre del objeto Game
-			newGame.setDescripcion(game.getDescription()); // Agregar la descripción, si la tienes
-			newGame.setRating(Integer.parseInt(txtFRating.getText()));
-			newGame.setFechaAñadido(new java.util.Date());
-			newGame.setComentario(txtFComentario.getText());
-			newGame.setComprado(checkBoxComprado.isSelected());
-			newGame.setDeseado(checkBoxDeseado.isSelected());
-			newGame.setJugado(checkBoxJugado.isSelected());
-			newGame.setUrlImagen(game.getBackgroundImage());
-			newGame.setUsuario(BibliotecaController.getUsuario()); // Asignar el usuario actual
+	        // Crear y guardar el juego en la biblioteca
+	        JuegosBiblioteca newGame = new JuegosBiblioteca();
+	        newGame.setTitulo(game.getName());
+	        newGame.setDescripcion(game.getDescription());
+	        newGame.setRating(Integer.parseInt(txtFRating.getText()));
+	        newGame.setFechaAñadido(new java.util.Date());
+	        newGame.setComentario(txtFComentario.getText());
+	        newGame.setComprado(checkBoxComprado.isSelected());
+	        newGame.setDeseado(checkBoxDeseado.isSelected());
+	        newGame.setJugado(checkBoxJugado.isSelected());
+	        newGame.setUrlImagen(game.getBackgroundImage());
+	        newGame.setUsuario(BibliotecaController.getUsuario());
 
-			// Insertar el juego en la base de datos
-			JuegosBibliotecaDaoImpl juegoNuevoDao = new JuegosBibliotecaDaoImpl(sesion);
-			juegoNuevoDao.insert(newGame); // CascadeType.ALL guardará las capturas automáticamente
+	        // Lista para almacenar las capturas
+	        List<Capturas> capturasList = new ArrayList<>();
 
-			// Realizar commit
-			sesion.getTransaction().commit();
+	        // Recorrer las capturas de `Game` y agregarlas a `Capturas`
+	        List<String> screenshots = APIUtils.getGameScreenshots(game.getId());
 
-			// Mostrar mensaje de éxito
-			UtilsViews.mostrarDialogo(Alert.AlertType.INFORMATION, getClass(), "Éxito", "Juego agregado correctamente");
+	        if (screenshots == null || screenshots.isEmpty()) {
+	            System.out.println("No hay capturas disponibles para este juego.");
+	        } else {
+	            for (String screenshotUrl : screenshots) {
+	                Capturas captura = new Capturas();
+	                captura.setJuego(newGame);
+	                captura.setUrlImagen(screenshotUrl); // Guardar solo la URL
 
-			// Cerrar la ventana actual después de agregar el juego
-			Stage stage = (Stage) btnAgregar.getScene().getWindow();
-			stage.close();
+	                // No descargamos la imagen, solo guardamos la URL
+	                captura.setCaptura(null); // Opción para no almacenar la imagen en bytes
 
+	                capturasList.add(captura);
+	            }
 
-		} catch (Exception e) {
-			// Realizar rollback en caso de error
-			if (sesion != null && sesion.getTransaction().isActive()) {
-				sesion.getTransaction().rollback();
-			}
+	            newGame.setCapturas(capturasList);
+	        }
 
-			// Mostrar mensaje de error
-			UtilsViews.mostrarDialogo(Alert.AlertType.ERROR, getClass(), "Error", "No se pudo agregar el juego: " + e.getMessage());
-			e.printStackTrace(); // Imprimir el stack trace para depuración
-		} finally {
-			// Cerrar la sesión si es necesario
-			if (sesion != null && sesion.isOpen()) {
-				sesion.close();
-			}
-		}
+	        // Guardar el juego con las capturas
+	        juegoDao.insert(newGame);
+	        sesion.getTransaction().commit();
+
+	        UtilsViews.mostrarDialogo(Alert.AlertType.INFORMATION, getClass(), "Éxito", "Juego agregado correctamente");
+
+	        // Cerrar la ventana actual
+	        Stage stage = (Stage) btnAgregar.getScene().getWindow();
+	        stage.close();
+
+	    } catch (Exception e) {
+	        if (sesion != null && sesion.getTransaction().isActive()) {
+	            sesion.getTransaction().rollback();
+	        }
+	        UtilsViews.mostrarDialogo(Alert.AlertType.ERROR, getClass(), "Error", "No se pudo agregar el juego: " + e.getMessage());
+	        e.printStackTrace();
+	    } finally {
+	        if (sesion != null && sesion.isOpen()) {
+	            sesion.close();
+	        }
+	    }
 	}
+
+
 
 	public void setPrimaryStage(Stage stage) {
 	    this.primaryStage = stage;

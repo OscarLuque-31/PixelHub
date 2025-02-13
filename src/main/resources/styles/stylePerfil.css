@@ -1,48 +1,126 @@
-@import url('https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=Tilt+Neon&family=Tilt+Warp&display=swap'); 
-
+/* Importación de fuentes */
+@import url('https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=Tilt+Neon&family=Tilt+Warp&display=swap');
 
 /* Estilos generales para el contenedor VBox */
 #vboxContainer {
-    -fx-background-color: #212E36; /* Fondo de color suave */
+    -fx-background-color: #212E36; /* Fondo oscuro */
     -fx-padding: 20px;
     -fx-spacing: 15px; /* Espaciado entre los elementos */
+    -fx-background-radius: 20; /* Esquinas redondeadas */
 }
 
 .vboxContainer {
-    -fx-background-color: #212E36; /* Fondo de color suave */
+    -fx-background-color: #212E36; /* Fondo oscuro */
     -fx-padding: 20px;
-    -fx-spacing: 15px; /* Espaciado entre los elementos */
+    -fx-spacing: 15px;
 }
 
-
+/* Estilos para el Label de Perfil */
 #lblPerfil {
-	-fx-text-fill: #52A5E0;
-	-fx-font-family: "Silkscreen";
-	-fx-font-size: 30;
+    -fx-text-fill: #52A5E0; /* Color de texto azul */
+    -fx-font-family: "Silkscreen";
+    -fx-font-size: 50px;
 }
 
-#lblPreferencias{
-	-fx-text-fill: #52A5E0;
-	-fx-font-family: "Silkscreen";
-	-fx-font-size: 20;
+/* Estilos para el Label de Preferencias */
+#lblPreferencias {
+    -fx-text-fill: #52A5E0;
+    -fx-font-family: "Silkscreen";
+    -fx-font-size: 30px;
 }
 
-.lblGeneroPlataforma{
-	-fx-text-fill: #52A5E0;
-	-fx-font-family: "Silkscreen";
-	-fx-font-size: 18;
+/* Estilo para los Labels de Género y Plataforma */
+.lblGeneroPlataforma {
+    -fx-text-fill: #52A5E0;
+    -fx-font-family: "Silkscreen";
+    -fx-font-size: 18px;
 }
 
-.lblsEspecificaciones{
-	-fx-text-fill: #52A5E0;
-	-fx-font-family: "Tilt Warp";
-	-fx-font-size: 18;
+/* Estilos para los Labels de Especificaciones */
+.lblsEspecificaciones {
+    -fx-text-fill: #52A5E0;
+    -fx-font-family: "Tilt Warp";
+    -fx-font-size: 18px;
 }
 
-.txtFDatos{
-	-fx-text-fill: #52A5E0;
-	-fx-font-family: "Tilt Neon";
-	-fx-font-size: 16;
-	-fx-background-radius: 5;
+/* Estilo para los TextFields (Campos de texto) */
+.txtFDatos {
+    -fx-text-fill: #52A5E0;
+    -fx-font-family: "Tilt Neon"; /* Cambiado a Tilt Neon */
+    -fx-font-size: 16px;
+    -fx-background-color: #2c3e50; /* Fondo oscuro para los campos de texto */
+    -fx-background-radius: 5px;
+    -fx-border-color: #34495e; /* Borde más suave */
+    -fx-border-radius: 5px; /* Esquinas redondeadas */
 }
 
+#listViewGenero, #listViewPlataforma {
+    -fx-background-color: #2c3e50; /* Fondo oscuro para el ListView */
+    -fx-border-color: #34495e; /* Borde gris oscuro */
+    -fx-border-radius: 10px; /* Esquinas redondeadas */
+    -fx-background-radius: 10px;
+    -fx-padding: 10px;
+    -fx-font-size: 14px;
+    -fx-font-family: "Tilt Neon"; /* Aplicado Tilt Neon a todo el ListView */
+    -fx-control-inner-background: transparent;
+    -fx-scroll-bar-policy: NEVER; /* No mostrar barras de desplazamiento */
+}
+
+
+/* Ocultar la barra de desplazamiento vertical en los ListView */
+.list-view .scroll-bar:vertical {
+    -fx-opacity: 0;
+    -fx-pref-width: 0;
+    -fx-padding: 0;
+}
+
+/* Ocultar la barra de desplazamiento horizontal en los ListView */
+.list-view .scroll-bar:horizontal {
+    -fx-opacity: 0;
+    -fx-pref-height: 0;
+    -fx-padding: 0;
+}
+
+/* Asegurarse de que el contenido del ListView no se desborde */
+.list-view {
+    -fx-padding: 0;
+}
+
+/* Estilo para los elementos dentro del ListView */
+.list-view .list-cell {
+    -fx-background-color: transparent; /* Fondo transparente por defecto */
+    -fx-text-fill: #52A5E0; /* Color de texto azul */
+    -fx-font-family: "Tilt Neon"; /* Fuente Tilt Neon para cada celda */
+    -fx-padding: 5px;
+}
+
+/* Efecto cuando se pasa el mouse sobre un item del ListView */
+.list-view .list-cell:hover {
+    -fx-background-color: #415a6c; /* Color de fondo más claro al pasar el mouse */
+    -fx-text-fill: white; /* Cambiar el texto a blanco cuando el mouse pasa */
+}
+
+/* Estilo cuando el item es seleccionado en el ListView */
+.list-view .list-cell:selected {
+    -fx-background-color: #5e9bff; /* Fondo azul claro cuando está seleccionado */
+    -fx-text-fill: white; /* Texto blanco */
+}
+
+/* Estilo cuando el ListView está vacío o no tiene items */
+.list-view .list-cell:empty {
+    -fx-background-color: transparent; /* Fondo transparente si no hay items */
+}
+
+.password-field {
+    -fx-text-fill: #52A5E0;
+    -fx-font-family: "Tilt Neon";
+    -fx-font-size: 12px;
+    -fx-background-color: #2c3e50;
+    -fx-background-radius: 5px;
+    -fx-border-color: #34495e;
+    -fx-border-radius: 5px;
+}
+
+#juegosAnadidos, #creacionFecha{
+	-fx-text-fill: #E8EFF3
+}
