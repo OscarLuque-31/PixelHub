@@ -3,6 +3,8 @@ package dao;
 import models.JuegosBiblioteca;
 import models.Usuario;
 
+import java.util.List;
+
 import org.hibernate.Session;
 
 public class JuegosBibliotecaDaoImpl extends CommonDaoImpl<JuegosBiblioteca> implements JuegosBibliotecaDao {
@@ -31,6 +33,18 @@ public class JuegosBibliotecaDaoImpl extends CommonDaoImpl<JuegosBiblioteca> imp
         
         // Devolver el número de juegos como un entero
         return count != null ? count.intValue() : 0;
+    }
+    
+    public List<JuegosBiblioteca> searchAll(Integer idUsuario) {
+        // Consulta HQL para obtener todos los juegos asociados a un usuario
+        String hql = "FROM JuegosBiblioteca j WHERE j.usuario.id = :idUsuario";
+        
+        // Ejecutar la consulta y obtener la lista de juegos
+        List<JuegosBiblioteca> juegos = session.createQuery(hql, JuegosBiblioteca.class)
+                .setParameter("idUsuario", idUsuario)
+                .getResultList();
+        
+        return juegos; // Devolver la lista de juegos
     }
 
 }
