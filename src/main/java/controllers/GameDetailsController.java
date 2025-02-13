@@ -1,6 +1,7 @@
 package controllers;
 
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
 
 import org.jsoup.Jsoup;
@@ -14,6 +15,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -25,20 +27,65 @@ import utils.NavigationUtils;
 
 public class GameDetailsController {
 
+    @FXML 
+    private VBox detailsContainer;
+    
+    @FXML 
+    private VBox gameDLC;
+    
+    @FXML 
+    private TextFlow gameDescription;
+    
+    @FXML 
+    private Text descriptionText;
+    
+    @FXML 
+    private ImageView gameImage;
+    
+    @FXML 
+    private HBox gamePlatforms;
+    
+    @FXML 
+    private Label gameRating;
+    
+    @FXML 
+    private ImageView gameScreenshots;
+    
+    @FXML 
+    private Label gameTitle;
+    
+    @FXML 
+    private ImageView next;
+    
+    @FXML 
+    private ImageView previous;
+    
+    @FXML
+    private Label nombreDlcCuatro;
 
+    @FXML
+    private Label nombreDlcDos;
 
-    @FXML private ImageView arrowBack;
-    @FXML private VBox detailsContainer;
-    @FXML private VBox gameDLC;
-    @FXML private TextFlow gameDescription;
-    @FXML private Text descriptionText;
-    @FXML private ImageView gameImage;
-    @FXML private HBox gamePlatforms;
-    @FXML private Label gameRating;
-    @FXML private ImageView gameScreenshots;
-    @FXML private Label gameTitle;
-    @FXML private ImageView next;
-    @FXML private ImageView previous;
+    @FXML
+    private Label nombreDlcTres;
+
+    @FXML
+    private Label nombreDlcUno;
+
+    @FXML
+    private ImageView fotoDlcCuatro;
+
+    @FXML
+    private ImageView fotoDlcDos;
+
+    @FXML
+    private ImageView fotoDlcTres;
+
+    @FXML
+    private ImageView fotoDlcUno;
+    
+    @FXML
+    private GridPane plataformasYRating;
     
     private BuscarJuegosController buscarJuegosController;
     private int gameId;
@@ -47,7 +94,6 @@ public class GameDetailsController {
 		gameTitle.setText(game.getName());
 		descriptionText.setText(extractSpanishDescription(game.getDescription()));
 		gameRating.setText("⭐ " + game.getRating());
-
 		gamePlatforms.getChildren().add(crearBloquePlataformas(game));
 
 		try {
@@ -56,13 +102,23 @@ public class GameDetailsController {
 			gameImage.setImage(new Image(getClass().getResource("/images/error.png").toExternalForm()));
 		}
 
-		gameImage.setFitWidth(300); // Ancho fijo
-		gameImage.setFitHeight(250); // Alto fijo
-		gameImage.setPreserveRatio(false); // Evita que la imagen se ajuste al tamaño cambiando su relación de aspecto
+
+		gameImage.setPreserveRatio(true); // Evita que la imagen se ajuste al tamaño cambiando su relación de aspecto
 		gameImage.setSmooth(true); // Suaviza la imagen
 		gameImage.setCache(true);  // Optimiza la carga
 
-		arrowBack.setImage(new Image(getClass().getResource("/images/arrow_back.png").toExternalForm()));
+		previous.setImage(new Image(getClass().getResource("/images/imagenAnterior.png").toExternalForm()));
+		next.setImage(new Image(getClass().getResource("/images/siguienteImagen.png").toExternalForm()));
+		
+		try {
+			setDLCs(dlcs.get(0), 1, fotoDlcUno, nombreDlcUno);
+			setDLCs(dlcs.get(1), 2, fotoDlcDos, nombreDlcDos);
+			setDLCs(dlcs.get(2), 3, fotoDlcTres, nombreDlcTres);
+			setDLCs(dlcs.get(3), 4, fotoDlcCuatro, nombreDlcCuatro);
+		} catch (Exception e) {
+			
+		}
+		plataformasYRating.setPrefWidth(gameImage.getFitWidth());
 	}
 
 	private HBox crearBloquePlataformas(Game game) {
@@ -80,7 +136,17 @@ public class GameDetailsController {
 			return new HBox(new Label("Error cargando juego"));
 		}
 	}
-
+	
+	private void setDLCs(Game dlc, int index, ImageView cuadroFoto, Label nombre) {
+		try {
+			cuadroFoto.setImage(new Image(dlc.getBackgroundImage()));
+			nombre.setText(dlc.getName());
+		} catch (Exception e){
+			cuadroFoto.setImage(new Image(getClass().getResource("/images/error.png").toExternalForm()));
+			nombre.setText("DLC no encontrado");
+		}
+	}
+	
 
 	private String extractSpanishDescription(String description) {
 		// Usa Jsoup para limpiar el HTML y extraer texto
@@ -91,7 +157,7 @@ public class GameDetailsController {
 		int startIndex = plainText.indexOf(startMarker);
 
 		if (startIndex == -1) {
-			return "No se ha encontrado ninguna descripción del juego";
+			return "No se ha encontrado ninguna descripción del juego en español";
 		}
 
 		// Extrae el texto desde "Español"
