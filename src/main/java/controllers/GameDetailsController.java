@@ -93,6 +93,9 @@ public class GameDetailsController {
 	private int posicionCapturas;
 
 	public void setGameDetails(Game game, List<String> screenshots, List<Game> dlcs) {
+    	detailsContainer.getStylesheets().add(getClass().getResource("/styles/styleGameDetails.css").toExternalForm());
+
+		
 		gameTitle.setText(game.getName());
 		descriptionText.setText(extractSpanishDescription(game.getDescription()));
 		gameRating.setText("⭐ " + game.getRating());
@@ -116,6 +119,11 @@ public class GameDetailsController {
 		this.screenshots = screenshots;
 		setCaptura("");
 
+		setDLCsPorDefecto(fotoDlcUno, nombreDlcUno);
+		setDLCsPorDefecto(fotoDlcDos, nombreDlcDos);
+		setDLCsPorDefecto(fotoDlcTres, nombreDlcTres);
+		setDLCsPorDefecto(fotoDlcCuatro, nombreDlcCuatro);
+		
 		try {
 			setDLCs(dlcs.get(0), fotoDlcUno, nombreDlcUno);
 			setDLCs(dlcs.get(1), fotoDlcDos, nombreDlcDos);
@@ -142,19 +150,26 @@ public class GameDetailsController {
 			return new HBox(new Label("Error cargando juego"));
 		}
 	}
+	
+
+	private void setDLCsPorDefecto(ImageView cuadroFoto, Label nombre) {
+		cuadroFoto.setImage(new Image(getClass().getResource("/images/error.png").toExternalForm()));
+		nombre.setText("DLC no encontrado");
+		
+		cuadroFoto.setFitWidth(80);
+		cuadroFoto.setFitHeight(50);
+		cuadroFoto.setPreserveRatio(false);
+		setImageBorderRadius(cuadroFoto, 5);
+	}
 
 	private void setDLCs(Game dlc, ImageView cuadroFoto, Label nombre) {
 		try {
 			cuadroFoto.setImage(new Image(dlc.getBackgroundImage()));
 			nombre.setText(dlc.getName());
 		} catch (Exception e){
-			cuadroFoto.setImage(new Image(getClass().getResource("/images/error.png").toExternalForm()));
-			nombre.setText("DLC no encontrado");
+			setDLCsPorDefecto(cuadroFoto, nombre);
 		}
-		cuadroFoto.setFitWidth(80);
-		cuadroFoto.setFitHeight(50);
-		cuadroFoto.setPreserveRatio(false);
-		setImageBorderRadius(cuadroFoto, 5);
+
 	}
 
 	private void setCaptura(String direction) {
