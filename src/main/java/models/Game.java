@@ -111,5 +111,14 @@ public class Game {
 	public void setGenres(List<Genre> genres) {
 		this.genres = genres;
 	}
+
+	@Override
+	public String toString() {
+		return "Game [id=" + id + ", name=" + name + ", released=" + released + ", background_image=" + background_image
+				+ ", description=" + description + ", rating=" + rating + ", parent_platforms=" + parent_platforms
+				+ ", genres=" + genres + ", shortScreenshots=" + shortScreenshots + "]";
+	}
+	
+	
     
 }

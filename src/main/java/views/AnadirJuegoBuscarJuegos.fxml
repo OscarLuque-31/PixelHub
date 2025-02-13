@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
@@ -12,23 +13,26 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="588.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AnadirJuegoBuscarJuegosController">
+<VBox fx:id="vboxPane" alignment="TOP_CENTER" prefHeight="555.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AnadirJuegoBuscarJuegosController">
    <children>
-      <VBox alignment="CENTER" prefHeight="105.0" prefWidth="600.0">
+      <VBox alignment="CENTER" prefHeight="105.0" prefWidth="600.0" VBox.vgrow="ALWAYS">
          <children>
             <Label fx:id="lblAnadirJuegoTitulo" text="Añadir" />
          </children>
+         <VBox.margin>
+            <Insets left="20.0" right="20.0" top="20.0" />
+         </VBox.margin>
       </VBox>
       <GridPane prefHeight="175.0" prefWidth="600.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints fillWidth="false" halignment="CENTER" hgrow="ALWAYS" maxWidth="482.0" minWidth="368.0" prefWidth="390.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="295.0" minWidth="10.0" prefWidth="210.0" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints valignment="TOP" vgrow="ALWAYS" />
         </rowConstraints>
          <children>
-            <ImageView fx:id="imagenJuego" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="imagenJuego" fitHeight="209.0" fitWidth="354.0" pickOnBounds="true" preserveRatio="true" />
             <GridPane GridPane.columnIndex="1">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -42,56 +46,89 @@
                      <children>
                         <HBox>
                            <children>
-                              <Label text="Comprado" />
+                              <Label styleClass="lblsAnadirJuego" text="Comprado">
+                                 <HBox.margin>
+                                    <Insets right="5.0" />
+                                 </HBox.margin></Label>
                               <CheckBox fx:id="checkBoxComprado" mnemonicParsing="false" />
                            </children>
                         </HBox>
                         <HBox>
                            <children>
-                              <Label text="Deseado" />
+                              <Label styleClass="lblsAnadirJuego" text="Deseado">
+                                 <HBox.margin>
+                                    <Insets right="5.0" />
+                                 </HBox.margin></Label>
                               <CheckBox fx:id="checkBoxDeseado" mnemonicParsing="false" />
                            </children>
                         </HBox>
                         <HBox>
                            <children>
-                              <Label text="Jugado" />
+                              <Label styleClass="lblsAnadirJuego" text="Jugado">
+                                 <HBox.margin>
+                                    <Insets right="5.0" />
+                                 </HBox.margin></Label>
                               <CheckBox fx:id="checkBoxJugado" mnemonicParsing="false" />
                            </children>
                         </HBox>
                      </children>
+                     <GridPane.margin>
+                        <Insets left="20.0" />
+                     </GridPane.margin>
                   </VBox>
                   <HBox GridPane.rowIndex="1">
                      <children>
-                        <Label text="Rating" />
-                        <TextField fx:id="txtFRating" prefHeight="25.0" prefWidth="27.0" />
+                        <Label styleClass="lblsAnadirJuego" text="Rating">
+                           <HBox.margin>
+                              <Insets right="5.0" />
+                           </HBox.margin></Label>
+                        <TextField fx:id="txtFRating" prefHeight="25.0" prefWidth="43.0" />
                      </children>
+                     <GridPane.margin>
+                        <Insets left="20.0" />
+                     </GridPane.margin>
                   </HBox>
                </children>
             </GridPane>
          </children>
+         <VBox.margin>
+            <Insets left="20.0" right="20.0" />
+         </VBox.margin>
       </GridPane>
       <GridPane prefHeight="208.0" prefWidth="600.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints vgrow="ALWAYS" />
+          <RowConstraints minHeight="80.0" valignment="CENTER" vgrow="ALWAYS" />
         </rowConstraints>
          <children>
-            <VBox prefHeight="200.0" prefWidth="100.0">
+            <VBox GridPane.vgrow="ALWAYS">
                <children>
-                  <Label text="Comentario" />
-                  <TextArea fx:id="txtFComentario" prefHeight="200.0" prefWidth="200.0" />
+                  <Label styleClass="lblsAnadirJuego" text="Comentario">
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin></Label>
+                  <TextArea fx:id="txtFComentario" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin></TextArea>
                </children>
+               <GridPane.margin>
+                  <Insets top="20.0" />
+               </GridPane.margin>
             </VBox>
-            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
+            <HBox alignment="CENTER" prefHeight="87.0" prefWidth="560.0" spacing="120.0" GridPane.rowIndex="1">
                <children>
                   <Button fx:id="btnCancelar" mnemonicParsing="false" text="Cancelar" />
                   <Button fx:id="btnAgregar" mnemonicParsing="false" text="Agregar" />
                </children>
             </HBox>
          </children>
+         <VBox.margin>
+            <Insets left="20.0" right="20.0" />
+         </VBox.margin>
       </GridPane>
    </children>
 </VBox>

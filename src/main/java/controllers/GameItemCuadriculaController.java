@@ -16,9 +16,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.SVGPath;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import models.Game;
 import utils.APIUtils;
 
@@ -33,6 +35,7 @@ public class GameItemCuadriculaController implements Initializable{
     
     private int gameId;
     private BuscarJuegosController buscarJuegosController;
+    
     
     public ImageView getImageView() {
 		return this.gameImage;
@@ -91,9 +94,10 @@ public class GameItemCuadriculaController implements Initializable{
     public void setGamesController(BuscarJuegosController controller) {
         this.buscarJuegosController = controller;
     }
+ 
     
     @FXML
-    void showGameDetails(MouseEvent event) {
+    void showGameDetails() {
     	if (buscarJuegosController != null) {
             try {
                 Game game = APIUtils.getGameDetails(gameId);
@@ -136,24 +140,31 @@ public class GameItemCuadriculaController implements Initializable{
     private void abrirVentanaAñadirJuego(Game game) {
         // Crear un nuevo Stage para la ventana emergente
         Stage stage = new Stage();
-        
+        stage.initStyle(StageStyle.TRANSPARENT);  // Sin barra de título y fondo transparente
+
+        if (game != null) {
+        	AnadirJuegoBuscarJuegosController.setGame(game); // Pasar el objeto Game al controlador
+        } else {
+        	System.out.println("Game is null"); 
+        }
         // Crear un FXMLLoader para cargar la vista del formulario de añadir juego
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/AnadirJuegoBuscarJuegos.fxml"));
         
         try {
-            BorderPane root = loader.load();
-            AnadirJuegoBuscarJuegosController controller = loader.getController();
-            controller.setGame(game); // Pasar el objeto Game al controlador
+            VBox root = loader.load();
 
-            Scene scene = new Scene(root);
+            AnadirJuegoBuscarJuegosController controller = loader.getController();
+
+            // Crear la escena con fondo transparente
+            Scene scene = new Scene(root, Color.TRANSPARENT);  // Fondo transparente
             stage.setScene(scene);
             
-            // Establecer el título de la ventana
+            // Establecer el título de la ventana (esto es opcional)
             stage.setTitle("Añadir Juego");
             
-            // Centrar la ventana en la pantalla
-            stage.setX((Stage.getWindows().get(0).getWidth() - stage.getWidth()) / 2);
-            stage.setY((Stage.getWindows().get(0).getHeight() - stage.getHeight()) / 2);
+            // Centrar la ventana cuando se muestre
+            controller.setPrimaryStage(stage);  // Pasamos el Stage
+
 
             // Mostrar la ventana emergente
             stage.show();

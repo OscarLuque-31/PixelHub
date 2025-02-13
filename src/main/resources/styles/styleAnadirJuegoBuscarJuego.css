@@ -1,0 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=Tilt+Neon&family=Tilt+Warp&display=swap');
+
+#lblAnadirJuegoTitulo{
+	-fx-text-fill: #52A5E0;
+	-fx-font-size: 40;
+	-fx-font-family: "Silkscreen";
+	-fx-alignment: center;
+}
+
+#vboxPane{
+	-fx-background-color: #2A3B47; /* Color de fondo */
+	-fx-background-radius: 20;
+	-fx-border-color: #52A5E0;
+	-fx-border-radius: 20;      /* Esquinas redondeadas con radio de 10px */
+	-fx-border-width: 2px;        /* Grosor de 3px */
+
+}
+
+#txtFRating{
+	-fx-background-color: #E8EFF3;
+	-fx-text-fill: #000000;
+	-fx-font-family: "Tilt Warp";
+	-fx-font-size: 16;	
+}
+
+#txtFComentario{
+	-fx-background-color: #E8EFF3;
+	-fx-text-fill: #000000;
+	-fx-font-family: "Tilt Warp";
+	-fx-font-size: 16;		
+}
+#btnAgregar{
+	-fx-background-color: #52A5E0;
+	-fx-text-fill: white;
+	-fx-font-family: "Tilt Warp";
+	-fx-font-size: 16;
+}
+
+#btnCancelar{
+	-fx-background-color: #F24245;
+	-fx-text-fill: WHITE;
+	-fx-font-family: "Tilt Warp";
+	-fx-font-size: 16;
+}
+
+#btnCancel:hover{
+	-fx-background-color: #9E181B;
+}
+
+.lblsAnadirJuego{
+	-fx-text-fill: #52A5E0;
+	-fx-font-family: "Tilt Neon";
+	-fx-font-size: 18;
+}

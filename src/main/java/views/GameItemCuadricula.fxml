@@ -11,10 +11,10 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="mainBox" alignment="CENTER_LEFT" onMouseClicked="#showGameDetails" spacing="10" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.GameItemCuadriculaController">
+<VBox fx:id="mainBox" alignment="CENTER_LEFT" spacing="10" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.GameItemCuadriculaController">
 
     <!-- Imagen del juego -->
-    <ImageView fx:id="gameImage" fitHeight="200.0" fitWidth="320.0" />
+    <ImageView fx:id="gameImage" fitHeight="200.0" fitWidth="320.0" onMouseClicked="#showGameDetails" />
     
     <!-- Plataformas -->
     <HBox fx:id="gamePlatforms" prefHeight="0.0" prefWidth="200.0">
