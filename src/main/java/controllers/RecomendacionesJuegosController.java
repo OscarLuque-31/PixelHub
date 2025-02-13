@@ -185,7 +185,6 @@ public class RecomendacionesJuegosController implements Initializable {
 
 		}
 
-		// Crear un ScrollPane para la fila de juegos
 		ScrollPane scrollPaneFila = new ScrollPane(hboxJuegos);
 		scrollPaneFila.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 		scrollPaneFila.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
@@ -202,13 +201,12 @@ public class RecomendacionesJuegosController implements Initializable {
 	}
 
 	private void mostrarJuegos(VBox juegosConTitulo) {
-		listaDeJuegosVBox.getChildren().add(juegosConTitulo); // Agrega los juegos dentro del VBox
+		listaDeJuegosVBox.getChildren().add(juegosConTitulo);
 	}
 
 	private void showGameDetails(int gameId) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/GameDetails.fxml"));
-			Parent root = loader.load();
 
 			GameDetailsController controller = loader.getController();
 			Game game = APIUtils.getGameDetails(gameId);
