@@ -41,16 +41,10 @@ import utils.LogicaUtils;
 public class RecomendacionesJuegosController implements Initializable {
 
 	@FXML
-	private BorderPane contenedorJuegos;
+	private VBox contenedorJuegos;
 
 	@FXML
 	private ScrollPane scrollPane;
-	
-	@FXML
-    private StackPane stackPane;
-	
-	@FXML
-	private VBox pantallaCarga;
 	
 	private Map<String, Integer> platforms;
 	private Map<String, Integer> genres;
@@ -59,18 +53,15 @@ public class RecomendacionesJuegosController implements Initializable {
 	private List<String> generos;
 	private PreferenciasDaoImpl preferenciasDao;
 
-	private VBox listaDeJuegosVBox;
-
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		listaDeJuegosVBox = new VBox();
-		listaDeJuegosVBox.setSpacing(20);  // Espaciado entre bloques de juegos
-		listaDeJuegosVBox.setAlignment(Pos.CENTER); 
+		contenedorJuegos.setSpacing(20);  // Espaciado entre bloques de juegos
+		contenedorJuegos.setAlignment(Pos.CENTER); 
 
 		scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 		scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
-		scrollPane.setContent(listaDeJuegosVBox);
+		scrollPane.setContent(contenedorJuegos);
 
 		scrollPane.setStyle("-fx-background: #192229; -fx-background-color: #192229;");
 
@@ -105,7 +96,6 @@ public class RecomendacionesJuegosController implements Initializable {
 	}
 
 	private void cargarCategorias() {
-		Platform.runLater(() -> pantallaCarga.setVisible(true));
 		
 		ExecutorService executor = Executors.newFixedThreadPool(2); 
 		List<Future<?>> futures = new ArrayList<>();
@@ -130,7 +120,6 @@ public class RecomendacionesJuegosController implements Initializable {
 	                e.printStackTrace();
 	            }
 	        }
-	        Platform.runLater(() -> pantallaCarga.setVisible(false));
 	    }).start();
 	}
 
@@ -151,6 +140,7 @@ public class RecomendacionesJuegosController implements Initializable {
 		vboxCompleto.setAlignment(Pos.CENTER);
 		vboxCompleto.setSpacing(10);
 		vboxCompleto.setPadding(new Insets(0, 0, 0, 20));
+		vboxCompleto.setMinHeight(270);
 
 		// Crear y añadir el título de la categoría
 		Label labelTitulo = new Label(titulo);
@@ -201,42 +191,32 @@ public class RecomendacionesJuegosController implements Initializable {
 	}
 
 	private void mostrarJuegos(VBox juegosConTitulo) {
-		listaDeJuegosVBox.getChildren().add(juegosConTitulo);
+		contenedorJuegos.getChildren().add(juegosConTitulo);
 	}
 
 	private void showGameDetails(int gameId) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/GameDetails.fxml"));
+			HBox gameDetails = loader.load();
 
 			GameDetailsController controller = loader.getController();
 			Game game = APIUtils.getGameDetails(gameId);
 			List<String> screenshots = APIUtils.getGameScreenshots(gameId);
 			List<Game> dlcs = APIUtils.getGameDLCs(gameId);
-			mostrarDetallesJuego(game, screenshots, dlcs);
+			
 			controller.setGameDetails(game, screenshots, dlcs); // Pasar el objeto Game
+			mostrarDetallesJuego(gameDetails);
+			
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public void mostrarDetallesJuego(Game game, List<String> screenshots, List<Game> dlcs) {
-		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/GameDetails.fxml"));
-			HBox gameDetails = loader.load();
-
-			// Obtener el controlador del detalle
-			GameDetailsController controller = loader.getController();
-			controller.setGameDetails(game, screenshots, dlcs);
-
-			// Reemplazar el contenido del contenedor principal con la nueva vista
-			contenedorJuegos.getChildren().clear();
-			contenedorJuegos.getChildren().add(gameDetails);
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			contenedorJuegos.getChildren().add(new Label("Error al cargar los detalles del juego."));
-		}
+	public void mostrarDetallesJuego(HBox gameDetails) {
+	    contenedorJuegos.getChildren().clear();
+	    contenedorJuegos.getChildren().add(gameDetails);
 	}
+
 
 }
