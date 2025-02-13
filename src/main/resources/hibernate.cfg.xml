@@ -14,7 +14,6 @@
         
         
         <mapping class="models.Capturas"/>
-        <mapping class="models.JuegoNuevo"/>
         <mapping class="models.JuegosBiblioteca"/>
         <mapping class="models.Plataformas"/>
         <mapping class="models.Preferencias"/>

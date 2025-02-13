@@ -7,39 +7,39 @@ import jakarta.persistence.*;
 public class Capturas {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_captura;
-    
+    @Column(name = "id_captura")
+    private Integer idCaptura;
+
     @ManyToOne
-    @JoinColumn(name = "id_nuevo_juego", nullable = false)
-    private JuegoNuevo juegoNuevo;
-    
-    @Column(columnDefinition = "TINYBLOB")
+    @JoinColumn(name = "id_juego", nullable = false)
+    private JuegosBiblioteca juego;
+
+    @Lob
+    @Column(nullable = false, columnDefinition = "LONGBLOB")
     private byte[] captura;
 
-    
+    // Getters y Setters
+    public Integer getIdCaptura() {
+        return idCaptura;
+    }
 
-	public Integer getId_captura() {
-		return id_captura;
-	}
+    public void setIdCaptura(Integer idCaptura) {
+        this.idCaptura = idCaptura;
+    }
 
-	public void setId_captura(Integer id_captura) {
-		this.id_captura = id_captura;
-	}
+    public JuegosBiblioteca getJuego() {
+        return juego;
+    }
 
-	public JuegoNuevo getJuegoNuevo() {
-		return juegoNuevo;
-	}
+    public void setJuego(JuegosBiblioteca juego) {
+        this.juego = juego;
+    }
 
-	public void setJuegoNuevo(JuegoNuevo juegoNuevo) {
-		this.juegoNuevo = juegoNuevo;
-	}
+    public byte[] getCaptura() {
+        return captura;
+    }
 
-	public byte[] getCaptura() {
-		return captura;
-	}
-
-	public void setCaptura(byte[] captura) {
-		this.captura = captura;
-	}
-    
+    public void setCaptura(byte[] captura) {
+        this.captura = captura;
+    }
 }

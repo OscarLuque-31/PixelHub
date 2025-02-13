@@ -1,94 +1,157 @@
 package models;
 
-import java.util.Date;
-
 import jakarta.persistence.*;
+import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "JuegosBiblioteca")
 public class JuegosBiblioteca {
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id_juego;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_juego")
+    private Integer idJuego;
 
-	@ManyToOne
-	@JoinColumn(name = "id_usuario", nullable = false)
-	private Usuario usuario;
+    @ManyToOne
+    @JoinColumn(name = "id_usuario", nullable = false)
+    private Usuario usuario;
 
-	@Column(name = "fecha_añadido", columnDefinition = "Date")
-	private Date fechaAñadido;
+    @Column(name = "fecha_añadido")
+    private Date fechaAñadido;
 
-	private Integer rating;
+    @Column(nullable = false)
+    private Integer rating;
 
-	@Column(length = 120)
-	private String comentario;
+    @Column(length = 120)
+    private String comentario;
+    
+    @Column 
+    private String titulo;
 
-	private Boolean comprado;
-	private Boolean jugado;
-	private Boolean deseado;
+    @Column(columnDefinition = "TEXT") // Descripción del juego
+    private String descripcion;
 
-	public Integer getId_juego() {
-		return id_juego;
-	}
+    @Column(nullable = false)
+    private Boolean comprado;
 
-	public void setId_juego(Integer id_juego) {
-		this.id_juego = id_juego;
-	}
+    @Column(nullable = false)
+    private Boolean jugado;
 
-	public Usuario getUsuario() {
-		return usuario;
-	}
+    @Column(nullable = false)
+    private Boolean deseado;
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
+    @Lob
+    @Column(nullable = false, columnDefinition = "LONGBLOB")
+    private byte[] imagen;
 
-	public Date getFechaAñadido() {
-		return fechaAñadido;
-	}
+    @OneToMany(mappedBy = "juego", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Capturas> capturas;
 
-	public void setFechaAñadido(Date fechaAñadido) {
-		this.fechaAñadido = fechaAñadido;
-	}
+    @OneToMany(mappedBy = "juego", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Plataformas> plataformas;
 
-	public Integer getRating() {
-		return rating;
-	}
+    // Getters y Setters
+    public String getTitulo() {
+    	return titulo;
+    }
+    
+    public void setTitulo(String titulo) {
+    	this.titulo = titulo;
+    }
+    public Integer getIdJuego() {
+        return idJuego;
+    }
 
-	public void setRating(Integer rating) {
-		this.rating = rating;
-	}
+    public void setIdJuego(Integer idJuego) {
+        this.idJuego = idJuego;
+    }
 
-	public String getComentario() {
-		return comentario;
-	}
+    public Usuario getUsuario() {
+        return usuario;
+    }
 
-	public void setComentario(String comentario) {
-		this.comentario = comentario;
-	}
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
 
-	public Boolean getComprado() {
-		return comprado;
-	}
+    public Date getFechaAñadido() {
+        return fechaAñadido;
+    }
 
-	public void setComprado(Boolean comprado) {
-		this.comprado = comprado;
-	}
+    public void setFechaAñadido(Date fechaAñadido) {
+        this.fechaAñadido = fechaAñadido;
+    }
 
-	public Boolean getJugado() {
-		return jugado;
-	}
+    public Integer getRating() {
+        return rating;
+    }
 
-	public void setJugado(Boolean jugado) {
-		this.jugado = jugado;
-	}
+    public void setRating(Integer rating) {
+        this.rating = rating;
+    }
 
-	public Boolean getDeseado() {
-		return deseado;
-	}
+    public String getComentario() {
+        return comentario;
+    }
 
-	public void setDeseado(Boolean deseado) {
-		this.deseado = deseado;
-	}
+    public void setComentario(String comentario) {
+        this.comentario = comentario;
+    }
 
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public Boolean getComprado() {
+        return comprado;
+    }
+
+    public void setComprado(Boolean comprado) {
+        this.comprado = comprado;
+    }
+
+    public Boolean getJugado() {
+        return jugado;
+    }
+
+    public void setJugado(Boolean jugado) {
+        this.jugado = jugado;
+    }
+
+    public Boolean getDeseado() {
+        return deseado;
+    }
+
+    public void setDeseado(Boolean deseado) {
+        this.deseado = deseado;
+    }
+
+    public byte[] getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(byte[] imagen) {
+        this.imagen = imagen;
+    }
+
+    public List<Capturas> getCapturas() {
+        return capturas;
+    }
+
+    public void setCapturas(List<Capturas> capturas) {
+        this.capturas = capturas;
+    }
+
+    public List<Plataformas> getPlataformas() {
+        return plataformas;
+    }
+
+    public void setPlataformas(List<Plataformas> plataformas) {
+        this.plataformas = plataformas;
+    }
 }
