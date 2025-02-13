@@ -24,6 +24,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import models.Game;
@@ -34,6 +35,12 @@ import utils.UtilsViews;
 
 public class BuscarJuegosController implements Initializable {
 
+	@FXML
+    private StackPane stackPane;
+
+    @FXML
+    private VBox loadingPane; 
+	
 	@FXML
 	private ImageView imgLupa;
 
@@ -101,6 +108,8 @@ public class BuscarJuegosController implements Initializable {
 	private void showGames(String title, Integer platform, Integer genre, String order) {
 	    scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 	    scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+	    
+	    Platform.runLater(() -> loadingPane.setVisible(true));
 
 	    // Crear un pool de hilos con el número óptimo de núcleos del sistema
 	    ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
@@ -127,11 +136,14 @@ public class BuscarJuegosController implements Initializable {
 	                })
 	                .toList();
 
-	            // Actualizar la UI en el hilo principal
-	            Platform.runLater(() -> mostrarJuegos(bloquesJuegos));
+	            Platform.runLater(() -> {
+                    mostrarJuegos(bloquesJuegos);
+                    loadingPane.setVisible(false);
+                });
 
 	        } catch (Exception e) {
 	            e.printStackTrace();
+                Platform.runLater(() -> loadingPane.setVisible(false));
 	        } finally {
 	            executor.shutdown(); // Cerrar el pool de hilos
 	        }
