@@ -3,6 +3,8 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
@@ -10,6 +12,7 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
 <BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.BuscarJuegosController">
@@ -53,7 +56,9 @@
       </GridPane>
    </top>
    <center>
-      <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" style="-fx-background-color: #192229;" BorderPane.alignment="CENTER">
+	   <StackPane BorderPane.alignment="CENTER">
+         <!-- ScrollPane con los juegos -->
+         <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" style="-fx-background-color: #192229;" BorderPane.alignment="CENTER">
          <content>
             <VBox fx:id="contenedorJuegos" alignment="CENTER" style="-fx-background-color: #192229;">
                <opaqueInsets>
@@ -64,6 +69,19 @@
          <BorderPane.margin>
             <Insets left="35.0" top="20.0" />
          </BorderPane.margin>
+            <opaqueInsets>
+               <Insets />
+            </opaqueInsets>
       </ScrollPane>
+
+         <!-- Pantalla de carga superpuesta -->
+         <VBox fx:id="loadingPane" alignment="CENTER" spacing="10" style="-fx-background-color: #192229;" visible="false">
+            <Label style="-fx-text-fill: white; -fx-font-size: 18px;" text="Cargando juegos..." />
+            <ProgressIndicator />
+         </VBox>
+         <BorderPane.margin>
+            <Insets left="20.0" top="10.0" />
+         </BorderPane.margin>
+      </StackPane>
    </center>
 </BorderPane>

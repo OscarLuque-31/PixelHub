@@ -16,6 +16,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -26,6 +27,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -43,7 +45,13 @@ public class RecomendacionesJuegosController implements Initializable {
 
 	@FXML
 	private ScrollPane scrollPane;
-
+	
+	@FXML
+    private StackPane stackPane;
+	
+	@FXML
+	private VBox pantallaCarga;
+	
 	private Map<String, Integer> platforms;
 	private Map<String, Integer> genres;
 
@@ -97,7 +105,10 @@ public class RecomendacionesJuegosController implements Initializable {
 	}
 
 	private void cargarCategorias() {
+		Platform.runLater(() -> pantallaCarga.setVisible(true));
+		
 		ExecutorService executor = Executors.newFixedThreadPool(2); 
+		List<Future<?>> futures = new ArrayList<>();
 
 		executor.submit(() -> cargarJuegosPorCategoria("Los más populares", null, null, "-rating"));
 
@@ -109,8 +120,18 @@ public class RecomendacionesJuegosController implements Initializable {
 			executor.submit(() -> cargarJuegosPorCategoria("Juegos de " + plataforma + " mejor valorados", platforms.get(plataforma), null, "-rating"));
 		}
 
-
 		executor.shutdown();
+		
+		new Thread(() -> {
+	        for (Future<?> future:futures) {
+	            try {
+	                future.get();
+	            } catch (Exception e) {
+	                e.printStackTrace();
+	            }
+	        }
+	        Platform.runLater(() -> pantallaCarga.setVisible(false));
+	    }).start();
 	}
 
 	private void cargarJuegosPorCategoria(String titulo, Integer platform, Integer genre, String order) {
@@ -151,12 +172,13 @@ public class RecomendacionesJuegosController implements Initializable {
 			
 			// Crear un rectángulo con bordes redondeados
 			Rectangle clip = new Rectangle(imageViewJuego.getFitWidth(), imageViewJuego.getFitHeight());
-			clip.setArcWidth(15);  // Radio de las esquinas
+			clip.setArcWidth(15);
 			clip.setArcHeight(15);
-			imageViewJuego.setClip(clip); // Aplicar el clip
+			imageViewJuego.setClip(clip);
 			
 			hboxJuegos.getChildren().add(imageViewJuego);
 
+			imageViewJuego.setCursor(Cursor.HAND);
 			imageViewJuego.setOnMouseClicked((MouseEvent event) -> {
 				showGameDetails(game.getId());
 			});
