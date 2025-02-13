@@ -8,6 +8,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+import dao.JuegosBibliotecaDaoImpl;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -29,6 +30,7 @@ import models.Game;
 import models.JuegosBiblioteca;
 import models.Usuario;
 import utils.APIUtils;
+import utils.HibernateUtil;
 import utils.NavigationUtils;
 import utils.UtilsViews;
 
@@ -158,11 +160,14 @@ public class BibliotecaJuegosController implements Initializable{
     }
 	
 	private void showGames(String title) {
-	    scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-	    scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+//	    scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+//	    scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
 	        try {
-	            List<JuegosBiblioteca> games = new ArrayList<>(); //LLAMADA BD --> igualar a resultado
+	        	
+	        	JuegosBibliotecaDaoImpl juegosBibliotecaDaoImpl = new JuegosBibliotecaDaoImpl(HibernateUtil.getSession());
+	        	
+	            List<JuegosBiblioteca> games = juegosBibliotecaDaoImpl.searchAll();
 	        	
 	        	List<VBox> bloques = new ArrayList<>();
 	        	for (JuegosBiblioteca game:games) {
