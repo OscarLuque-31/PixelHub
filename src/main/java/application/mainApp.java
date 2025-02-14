@@ -9,6 +9,7 @@ public class mainApp extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
+			// Carga el logincontroller y lanza la pantalla
 			LoginController loginController = new LoginController();
 			loginController.cargarFXML(primaryStage);
 		} catch (Exception e) {

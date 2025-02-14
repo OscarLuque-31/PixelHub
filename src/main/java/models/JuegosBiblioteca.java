@@ -9,162 +9,161 @@ import java.util.List;
 public class JuegosBiblioteca {
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_juego")
-    private Integer idJuego;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_juego")
+	private Integer idJuego;
 
-    @ManyToOne
-    @JoinColumn(name = "id_usuario", nullable = false)
-    private Usuario usuario;
+	@ManyToOne
+	@JoinColumn(name = "id_usuario", nullable = false)
+	private Usuario usuario;
 
-    @Column(name = "fecha_añadido")
-    private Date fechaAñadido;
-    
-    @Column(name = "url_imagen", nullable = true)
-    private String url_imagen;
+	@Column(name = "fecha_añadido")
+	private Date fechaAñadido;
 
+	@Column(name = "url_imagen", nullable = true)
+	private String url_imagen;
 
-    @Column(nullable = false)
-    private Integer rating;
+	@Column(nullable = false)
+	private Integer rating;
 
-    @Column(length = 120)
-    private String comentario;
-    
-    @Column 
-    private String titulo;
+	@Column(length = 120)
+	private String comentario;
 
-    @Column(columnDefinition = "TEXT") // Descripción del juego
-    private String descripcion;
+	@Column
+	private String titulo;
 
-    @Column(nullable = false)
-    private Boolean comprado;
+	@Column(columnDefinition = "TEXT")
+	private String descripcion;
 
-    @Column(nullable = false)
-    private Boolean jugado;
+	@Column(nullable = false)
+	private Boolean comprado;
 
-    @Column(nullable = false)
-    private Boolean deseado;
+	@Column(nullable = false)
+	private Boolean jugado;
 
-    @Lob
-    @Column(columnDefinition = "LONGBLOB")
-    private byte[] imagen;
+	@Column(nullable = false)
+	private Boolean deseado;
 
-    @OneToMany(mappedBy = "juego", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Capturas> capturas;
+	@Lob
+	@Column(columnDefinition = "LONGBLOB")
+	private byte[] imagen;
 
-    @OneToMany(mappedBy = "juego", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Plataformas> plataformas;
+	@OneToMany(mappedBy = "juego", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Capturas> capturas;
 
-    // Getters y Setters
-    public String getTitulo() {
-    	return titulo;
-    }
-    
-    public void setTitulo(String titulo) {
-    	this.titulo = titulo;
-    }
-    public Integer getIdJuego() {
-        return idJuego;
-    }
+	@OneToMany(mappedBy = "juego", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Plataformas> plataformas;
 
-    public void setIdJuego(Integer idJuego) {
-        this.idJuego = idJuego;
-    }
+	// Getters y Setters
+	public String getTitulo() {
+		return titulo;
+	}
 
-    public Usuario getUsuario() {
-        return usuario;
-    }
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
+	}
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
-    
-    public String getUrlImagen() {
-        return url_imagen;
-    }
+	public Integer getIdJuego() {
+		return idJuego;
+	}
 
-    public void setUrlImagen(String urlImagen) {
-        this.url_imagen = urlImagen;
-    }
+	public void setIdJuego(Integer idJuego) {
+		this.idJuego = idJuego;
+	}
 
+	public Usuario getUsuario() {
+		return usuario;
+	}
 
-    public Date getFechaAñadido() {
-        return fechaAñadido;
-    }
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
 
-    public void setFechaAñadido(Date fechaAñadido) {
-        this.fechaAñadido = fechaAñadido;
-    }
+	public String getUrlImagen() {
+		return url_imagen;
+	}
 
-    public Integer getRating() {
-        return rating;
-    }
+	public void setUrlImagen(String urlImagen) {
+		this.url_imagen = urlImagen;
+	}
 
-    public void setRating(Integer rating) {
-        this.rating = rating;
-    }
+	public Date getFechaAñadido() {
+		return fechaAñadido;
+	}
 
-    public String getComentario() {
-        return comentario;
-    }
+	public void setFechaAñadido(Date fechaAñadido) {
+		this.fechaAñadido = fechaAñadido;
+	}
 
-    public void setComentario(String comentario) {
-        this.comentario = comentario;
-    }
+	public Integer getRating() {
+		return rating;
+	}
 
-    public String getDescripcion() {
-        return descripcion;
-    }
+	public void setRating(Integer rating) {
+		this.rating = rating;
+	}
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
+	public String getComentario() {
+		return comentario;
+	}
 
-    public Boolean getComprado() {
-        return comprado;
-    }
+	public void setComentario(String comentario) {
+		this.comentario = comentario;
+	}
 
-    public void setComprado(Boolean comprado) {
-        this.comprado = comprado;
-    }
+	public String getDescripcion() {
+		return descripcion;
+	}
 
-    public Boolean getJugado() {
-        return jugado;
-    }
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
 
-    public void setJugado(Boolean jugado) {
-        this.jugado = jugado;
-    }
+	public Boolean getComprado() {
+		return comprado;
+	}
 
-    public Boolean getDeseado() {
-        return deseado;
-    }
+	public void setComprado(Boolean comprado) {
+		this.comprado = comprado;
+	}
 
-    public void setDeseado(Boolean deseado) {
-        this.deseado = deseado;
-    }
+	public Boolean getJugado() {
+		return jugado;
+	}
 
-    public byte[] getImagen() {
-        return imagen;
-    }
+	public void setJugado(Boolean jugado) {
+		this.jugado = jugado;
+	}
 
-    public void setImagen(byte[] imagen) {
-        this.imagen = imagen;
-    }
+	public Boolean getDeseado() {
+		return deseado;
+	}
 
-    public List<Capturas> getCapturas() {
-        return capturas;
-    }
+	public void setDeseado(Boolean deseado) {
+		this.deseado = deseado;
+	}
 
-    public void setCapturas(List<Capturas> capturas) {
-        this.capturas = capturas;
-    }
+	public byte[] getImagen() {
+		return imagen;
+	}
 
-    public List<Plataformas> getPlataformas() {
-        return plataformas;
-    }
+	public void setImagen(byte[] imagen) {
+		this.imagen = imagen;
+	}
 
-    public void setPlataformas(List<Plataformas> plataformas) {
-        this.plataformas = plataformas;
-    }
+	public List<Capturas> getCapturas() {
+		return capturas;
+	}
+
+	public void setCapturas(List<Capturas> capturas) {
+		this.capturas = capturas;
+	}
+
+	public List<Plataformas> getPlataformas() {
+		return plataformas;
+	}
+
+	public void setPlataformas(List<Plataformas> plataformas) {
+		this.plataformas = plataformas;
+	}
 }

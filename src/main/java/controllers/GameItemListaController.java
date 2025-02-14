@@ -27,6 +27,10 @@ public class GameItemListaController {
 	@FXML 
 	private Region spacer;
 
+	/**
+	 * Método que setea todos los datos del juego
+	 * @param juego
+	 */
 	public void setGameData(Game juego) {
 		gameTitle.setText(juego.getName());
 
@@ -40,19 +44,23 @@ public class GameItemListaController {
 			gameImage.setImage(new Image(getClass().getResource("/images/error.png").toExternalForm()));
 		}
 
-		gameImage.setFitWidth(100); // Ancho fijo
-		gameImage.setFitHeight(70); // Alto fijo
-		gameImage.setPreserveRatio(false); // Evita que la imagen se ajuste al tamaño cambiando su relación de aspecto
-		gameImage.setSmooth(true); // Suaviza la imagen
-		gameImage.setCache(true);  // Optimiza la carga
+		gameImage.setFitWidth(100);
+		gameImage.setFitHeight(70); 
+		gameImage.setPreserveRatio(false); 
+		gameImage.setSmooth(true);
+		gameImage.setCache(true); 
 
-		// Clipping para recortar los lados sobrantes
 		Rectangle clip = new Rectangle(gameImage.getFitWidth(), gameImage.getFitHeight());
-		clip.setArcWidth(10);  // Opcional: Bordes redondeados
+		clip.setArcWidth(10);  
 		clip.setArcHeight(10);
 		gameImage.setClip(clip);
 	}
 
+	/**
+	 * Método que muestra los juegos creando los bloques o card de cada juego
+	 * @param game
+	 * @return
+	 */
 	private HBox crearBloquePlataformas(Game juego) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Plataformas.fxml"));

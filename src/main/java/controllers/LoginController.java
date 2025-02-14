@@ -107,7 +107,11 @@ public class LoginController {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Login.fxml"));
 			Scene scene = new Scene(loader.load());
-			
+		
+
+			// Establecer el Stage en el controlador
+			primaryStage.initStyle(StageStyle.TRANSPARENT);
+
 			LoginController controller = loader.getController();
 			controller.setStage(primaryStage);
 			primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/logoPixelHub.png")));
@@ -123,7 +127,6 @@ public class LoginController {
 			new Thread(initTask).start();
 
 			primaryStage.setTitle("PixelHub");
-			primaryStage.initStyle(StageStyle.TRANSPARENT);
 			primaryStage.setScene(scene);
 			primaryStage.setMaximized(true);
 
@@ -138,7 +141,10 @@ public class LoginController {
 	 * Método para cargar la hoja de estilos de la ventana de login
 	 */
 	private void cargarCSS() {
+
 		borderPane.getStylesheets().addAll(getClass().getResource("/styles/styleLogin.css").toExternalForm(),
+
+
 				getClass().getResource("/styles/styleTopBar.css").toExternalForm());
 	}
 
@@ -152,11 +158,11 @@ public class LoginController {
 	/**
 	 * Método que inicia sesión si las credenciales son correctas
 	 */
-	private void inicioDeSesion() {
-	    btnLogin.setOnMouseClicked(event -> {
+	public void inicioDeSesion() {
+	    getBtnLogin().setOnMouseClicked(event -> {
 
-	        String username = txtUsername.getText().trim();
-	        String password = txtPassword.getText().trim();
+	        String username = getTxtUsername().getText().trim();
+	        String password = getTxtPassword().getText().trim();
 
 	        if (validarCampos(username, password)) {
 	            mostrarPantallaCarga();
@@ -268,7 +274,7 @@ public class LoginController {
 	 */
 	public void hoverEffect() {
 		UtilsViews.hoverEffectText(linkRegister, "#0095FF", "#52A5E0");
-		UtilsViews.hoverEffectButton(btnLogin, "#0095FF", "#52A5E0");
+		UtilsViews.hoverEffectButton(getBtnLogin(), "#0095FF", "#52A5E0");
 		UtilsViews.hoverEffectButton(btnMinimizar, "#2a3b47", "#192229");
 		UtilsViews.hoverEffectButton(btnCerrar, "#c63637", "#192229");
 	}
@@ -280,6 +286,38 @@ public class LoginController {
 		imgLogo.setImage(new Image(getClass().getResourceAsStream("/images/logoPixelHub.png")));
 		iconMinimizar.setImage(new Image(getClass().getResourceAsStream("/images/iconoMinimizar.png")));
 		iconCerrar.setImage(new Image(getClass().getResourceAsStream("/images/iconoCerrar.png")));
+	}
+
+	public TextField getTxtUsername() {
+		return txtUsername;
+	}
+
+	public void setTxtUsername(TextField txtUsername) {
+		this.txtUsername = txtUsername;
+	}
+
+	public PasswordField getTxtPassword() {
+		return txtPassword;
+	}
+
+	public void setTxtPassword(PasswordField txtPassword) {
+		this.txtPassword = txtPassword;
+	}
+
+	public Button getBtnLogin() {
+		return btnLogin;
+	}
+
+	public void setBtnLogin(Button btnLogin) {
+		this.btnLogin = btnLogin;
+	}
+
+	public BorderPane getBorderPane() {
+		return borderPane;
+	}
+
+	public void setBorderPane(BorderPane borderPane) {
+		this.borderPane = borderPane;
 	}
 
 

@@ -3,30 +3,32 @@ package models;
 import java.util.List;
 
 public class Game {
-    public int id;
-    public String name;
-    public String released;
-    public String background_image;
-    public String description;
-    public double rating;
-    public List<ParentPlatform> parent_platforms;
-    public List<Genre> genres;
+	public int id;
+	public String name;
+	public String released;
+	public String background_image;
+	public String description;
+	public double rating;
+	public List<ParentPlatform> parent_platforms;
+	public List<Genre> genres;
 	public List<Screenshot> shortScreenshots;
 
-    public static class ParentPlatform {
-        public PlatformDetail platform;
+	public static class ParentPlatform {
+		public PlatformDetail platform;
 
-        public static class PlatformDetail {
-            public String name;
-            public String slug;
+		public static class PlatformDetail {
+			public String name;
+			public String slug;
+
 			public String getName() {
 				return name;
 			}
+
 			public void setName(String name) {
 				this.name = name;
 			}
-            
-        }
+
+		}
 
 		public PlatformDetail getPlatform() {
 			return platform;
@@ -35,16 +37,16 @@ public class Game {
 		public void setPlatform(PlatformDetail platform) {
 			this.platform = platform;
 		}
-    }
+	}
 
-    public static class Genre {
-        public int id;
-        public String name;
-        public String slug;
-    }
+	public static class Genre {
+		public int id;
+		public String name;
+		public String slug;
+	}
 
-    public static class Screenshot {
-        public String image;
+	public static class Screenshot {
+		public String image;
 
 		public String getImage() {
 			return image;
@@ -53,10 +55,10 @@ public class Game {
 		public void setImage(String image) {
 			this.image = image;
 		}
-        
-    }
-    
-    public String getName() {
+
+	}
+
+	public String getName() {
 		return name;
 	}
 
@@ -118,13 +120,13 @@ public class Game {
 				+ ", description=" + description + ", rating=" + rating + ", parent_platforms=" + parent_platforms
 				+ ", genres=" + genres + ", shortScreenshots=" + shortScreenshots + "]";
 	}
-	
+
 	public List<Screenshot> getShortScreenshots() {
-	    return shortScreenshots;
+		return shortScreenshots;
 	}
 
 	public void setShortScreenshots(List<Screenshot> shortScreenshots) {
-	    this.shortScreenshots = shortScreenshots;
+		this.shortScreenshots = shortScreenshots;
 	}
-    
+
 }

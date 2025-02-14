@@ -118,7 +118,7 @@ public class Usuario {
 				+ ", fecha_creacion=" + fecha_creacion + ", juegosBiblioteca="
 				+ juegosBiblioteca + "]";
 	}
-	
-	
+
+
 
 }

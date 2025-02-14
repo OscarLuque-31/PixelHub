@@ -1,11 +1,9 @@
 package controllers;
 
-import java.util.List;
+import java.io.ByteArrayInputStream;
 
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 
-import dao.JuegosBibliotecaDaoImpl;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
@@ -15,12 +13,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.SVGPath;
-import models.Game;
 import models.JuegosBiblioteca;
-import utils.APIUtils;
 import utils.HibernateUtil;
-
-import java.io.ByteArrayInputStream;
 
 public class GameItemCuadriculaBibliotecaController {
 
@@ -46,6 +40,10 @@ public class GameItemCuadriculaBibliotecaController {
     
     private BibliotecaJuegosController bibliotecaController;    
     
+    /**
+     * Método que setea el juego
+     * @param game
+     */
     public void setGameData(JuegosBiblioteca game) {
     	this.game = game;
     	
@@ -56,6 +54,7 @@ public class GameItemCuadriculaBibliotecaController {
         gamePlatforms.getChildren().add(crearBloquePlataformas(game));
 
         try {
+        	// Comprueba que no sea nulo
             if (game.getUrlImagen() != null) {
 				gameImage.setImage(new Image(game.getUrlImagen()));
 			}else {
@@ -71,7 +70,7 @@ public class GameItemCuadriculaBibliotecaController {
         double width = gameImage.getFitWidth();
         double height = gameImage.getFitHeight();
 
-        // Crear un clip con una ruta SVG para redondear solo las esquinas superiores
+        // Crea un clip con una ruta SVG para redondear solo las esquinas superiores
         SVGPath clip = new SVGPath();
         clip.setContent("M0," + 15 + " " + 
                         "Q0,0 " + 15 + ",0 " + 
@@ -81,9 +80,15 @@ public class GameItemCuadriculaBibliotecaController {
                         "L0," + height + "Z");
 
         gameImage.setClip(clip);
+        // Añade el boton de remover
         removeButton.setImage(new Image(getClass().getResource("/images/circuloMenos.png").toExternalForm()));
     }
     
+    /**
+	 * Método que muestra los juegos creando los bloques o card de cada juego
+	 * @param game
+	 * @return
+	 */
     private HBox crearBloquePlataformas(JuegosBiblioteca game) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Plataformas.fxml"));
@@ -120,26 +125,26 @@ public class GameItemCuadriculaBibliotecaController {
     @FXML
     void removeGame(MouseEvent event) {
         if (bibliotecaController != null) {
-            // Crear la sesión de Hibernate
+            // Crea la sesión de Hibernate
             try (Session session = HibernateUtil.getSession()) {
-                // Iniciar una transacción
+                // Inicia una transacción
                 session.beginTransaction();
 
-                // Buscar el juego en la base de datos
+                // Busca el juego en la base de datos
                 JuegosBiblioteca juego = session.get(JuegosBiblioteca.class, game.getIdJuego());
 
                 if (juego != null) {
-                    // Limpiar las capturas asociadas si es necesario
-                    juego.getCapturas().clear();  // Si tienes relaciones de cascada, esto no es necesario
+                    // Limpia las capturas asociadas si es necesario
+                    juego.getCapturas().clear(); 
 
-                    // Eliminar el juego
+                    // Elimina el juego
                     session.remove(juego);
                 }
 
-                // Confirmar la transacción
+                // Confirma la transacción
                 session.getTransaction().commit();
 
-                // Actualizar la vista de biblioteca
+                // Actualiza la vista de biblioteca
                 bibliotecaController.buscarJuegos(event);
 
             } catch (Exception e) {
