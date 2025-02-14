@@ -2,6 +2,7 @@ package controllers;
 
 import java.util.List;
 
+import dao.JuegosBibliotecaDaoImpl;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
@@ -14,6 +15,8 @@ import javafx.scene.shape.SVGPath;
 import models.Game;
 import models.JuegosBiblioteca;
 import utils.APIUtils;
+import utils.HibernateUtil;
+
 import java.io.ByteArrayInputStream;
 
 public class GameItemCuadriculaBibliotecaController {
@@ -116,7 +119,9 @@ public class GameItemCuadriculaBibliotecaController {
     	if (bibliotecaController != null) {
             try {
             	
+            	JuegosBibliotecaDaoImpl dao = new JuegosBibliotecaDaoImpl(HibernateUtil.getSession());
             	
+            	dao.delete(game);
             	
                 bibliotecaController.buscarJuegos(event);
             } catch (Exception e) {
