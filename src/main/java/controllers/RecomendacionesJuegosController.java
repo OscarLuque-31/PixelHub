@@ -17,6 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -134,7 +135,7 @@ public class RecomendacionesJuegosController implements Initializable {
     private void cargarJuegosPorCategoria(String titulo, Integer platform, Integer genre, String order) {
         try {
             List<Game> listaJuegos = APIUtils.getGames(null, platform, genre, order, 12);
-            VBox juegosConTitulo = crearFilaJuegosConTitulo(listaJuegos);
+            VBox juegosConTitulo = crearFilaJuegosConTitulo(titulo, listaJuegos);
 
             Platform.runLater(() -> mostrarJuegos(juegosConTitulo));
         } catch (Exception e) {
@@ -148,46 +149,55 @@ public class RecomendacionesJuegosController implements Initializable {
      * @param listaJuegos  Lista de juegos a mostrar.
      * @return VBox        Contenedor con el título y los juegos.
      */
-    private VBox crearFilaJuegosConTitulo(List<Game> listaJuegos) {
-        VBox vboxCompleto = new VBox();
-        vboxCompleto.setAlignment(Pos.CENTER);
-        vboxCompleto.setSpacing(10);
-        vboxCompleto.setPadding(new Insets(0, 0, 0, 20));
-        vboxCompleto.setMinHeight(270);
+    private VBox crearFilaJuegosConTitulo(String titulo, List<Game> listaJuegos) {
+		VBox vboxCompleto = new VBox();
+		vboxCompleto.setAlignment(Pos.CENTER);
+		vboxCompleto.setSpacing(10);
+		vboxCompleto.setPadding(new Insets(0, 0, 0, 20));
+		vboxCompleto.setMinHeight(270);
 
-        HBox hboxJuegos = new HBox();
-        hboxJuegos.setSpacing(20);
-        hboxJuegos.setAlignment(Pos.CENTER_LEFT);
-        hboxJuegos.setPadding(new Insets(0, 0, 0, 20));
+		// Crear y añadir el título de la categoría
+		Label labelTitulo = new Label(titulo);
+		labelTitulo.setStyle("-fx-font-size: 22px; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10px;");
+		labelTitulo.setMaxWidth(Double.MAX_VALUE);
 
-        for (Game game : listaJuegos) {
-            ImageView imageViewJuego = new ImageView(new Image(game.getBackgroundImage()));
-            imageViewJuego.setFitWidth(250);
-            imageViewJuego.setFitHeight(200);
+		vboxCompleto.getChildren().add(labelTitulo);
 
-            Rectangle clip = new Rectangle(imageViewJuego.getFitWidth(), imageViewJuego.getFitHeight());
-            clip.setArcWidth(15);
-            clip.setArcHeight(15);
-            imageViewJuego.setClip(clip);
+		HBox hboxJuegos = new HBox();
+		hboxJuegos.setSpacing(20);
+		hboxJuegos.setAlignment(Pos.CENTER_LEFT);
+		hboxJuegos.setPadding(new Insets(0, 0, 0, 20));
 
-            hboxJuegos.getChildren().add(imageViewJuego);
+		for (Game game : listaJuegos) {
+			ImageView imageViewJuego = new ImageView(new Image(game.getBackgroundImage()));
+			imageViewJuego.setFitWidth(250);
+			imageViewJuego.setFitHeight(200);
+			
+			Rectangle clip = new Rectangle(imageViewJuego.getFitWidth(), imageViewJuego.getFitHeight());
+			clip.setArcWidth(15);
+			clip.setArcHeight(15);
+			imageViewJuego.setClip(clip);
+			
+			hboxJuegos.getChildren().add(imageViewJuego);
 
-            imageViewJuego.setCursor(Cursor.HAND);
-            imageViewJuego.setOnMouseClicked((MouseEvent event) -> showGameDetails(game.getId()));
-        }
+			imageViewJuego.setCursor(Cursor.HAND);
+			imageViewJuego.setOnMouseClicked((MouseEvent event) -> {
+				showGameDetails(game.getId());
+			});
+		}
 
-        ScrollPane scrollPaneFila = new ScrollPane(hboxJuegos);
-        scrollPaneFila.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        scrollPaneFila.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        scrollPaneFila.setFitToHeight(true);
-        scrollPaneFila.setPannable(true);
-        scrollPaneFila.setStyle("-fx-background: transparent; -fx-background-color: transparent;");
-        scrollPaneFila.setPrefWidth(scrollPane.getWidth() - 20);
+		ScrollPane scrollPaneFila = new ScrollPane(hboxJuegos);
+		scrollPaneFila.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+		scrollPaneFila.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+		scrollPaneFila.setFitToHeight(true);
+		scrollPaneFila.setPannable(true);
+		scrollPaneFila.setStyle("-fx-background: transparent; -fx-background-color: transparent;");
+		scrollPaneFila.setPrefWidth(scrollPane.getWidth() - 20);
 
-        vboxCompleto.getChildren().add(scrollPaneFila);
+		vboxCompleto.getChildren().add(scrollPaneFila);
 
-        return vboxCompleto;
-    }
+		return vboxCompleto;
+	}
 
     /**
      * Muestra los juegos en el contenedor principal.
