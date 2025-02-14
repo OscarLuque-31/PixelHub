@@ -1,6 +1,7 @@
 package controllers;
 
 import java.net.URL;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +28,6 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
@@ -40,8 +40,6 @@ import utils.DateUtils;
 import utils.HibernateUtil;
 import utils.UtilsBcrypt;
 import utils.UtilsViews;
-
-import java.sql.Date;
 
 
 public class PerfilController implements Initializable {
@@ -131,7 +129,7 @@ public class PerfilController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		vboxContainer.getStylesheets().add(getClass().getResource("/styles/stylePerfil.css").toExternalForm());
 
-		// Inicializar imágenes y efectos hover (si aplica)
+		// Inicializa imágenes y efectos hover
 		initializeImagesBar();
 
 		// Asume que BibliotecaController.getUsuario() retorna el usuario actual.
@@ -144,9 +142,9 @@ public class PerfilController implements Initializable {
 		desactivarBarritasListView();
 
 
-		// Actualizar el Label de juegos añadidos
+		// Actualiza el Label de juegos añadidos
 		actualizarJuegosAnadidos();
-		// Formatear y mostrar la fecha de creación
+		// Formatea y muestra la fecha de creación
 		actualizarFechaCreacion();
 
 		// Cambia el estado de perfil a editable cuando se pulsa en la imagen
@@ -172,14 +170,14 @@ public class PerfilController implements Initializable {
 	    dialog.setHeaderText("Seleccione un género para añadir:");
 	    dialog.setContentText("Género:");
 
-	    // Aplicar estilo CSS
+	    // Aplica estilo CSS
 	    dialog.getDialogPane().getStylesheets().add(getClass().getResource("/styles/styleDialogElegir.css").toExternalForm());
 	    dialog.getDialogPane().getStyleClass().add("custom-dialog");
 
 
-	    // Obtener el Stage del diálogo y hacer transparente
+	    // Obtiene el Stage del diálogo y lo hace transparente
 	    Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
-	    stage.initStyle(StageStyle.TRANSPARENT); // Hace la ventana sin decoración
+	    stage.initStyle(StageStyle.TRANSPARENT); 
 	    stage.getScene().setFill(Color.TRANSPARENT);
 	    
 	    Optional<String> result = dialog.showAndWait();
@@ -199,7 +197,7 @@ public class PerfilController implements Initializable {
 	    List<String> plataformasPermitidas = List.of("PC", "PlayStation", "Xbox", "iOS", 
 	        "Apple Macintosh", "Linux", "Nintendo", "Android", "Web");
 
-	    // Mostrar un diálogo con las plataformas permitidas
+	    // Muestra un diálogo con las plataformas permitidas
 	    ChoiceDialog<String> dialog = new ChoiceDialog<>(plataformasPermitidas.get(0), plataformasPermitidas);
 	    dialog.setTitle("Agregar Plataforma");
 	    dialog.setHeaderText("Seleccione una plataforma para añadir:");
@@ -208,9 +206,9 @@ public class PerfilController implements Initializable {
 	    dialog.getDialogPane().getStylesheets().add(getClass().getResource("/styles/styleDialogElegir.css").toExternalForm());
 	    dialog.getDialogPane().getStyleClass().add("custom-dialog");
 	    
-	    // Obtener el Stage del diálogo y hacer transparente
+	    // Obtiene el Stage del diálogo y hacer transparente
 	    Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
-	    stage.initStyle(StageStyle.TRANSPARENT); // Hace la ventana sin decoración
+	    stage.initStyle(StageStyle.TRANSPARENT); 
 	    stage.getScene().setFill(Color.TRANSPARENT);
 
 	    Optional<String> result = dialog.showAndWait();
@@ -225,10 +223,10 @@ public class PerfilController implements Initializable {
 	
 	@FXML
 	private void eliminarPlataforma() {
-	    // Obtener las plataformas seleccionadas
+	    // Obtiene las plataformas seleccionadas
 	    ObservableList<String> selectedPlataformas = listViewPlataforma.getSelectionModel().getSelectedItems();
 
-	    // Eliminar las plataformas seleccionadas
+	    // Elimina las plataformas seleccionadas
 	    listViewPlataforma.getItems().removeAll(selectedPlataformas);
 	}
 
@@ -242,6 +240,9 @@ public class PerfilController implements Initializable {
 	    listViewGenero.getItems().removeAll(selectedGeneros);
 	}
 
+	/**
+	 * Método que desactiva las barra de desplazamiento de los listView
+	 */
 	private void desactivarBarritasListView() {
 		Platform.runLater(() -> {
 			// Obtener las barras de desplazamiento de los ListView
@@ -272,13 +273,12 @@ public class PerfilController implements Initializable {
 	 * Formatea y muestra la fecha de creación del usuario.
 	 */
 	private void actualizarFechaCreacion() {
-		// Suponiendo que la fecha de creación es un LocalDate
 		LocalDate fechaCreacionLocal = usuario.getFecha_creacion(); 
 
-		// Convertir LocalDate a Date (java.util.Date)
+		// Convierte LocalDate a Date 
 		Date fechaCreacion = Date.valueOf(fechaCreacionLocal);
 
-		// Formatear la fecha utilizando tu método de formateo
+		// Formatea la fecha
 		String fechaFormateada = DateUtils.formatearFecha(fechaCreacion);
 		creacionFecha.setText("Fecha de creación: " + fechaFormateada);
 	}
@@ -317,7 +317,9 @@ public class PerfilController implements Initializable {
 		btnEliminarPlataformas.setVisible(false);
 	}
 
-
+	/**
+	 * Método que cambia el estado del perfil a editable
+	 */
 	private void cambiarEstadoDePerfilAEditable() {
 		txtFApellidos.setEditable(true);
 		txtFFechaNacimiento.setEditable(true);
@@ -331,7 +333,9 @@ public class PerfilController implements Initializable {
 		activarActualizarPreferencias();
 	}
 
-
+	/**
+	 * Método que actualiza el cambiar contraseña
+	 */
 	private void activarActualizarContrasenia() {
 		lblContrasenia.setText("Contraseña actual");
 		txtFContrasena.clear();
@@ -341,6 +345,9 @@ public class PerfilController implements Initializable {
 		txtFContraseniaNueva.setVisible(true);
 	}
 	
+	/**
+	 * Método que activa las preferncias
+	 */
 	private void activarActualizarPreferencias() {
 		
 		btnAnadirGenero.setVisible(true);
@@ -349,6 +356,9 @@ public class PerfilController implements Initializable {
 		btnEliminarPlataformas.setVisible(true);
 	}
 
+	/**
+	 * Método que desactiva los camposdd
+	 */
 	private void desactivarEdicion() {
 
 		txtFNombreUsuario.setEditable(false);
@@ -375,22 +385,19 @@ public class PerfilController implements Initializable {
 
 	/**
 	 * Método que rellena los ListView con las preferencias del usuario.
-	 * Se asume que en la tabla Preferencias:
-	 * - Si el campo tipo_preferencia (mapeado en el modelo como 'tipo') es 1, se trata de un género.
-	 * - Si es 2, se trata de una plataforma.
 	 */
 	private void initializeListViews(Usuario usuario) {
-		// Crear la instancia del DAO utilizando la sesión de Hibernate.
+		// Crea la instancia del DAO utilizando la sesión de Hibernate.
 		PreferenciasDaoImpl preferenciasDao = new PreferenciasDaoImpl(HibernateUtil.getSession());
 
-		// Obtener la lista de preferencias del usuario.
+		// Obtiene la lista de preferencias del usuario.
 		List<Preferencias> preferencias = preferenciasDao.getPreferenciasByUsuario(usuario.getId());
 
-		// Listas para almacenar las preferencias de género y plataforma.
+		// Lista para almacenar las preferencias de género y plataforma.
 		List<String> generos = new ArrayList<>();
 		List<String> plataformas = new ArrayList<>();
 
-		// Recorrer las preferencias y separarlas según el tipo.
+		// Recorre las preferencias y separarlas según el tipo.
 		for (Preferencias pref : preferencias) {
 			if (pref.getTipo() == 1) {
 				generos.add(pref.getPreferencia());
@@ -399,24 +406,22 @@ public class PerfilController implements Initializable {
 			}
 		}
 
-		// Convertir las listas en ObservableList para asignarlas a los ListView.
+		// Convierte las listas en ObservableList para asignarlas a los ListView.
 		ObservableList<String> observableGeneros = FXCollections.observableArrayList(generos);
 		ObservableList<String> observablePlataformas = FXCollections.observableArrayList(plataformas);
 
-		// Asignar las listas a los ListView.
+		// Asigna las listas a los ListView.
 		listViewGenero.setItems(observableGeneros);
 		listViewPlataforma.setItems(observablePlataformas);
 
 
 	}
 
-
-
 	@FXML
 	private void confirmarCambios() {
-	    // Validar los datos antes de proceder
+	    // Valida los datos antes de proceder
 	    if (!validarDatos()) {
-	        return; // Detener ejecución si hay errores
+	        return; 
 	    }
 
 	    Session session = HibernateUtil.getSession();
@@ -427,24 +432,24 @@ public class PerfilController implements Initializable {
 	        UsuarioDaoImpl usuarioDaoImpl = new UsuarioDaoImpl(session);
 	        PreferenciasDaoImpl preferenciasDao = new PreferenciasDaoImpl(session);
 
-	        // Verificar si el usuario quiere cambiar la contraseña
+	        // Verifica si el usuario quiere cambiar la contraseña
 	        if (!txtFContrasena.getText().trim().isEmpty() && !txtFContraseniaNueva.getText().trim().isEmpty()) {
 	            if (!UtilsBcrypt.checkPassword(txtFContrasena.getText().trim(), usuario.getPassword())) {
 	                UtilsViews.mostrarDialogo(Alert.AlertType.ERROR, getClass(), "Error de Contraseña", "La contraseña actual es incorrecta.");
 	                return;
 	            }
 
-	            // Validar la nueva contraseña antes de actualizarla
+	            // Valida la nueva contraseña antes de actualizarla
 	            if (!validarContrasena(txtFContraseniaNueva.getText().trim())) {
 	                return;
 	            }
 
-	            // Hash de la nueva contraseña
+	            // Hashea de la nueva contraseña
 	            String nuevaPasswordHashed = UtilsBcrypt.hashPassword(txtFContraseniaNueva.getText().trim());
 	            usuario.setPassword(nuevaPasswordHashed);
 	        }
 
-	        // Actualizar datos del usuario
+	        // Actualiza datos del usuario
 	        usuario.setUsername(txtFNombreUsuario.getText().trim());
 	        usuario.setNombre(txtFNombre.getText().trim());
 	        usuario.setApellidos(txtFApellidos.getText().trim());
@@ -453,7 +458,7 @@ public class PerfilController implements Initializable {
 
 	        usuarioDaoImpl.update(usuario);
 
-	        // Actualizar preferencias de género
+	        // Actualiza preferencias de género
 	        List<Preferencias> preferenciasGenero = new ArrayList<>();
 	        for (String genero : listViewGenero.getItems()) {
 	            Preferencias pref = new Preferencias();
@@ -463,22 +468,22 @@ public class PerfilController implements Initializable {
 	            preferenciasGenero.add(pref);
 	        }
 
-	        // Actualizar preferencias de plataforma
+	        // Actualiza preferencias de plataforma
 	        List<Preferencias> preferenciasPlataforma = new ArrayList<>();
 	        for (String plataforma : listViewPlataforma.getItems()) {
 	            Preferencias pref = new Preferencias();
 	            pref.setId_usuario(usuario.getId());
-	            pref.setTipo(2); // Tipo 2 para plataformas
+	            pref.setTipo(2);
 	            pref.setPreferencia(plataforma);
 	            preferenciasPlataforma.add(pref);
 	        }
 
-	        // Eliminar preferencias antiguas y guardar las nuevas
+	        // Elimina preferencias antiguas y guardar las nuevas
 	        preferenciasDao.eliminarPreferenciasPorUsuario(usuario.getId());
 	        preferenciasDao.insertarPreferencias(preferenciasGenero);
 	        preferenciasDao.insertarPreferencias(preferenciasPlataforma);
 
-	        tx.commit(); // Confirmar transacción
+	        tx.commit(); 
 
 	        UtilsViews.mostrarDialogo(Alert.AlertType.INFORMATION, getClass(), "Éxito", "Perfil actualizado correctamente.");
 	        desactivarEdicion();
@@ -496,13 +501,16 @@ public class PerfilController implements Initializable {
 
 
 
-
+	/**
+	 * Método que valida todos los campos antes de meterlos en base de datos
+	 * @return
+	 */
 	private boolean validarDatos() {
 		Session session = HibernateUtil.getSession();
 		UsuarioDaoImpl usuarioDao = new UsuarioDaoImpl(session);
 
 		try {
-			// Validar que los campos no estén vacíos
+			// Valida que los campos no estén vacíos
 			if (txtFNombreUsuario.getText().trim().isEmpty() ||
 					txtFNombre.getText().trim().isEmpty() ||
 					txtFApellidos.getText().trim().isEmpty() ||
@@ -513,14 +521,14 @@ public class PerfilController implements Initializable {
 				return false;
 			}
 
-			// Validar correo electrónico con regex
+			// Valida correo electrónico con regex
 			String emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$";
 			if (!txtFCorreoElectronico.getText().matches(emailRegex)) {
 				UtilsViews.mostrarDialogo(Alert.AlertType.ERROR, getClass(), "Correo Inválido", "El correo electrónico ingresado no es válido.");
 				return false;
 			}
 
-			// Validar formato de fecha (YYYY-MM-DD)
+			// Valida formato de fecha (YYYY-MM-DD)
 			try {
 				LocalDate.parse(txtFFechaNacimiento.getText().trim());
 			} catch (Exception e) {
@@ -528,7 +536,7 @@ public class PerfilController implements Initializable {
 				return false;
 			}
 
-			// Verificar si el nombre de usuario o el correo ya existen en la BD
+			// Verifica si el nombre de usuario o el correo ya existen en la BD
 			String nuevoUsername = txtFNombreUsuario.getText().trim();
 			String nuevoEmail = txtFCorreoElectronico.getText().trim();
 
@@ -546,7 +554,11 @@ public class PerfilController implements Initializable {
 		}
 	}
 
-	// Método para validar la contraseña con los nuevos requisitos
+	/**
+	 * Método para validar la contraseña con los nuevos requisitos
+	 * @param password
+	 * @return
+	 */
 	private boolean validarContrasena(String password) {
 		StringBuilder errores = new StringBuilder();
 
@@ -577,8 +589,4 @@ public class PerfilController implements Initializable {
 
 		return true;
 	}
-
-
-
-
 }
