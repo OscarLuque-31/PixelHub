@@ -52,10 +52,13 @@
                <Insets bottom="25.0" left="10.0" />
             </GridPane.margin>
           </Label>
-         <ImageView fx:id="removeButton" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+         <ImageView fx:id="removeButton" fitHeight="20.0" fitWidth="20.0" onMouseClicked="#removeGame" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
             <GridPane.margin>
                <Insets bottom="25.0" right="10.0" />
             </GridPane.margin>
+            <cursor>
+               <Cursor fx:constant="HAND" />
+            </cursor>
          </ImageView>
       </children>
    </GridPane>
