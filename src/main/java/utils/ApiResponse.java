@@ -4,6 +4,9 @@ import java.util.List;
 
 import models.Game;
 
+/**
+ * Clase con la que se obtiene la respuesta de la API
+ */
 public class ApiResponse {
     private int count;
     private String next;

@@ -18,20 +18,26 @@ public class PlataformasController {
 	@FXML
     private HBox platforms;
 	
-	
+	/**
+     * Muestra las plataformas de un juego en formato texto.
+     * 
+     * @param game Juego del cual se extraerán las plataformas.
+     */
 	public void setPlataformas(Game game) {
 		List<String> plataformas = getPlataformas(game);
 		
 		for(String name:plataformas) {
 			Label label = new Label(name);
-			
 			label.setStyle("-fx-text-fill: FFFFFF");
-			
 			platforms.getChildren().add(label);
-		}
-        
+		} 
     }
 	
+	/**
+     * Muestra las plataformas de un juego en formato imagen.
+     * 
+     * @param game Juego del cual se extraerán las plataformas.
+     */
 	public void setPlataformasFoto(Game game) {
 		List<String> plataformas = getPlataformas(game);
 		platforms.setSpacing(10);
@@ -42,11 +48,8 @@ public class PlataformasController {
 		for(String name:plataformas) {
 			ImageView image = new ImageView();
 			
-			image.setStyle("");//Estilo del texto
-			
 			try {
 				image.setImage(new Image(getClass().getResource("/images/" + getImage(name) + ".png").toExternalForm()));
-				
 				image.setFitWidth(20);
 		        image.setFitHeight(20);
 				platforms.getChildren().add(image);
@@ -54,7 +57,6 @@ public class PlataformasController {
 			} catch (Exception e) {
 				
 			}
-			
 		}
         if (contadorPlataformas == 0) {
         	ImageView image = new ImageView();
@@ -63,8 +65,12 @@ public class PlataformasController {
         }
     }
 	
+	/**
+     * Muestra las plataformas de un juego de la biblioteca en formato imagen.
+     * 
+     * @param game Objeto JuegosBiblioteca del cual se extraerán las plataformas.
+     */
 	public void setPlataformasFoto(JuegosBiblioteca game) {
-
 		List<String> plataformas = getPlataformas(game);
 		platforms.setSpacing(10);
 		platforms.setAlignment(Pos.CENTER);
@@ -75,9 +81,7 @@ public class PlataformasController {
 			ImageView image = new ImageView();
 						
 			try {
-				//System.out.println(getImage(name));
 				image.setImage(new Image(getClass().getResource("/images/" + getImage(name) + ".png").toExternalForm()));
-				
 				image.setFitWidth(20);
 		        image.setFitHeight(20);
 				platforms.getChildren().add(image);
@@ -85,7 +89,6 @@ public class PlataformasController {
 			} catch (Exception e) {
 				
 			}
-			
 		}
         if (contadorPlataformas == 0) {
         	ImageView image = new ImageView();
@@ -94,6 +97,12 @@ public class PlataformasController {
         }
     }
 	
+	 /**
+     * Obtiene la imagen correspondiente a la plataforma.
+     * 
+     * @param name Nombre de la plataforma.
+     * @return Nombre de la imagen correspondiente a la plataforma.
+     */
 	private String getImage(String name) {
 		String image = "";
 		switch (name) {
@@ -127,10 +136,15 @@ public class PlataformasController {
 		default:
 			image = "noplatform";
 		}
-		
 		return image;
 	}
 
+	/**
+     * Extrae las plataformas de un Juego.
+     * 
+     * @param game Juego del cual se extraerán las plataformas.
+     * @return Lista de nombres de plataformas.
+     */
 	private List<String> getPlataformas(Game game){
 		List<String> platforms = new ArrayList<>();
 		for (Game.ParentPlatform parentPlatform:game.getParentPlatforms()) {
@@ -141,6 +155,12 @@ public class PlataformasController {
 		return platforms;
 	}
 	
+	/**
+     * Extrae las plataformas de un juego.
+     * 
+     * @param game Juego del cual se extraerán las plataformas.
+     * @return Lista de nombres de plataformas.
+     */
 	private List<String> getPlataformas(JuegosBiblioteca game){
 		List<String> platforms = new ArrayList<>();
 		for (Plataformas plataforma:game.getPlataformas()) {

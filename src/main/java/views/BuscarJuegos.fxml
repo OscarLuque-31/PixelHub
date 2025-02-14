@@ -57,7 +57,6 @@
    </top>
    <center>
 	   <StackPane BorderPane.alignment="CENTER">
-         <!-- ScrollPane con los juegos -->
          <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" style="-fx-background-color: #192229;" BorderPane.alignment="CENTER">
          <content>
             <VBox fx:id="contenedorJuegos" alignment="CENTER" style="-fx-background-color: #192229;">
@@ -73,8 +72,6 @@
                <Insets />
             </opaqueInsets>
       </ScrollPane>
-
-         <!-- Pantalla de carga superpuesta -->
          <VBox fx:id="loadingPane" alignment="CENTER" spacing="10" style="-fx-background-color: #192229;" visible="false">
             <Label style="-fx-text-fill: white; -fx-font-size: 18px;" text="Cargando juegos..." />
             <ProgressIndicator />

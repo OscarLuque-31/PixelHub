@@ -4,11 +4,10 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.layout.StackPane?> <!-- Importa StackPane para detalles del juego -->
+<?import javafx.scene.layout.StackPane?>
 
 <BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.RecomendacionesJuegosController">
     <center>
-        <!-- VBox para mostrar los juegos o los detalles -->
         <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" style="-fx-background-color: #192229;" BorderPane.alignment="CENTER">
             <content>
                 <VBox fx:id="contenedorJuegos" alignment="CENTER" style="-fx-background-color: #192229;">

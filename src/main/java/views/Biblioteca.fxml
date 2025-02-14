@@ -62,7 +62,7 @@
 			<children>
 				<HBox fx:id="dragArea" alignment="CENTER_RIGHT" spacing="9">
 					<children>
-						<GridPane fx:id="gridPane">
+						<GridPane>
 							<columnConstraints>
 								<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="50.0" />
 								<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="50.0" />
@@ -73,13 +73,11 @@
 							<children>
                         <Button fx:id="btnMinimizar" mnemonicParsing="false" prefWidth="50.0" style="-fx-background-color: #192229;" styleClass="btnNavegacion">
                            <graphic>
-      								<!-- Icono Minimizar -->
       								<ImageView fx:id="iconMinimizar" fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true" />
                            </graphic>
                         </Button>
                         <Button fx:id="btnCerrar" mnemonicParsing="false" prefWidth="50.0" style="-fx-background-color: #192229;" styleClass="btnNavegacion" GridPane.columnIndex="1">
                            <graphic>
-      								<!-- Icono Cerrar -->
       								<ImageView fx:id="iconCerrar" fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true" />
                            </graphic>
                         </Button>
@@ -91,12 +89,9 @@
 					<children>
 						<GridPane prefHeight="120.0" prefWidth="1365.0" HBox.hgrow="ALWAYS" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
 							<columnConstraints>
-								<!-- Columna 0: Estática -->
 								<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="110.0" minWidth="110.0" prefWidth="110.0" />
-								<!-- Columna 1: Responsive -->
 								<ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="993.0" prefWidth="1012.0" />
 								<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="161.0" minWidth="80.0" prefWidth="142.0" />
-								<!-- Columna 2: Estática -->
 								<ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="140.0" minWidth="101.0" prefWidth="101.0" />
 							</columnConstraints>
 							<rowConstraints>

@@ -12,12 +12,8 @@
 <?import javafx.scene.text.Font?>
 
 <VBox fx:id="mainBox" alignment="CENTER_LEFT" spacing="10" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.GameItemCuadriculaBibliotecaController">
-
-    <!-- Imagen del juego -->
     <ImageView fx:id="gameImage" fitHeight="200.0" fitWidth="320.0" onMouseClicked="#showGameDetails" />
-    
-    <!-- Plataformas -->
-    <HBox fx:id="gamePlatforms" prefHeight="0.0" prefWidth="200.0">
+        <HBox fx:id="gamePlatforms" prefHeight="0.0" prefWidth="200.0">
       <opaqueInsets>
          <Insets />
       </opaqueInsets>
@@ -25,9 +21,7 @@
          <Insets left="10.0" />
       </padding>
     </HBox>
-    
-    <!-- Nombre del juego -->
-    <Label fx:id="gameTitle" onMouseClicked="#showGameDetails">
+        <Label fx:id="gameTitle" onMouseClicked="#showGameDetails">
       <font>
          <Font size="20.0" />
       </font>
@@ -45,9 +39,7 @@
        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
      </rowConstraints>
       <children>
-          
-          <!-- Rating del juego -->
-          <Label fx:id="gameRating">
+                    <Label fx:id="gameRating">
             <GridPane.margin>
                <Insets bottom="25.0" left="10.0" />
             </GridPane.margin>

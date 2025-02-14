@@ -9,6 +9,10 @@ public class LogicaUtils {
 	public static Map<String, Integer> genres;
 	public static Map<String, String> order;
 	
+	/**
+	 * Setea el contenido de los mapas que contienen las plataformas y géneros con sus respectivos ids
+	 * y las palabras claves para ordenar los juegos
+	 */
 	public static void setMapContent() {
 		platforms = new HashMap<>();
 		genres = new HashMap<>();

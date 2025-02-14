@@ -44,7 +44,6 @@ import utils.UtilsViews;
 
 public class PerfilController implements Initializable {
 
-
 	@FXML
 	private VBox vboxContainer;
 
@@ -125,37 +124,38 @@ public class PerfilController implements Initializable {
 		return this.usuario;
 	}
 
+	/**
+     * Inicializa la vista del perfil.
+     * @param location   URL de localización.
+     * @param resources  Recursos utilizados en la vista.
+     */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		// Enlaza el css
 		vboxContainer.getStylesheets().add(getClass().getResource("/styles/stylePerfil.css").toExternalForm());
 
 		// Inicializa imágenes y efectos hover
+
 		initializeImagesBar();
-
-		// Asume que BibliotecaController.getUsuario() retorna el usuario actual.
+		// Setea el usuario de BibliotecaController
 		setUsuario(BibliotecaController.getUsuario());
-
 		// Rellena los TextField con los datos del usuario
 		initializeTextFields(getUsuario());
 		// Rellena los ListView con las preferencias del usuario
 		initializeListViews(getUsuario());
 		desactivarBarritasListView();
 
-
 		// Actualiza el Label de juegos añadidos
 		actualizarJuegosAnadidos();
 		// Formatea y muestra la fecha de creación
 		actualizarFechaCreacion();
 
-		// Cambia el estado de perfil a editable cuando se pulsa en la imagen
 		imgEditar.setOnMouseClicked(event -> cambiarEstadoDePerfilAEditable());
 		btnCancelar.setOnMouseClicked(event -> desactivarEdicion());
 		btnConfirmar.setOnMouseClicked(event -> confirmarCambios());
 		
-		
 		listViewGenero.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		listViewPlataforma.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-
 	}
 	
 	

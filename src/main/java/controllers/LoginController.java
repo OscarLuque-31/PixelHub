@@ -1,7 +1,5 @@
 package controllers;
 
-import java.util.List;
-
 import dao.UsuarioDaoImpl;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
@@ -10,7 +8,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.ProgressIndicator;
@@ -53,9 +50,6 @@ public class LoginController {
 	private Button btnLogin;
 
 	@FXML
-	private Text linkPassword;
-
-	@FXML
 	private Text linkRegister;
 
 	@FXML
@@ -69,7 +63,6 @@ public class LoginController {
 
 	@FXML
 	private ImageView iconMinimizar;
-
 
 	@FXML
 	private Button btnCerrar;
@@ -85,62 +78,11 @@ public class LoginController {
 
 	private Stage stage;
 	private Stage loadingStage;
-
-	public void cargarFXML(Stage primaryStage) {	
-		try {
-			// Cargar el FXML
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Login.fxml"));
-			Scene scene = new Scene(loader.load());
-			// Establecer el Stage en el controlador
-			primaryStage.initStyle(StageStyle.TRANSPARENT);
-			LoginController controller = loader.getController();
-			controller.setStage(primaryStage);
-			primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/logoPixelHub.png")));
-
-
-			// Tarea en segundo plano para inicializar Hibernate
-			Task<Void> initTask = new Task<>() {
-				@Override
-				protected Void call() {
-					HibernateUtil.getSession();  // Forzamos la carga de Hibernate
-					return null;
-				}
-			};
-
-			// Ejecutar la tarea en un hilo separado para evitar que la interfaz se congele
-			new Thread(initTask).start();
-
-
-			// Configuración del Stage
-			primaryStage.setTitle("PixelHub");
-			primaryStage.setScene(scene);
-			primaryStage.setMaximized(true);
-
-			// Mostrar la ventana
-			primaryStage.show();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-	}
-
+	
 	/**
-	 * Método para cargar la hoja de estilos (CSS) de la ventana de login
+	 * Inicializa todo lo necesario
+	 * @param stage
 	 */
-	private void cargarCSS() {
-		// Cargar el archivo de estilo para la ventana de login
-		getBorderPane().getStylesheets().addAll(getClass().getResource("/styles/styleLogin.css").toExternalForm(),
-				getClass().getResource("/styles/styleTopBar.css").toExternalForm());
-	}
-
-	/**
-	 * Método que controla la navegación entre ventanas
-	 */
-	private void navegacionEntreVentanas() {
-		linkRegister.setOnMouseClicked(event -> NavigationUtils.navigateTo(stage, "/views/Registro.fxml"));
-		linkPassword.setOnMouseClicked(event -> NavigationUtils.navigateTo(stage, "/views/RecuperarContrasena.fxml"));
-	}
-
 	public void setStage(Stage stage) {
 		this.stage = stage;
 		// Funciones de los botones de la barra de navegacion
@@ -157,6 +99,61 @@ public class LoginController {
 		inicioDeSesion();
 	}
 
+	/**
+	 * Carga el FXML
+	 * @param primaryStage Stage principal
+	 */
+	public void cargarFXML(Stage primaryStage) {	
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Login.fxml"));
+			Scene scene = new Scene(loader.load());
+		
+
+			// Establecer el Stage en el controlador
+			primaryStage.initStyle(StageStyle.TRANSPARENT);
+
+			LoginController controller = loader.getController();
+			controller.setStage(primaryStage);
+			primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/logoPixelHub.png")));
+
+			Task<Void> initTask = new Task<>() {
+				@Override
+				protected Void call() {
+					HibernateUtil.getSession();
+					return null;
+				}
+			};
+
+			new Thread(initTask).start();
+
+			primaryStage.setTitle("PixelHub");
+			primaryStage.setScene(scene);
+			primaryStage.setMaximized(true);
+
+			primaryStage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	/**
+	 * Método para cargar la hoja de estilos de la ventana de login
+	 */
+	private void cargarCSS() {
+
+		borderPane.getStylesheets().addAll(getClass().getResource("/styles/styleLogin.css").toExternalForm(),
+
+
+				getClass().getResource("/styles/styleTopBar.css").toExternalForm());
+	}
+
+	/**
+	 * Método que controla la navegación entre ventanas
+	 */
+	private void navegacionEntreVentanas() {
+		linkRegister.setOnMouseClicked(event -> NavigationUtils.navigateTo(stage, "/views/Registro.fxml"));
+	}
 
 	/**
 	 * Método que inicia sesión si las credenciales son correctas
@@ -179,7 +176,7 @@ public class LoginController {
 
 	            loginTask.setOnSucceeded(e -> {
 	                Usuario usuario = loginTask.getValue();
-	                cerrarPantallaCarga(); // Cerrar pantalla de carga
+	                cerrarPantallaCarga();
 
 	                if (usuario != null && UtilsBcrypt.checkPassword(password, usuario.getPassword())) {
 	                    NavigationUtils.navigateToBibliotecaWithUser(stage, "/views/Biblioteca.fxml", "Biblioteca", usuario);
@@ -190,17 +187,19 @@ public class LoginController {
 	            });
 
 	            loginTask.setOnFailed(e -> {
-	                cerrarPantallaCarga(); // Cerrar pantalla de carga en caso de error
+	                cerrarPantallaCarga();
 	                UtilsViews.mostrarDialogo(Alert.AlertType.ERROR, getClass(),
 	                        "Error de conexión", "Hubo un problema al iniciar sesión. Inténtelo de nuevo.");
 	            });
 
-	            new Thread(loginTask).start(); // Iniciar el hilo en segundo plano
+	            new Thread(loginTask).start();
 	        }
 	    });
 	}
-
 	
+	/**
+	 * Muestra la pantalla de carga
+	 */
 	private void mostrarPantallaCarga() {
 	    loadingStage = new Stage();
 	    loadingStage.initStyle(StageStyle.UNDECORATED);
@@ -226,7 +225,9 @@ public class LoginController {
 	    loadingStage.show();
 	}
 
-
+	/**
+	 * Cierra la pantalla de carga
+	 */
 	private void cerrarPantallaCarga() {
 	    if (loadingStage != null) {
 	        loadingStage.close();
@@ -272,7 +273,6 @@ public class LoginController {
 	 * Método que recopila todos los hoverEffect
 	 */
 	public void hoverEffect() {
-		UtilsViews.hoverEffectText(linkPassword, "#0095FF", "#52A5E0");
 		UtilsViews.hoverEffectText(linkRegister, "#0095FF", "#52A5E0");
 		UtilsViews.hoverEffectButton(getBtnLogin(), "#0095FF", "#52A5E0");
 		UtilsViews.hoverEffectButton(btnMinimizar, "#2a3b47", "#192229");

@@ -12,27 +12,28 @@ import models.Usuario;
 public class NavigationUtils {
 
 	/**
-	 * Método que administra la navegación entre pantallas
-	 * @param stage - stage de la pantalla
-	 * @param fxmlPath - path del fichero fxml
-	 * @param title - titulo de la pantalla
+	 * Cambia la pantalla actual por una nueva vista FXML.
+	 * Carga el archivo FXML y obtiene su controlador.
+	 *
+	 * @param stage    Escenario principal donde se mostrará la nueva vista.
+	 * @param fxmlPath Ruta del archivo FXML de la nueva vista.
 	 */
+
 	public static void navigateTo(Stage stage, String fxmlPath) {
 		try {
-
-			// Carga el nuevo contenido FXML
 			FXMLLoader loader = new FXMLLoader(NavigationUtils.class.getResource(fxmlPath));
 			Parent newRoot = loader.load();
 			Object controller = loader.getController();
 
-			// Asigna el stage al controlador
 			if (controller instanceof BibliotecaController) {
 				((BibliotecaController) controller).setStage(stage);
 			} else if (controller instanceof LoginController) {
 				((LoginController) controller).setStage(stage);
 			} else if (controller instanceof RegistroController) {
 				((RegistroController) controller).setStage(stage);
+
 			} 
+
 
 			prepararStage(stage, newRoot);
 
@@ -43,21 +44,19 @@ public class NavigationUtils {
 
 
 	/**
-	 * Método que administra la navegación entre login y biblioteca
-	 * @param stage - stage de la pantalla
-	 * @param fxmlPath - path del fichero fxml
-	 * @param title - titulo de la pantalla
+	 * Cambia la pantalla actual a la vista de la biblioteca pasando la información del usuario.
+	 *
+	 * @param stage    Escenario principal donde se mostrará la nueva vista.
+	 * @param fxmlPath Ruta del archivo FXML de la biblioteca.
+	 * @param usuario  Usuario con la información del usuario autenticado.
 	 */
+
 	public static void navigateToBibliotecaWithUser(Stage stage, String fxmlPath, String title, Usuario usuario) {
 		try {
-			
-
-			// Cargar el nuevo contenido FXML
 			FXMLLoader loader = new FXMLLoader(NavigationUtils.class.getResource(fxmlPath));
 			Parent newRoot = loader.load();
 			Object controller = loader.getController();
 
-			// Configurar el controlador con el usuario, si aplica
 			if (controller instanceof BibliotecaController) {
 				((BibliotecaController) controller).setUsuario(usuario);
 				((BibliotecaController) controller).setStage(stage);
@@ -69,28 +68,22 @@ public class NavigationUtils {
 			e.printStackTrace();
 		}
 	}
-
-
-
+	
 	/**
-	 * Método que prepara todo el stage
-	 * @param stage
-	 * @param wasMaximized
-	 * @param scene
-	 * @param title
+	 * Configura el Stage con la nueva vista y lo muestra.
+	 * Si ya existe una escena cambia su raíz, de lo contrario crea una nueva escena.
+	 *
+	 * @param stage   Escenario principal donde se actualizará la vista.
+	 * @param newRoot Nuevo contenido de la vista.
 	 */
-	private static void prepararStage(Stage stage, Parent newRoot) {
 
-		// Cambia la raíz de la escena actual
+	private static void prepararStage(Stage stage, Parent newRoot) {
 		Scene sceneActual = stage.getScene();
 		if (sceneActual != null) {
 			sceneActual.setRoot(newRoot);
 		} else {
-			// Si no hay escena actual, crea una nueva
 			stage.setScene(new Scene(newRoot));
 		}
-
-		// Restaurar el estado de maximización
 		stage.setMaximized(true);
 
 		stage.show();
