@@ -69,8 +69,7 @@ public class BibliotecaJuegosController implements Initializable{
     @FXML
     private ComboBox<String> comboBoxPlataforma;
 
-    @FXML
-    private ComboBox<String> comboBoxGenero;
+  
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {	
@@ -146,10 +145,6 @@ public class BibliotecaJuegosController implements Initializable{
 		comboBoxPlataforma.getItems().addAll("PC", "PlayStation", "Xbox",
 				"iOS", "Apple Macintosh", "Linux",
 				"Nintendo", "Android", "Web");
-		comboBoxGenero.getItems().addAll("Acción", "Indie", "Aventura", "RPG", "Estrategia", 
-				"Shooter", "Casual", "Simulación", "Puzzle", "Arcade", 
-				"Plataformas", "Multijugador", "Carreras", "Deportes", 
-				"Lucha", "Familiar", "Juegos de mesa", "Educativo", "Cartas");
 		comboBoxOrdenar.getItems().addAll("A - Z", "Z - A", "Rating", "Fecha añadido");
 	}
 
@@ -175,21 +170,31 @@ public class BibliotecaJuegosController implements Initializable{
 
 
 	@FXML
-    void buscarJuegos(MouseEvent event) {
-		showGames(textFieldBusqueda.getText()); 
-    }
-	
-	private void showGames(String title) {
+	void buscarJuegos(MouseEvent event) {
+	    String searchText = textFieldBusqueda.getText();
+	    String plataforma = comboBoxPlataforma.getValue();
+	    String ordenarPor = comboBoxOrdenar.getValue();
+	    
+	    // Llamada a la función sin el género
+	    showGames(searchText, plataforma, ordenarPor); 
+	}
+
+
+	private void showGames(String title, String plataforma, String ordenarPor) {
 	    scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 	    scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
-		loadingPane.setVisible(true);
+	    loadingPane.setVisible(true);
 
 	    Task<List<VBox>> loadGamesTask = new Task<>() {
 	        @Override
 	        protected List<VBox> call() throws Exception {
 	            JuegosBibliotecaDaoImpl juegosBibliotecaDaoImpl = new JuegosBibliotecaDaoImpl(HibernateUtil.getSession());
-	            List<JuegosBiblioteca> games = juegosBibliotecaDaoImpl.searchJuegosByUsuario(BibliotecaController.getUsuario().getId());
+	            // Filtrar juegos por usuario y por los criterios seleccionados
+	            List<JuegosBiblioteca> games = juegosBibliotecaDaoImpl.searchJuegosByFilters(
+	                BibliotecaController.getUsuario().getId(),
+	                title, plataforma, ordenarPor
+	            );
 
 	            List<VBox> bloques = new ArrayList<>();
 	            for (JuegosBiblioteca game : games) {
@@ -213,8 +218,8 @@ public class BibliotecaJuegosController implements Initializable{
 
 	    // Ejecuta la carga en un nuevo hilo para no bloquear la UI
 	    new Thread(loadGamesTask).start();
-
 	}
+
 	
 	private void mostrarJuegos(List<VBox> bloquesJuegos) {
 	    contenedorJuegos.getChildren().clear();
