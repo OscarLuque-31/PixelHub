@@ -2,6 +2,9 @@ package controllers;
 
 import java.util.List;
 
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
 import dao.JuegosBibliotecaDaoImpl;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -116,18 +119,36 @@ public class GameItemCuadriculaBibliotecaController {
 
     @FXML
     void removeGame(MouseEvent event) {
-    	if (bibliotecaController != null) {
-            try {
-            	
-            	JuegosBibliotecaDaoImpl dao = new JuegosBibliotecaDaoImpl(HibernateUtil.getSession());
-            	
-            	dao.delete(game);
-            	
+        if (bibliotecaController != null) {
+            // Crear la sesión de Hibernate
+            try (Session session = HibernateUtil.getSession()) {
+                // Iniciar una transacción
+                session.beginTransaction();
+
+                // Buscar el juego en la base de datos
+                JuegosBiblioteca juego = session.get(JuegosBiblioteca.class, game.getIdJuego());
+
+                if (juego != null) {
+                    // Limpiar las capturas asociadas si es necesario
+                    juego.getCapturas().clear();  // Si tienes relaciones de cascada, esto no es necesario
+
+                    // Eliminar el juego
+                    session.remove(juego);
+                }
+
+                // Confirmar la transacción
+                session.getTransaction().commit();
+
+                // Actualizar la vista de biblioteca
                 bibliotecaController.buscarJuegos(event);
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     }
+
+
+ 
 
 }
