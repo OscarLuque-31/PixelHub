@@ -70,7 +70,6 @@ public class GameDetailsBibliotecaController {
     	detailsContainer.getStylesheets().add(getClass().getResource("/styles/styleGameDetails.css").toExternalForm());
 
 		gameTitle.setText(game.getTitulo());
-		descriptionText.setText(extractSpanishDescription(game.getDescripcion()));
 		gameRating.setText("Rating personal: ⭐ " + game.getRating());
 		comentario.setText(game.getComentario());
 		gameFecha.setText("Fecha en la que se añadió a la biblioteca: " + game.getFechaAñadido());
@@ -80,9 +79,11 @@ public class GameDetailsBibliotecaController {
 			if (game.getUrlImagen() != null) {
 				gameImage.setImage(new Image(game.getUrlImagen()));
 				areCapturasApi = true;
+				descriptionText.setText(extractSpanishDescription(game.getDescripcion()));
 			}else {
 				gameImage.setImage(new Image(new ByteArrayInputStream(game.getImagen())));
 				areCapturasApi = false;
+				descriptionText.setText(game.getDescripcion());
 			}
 		} catch (Exception e) {
 			gameImage.setImage(new Image(getClass().getResource("/images/error.png").toExternalForm()));
@@ -138,7 +139,7 @@ public class GameDetailsBibliotecaController {
 				if (areCapturasApi) {
 					gameScreenshots.setImage(new Image(capturas.get(posicionCapturas).getUrlImagen()));
 				}else {
-					gameImage.setImage(new Image(new ByteArrayInputStream(capturas.get(posicionCapturas).getCaptura())));
+					gameScreenshots.setImage(new Image(new ByteArrayInputStream(capturas.get(posicionCapturas).getCaptura())));
 				}
 			}
 			

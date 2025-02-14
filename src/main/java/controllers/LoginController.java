@@ -6,12 +6,14 @@ import dao.UsuarioDaoImpl;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -21,6 +23,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import models.Usuario;
@@ -81,7 +84,7 @@ public class LoginController {
 	private ImageView imgLogo;
 
 	private Stage stage;
-
+	private Stage loadingStage;
 
 	public void cargarFXML(Stage primaryStage) {	
 		try {
@@ -159,32 +162,75 @@ public class LoginController {
 	 * Método que inicia sesión si las credenciales son correctas
 	 */
 	private void inicioDeSesion() {
-		btnLogin.setOnMouseClicked(event -> {
+	    btnLogin.setOnMouseClicked(event -> {
 
-			String username = txtUsername.getText().trim();
-			String password = txtPassword.getText().trim();
+	        String username = txtUsername.getText().trim();
+	        String password = txtPassword.getText().trim();
 
-			if (validarCampos(username, password)) {
+	        if (validarCampos(username, password)) {
+	            mostrarPantallaCarga(); // Mostrar pantalla de carga antes de validar
+	            
+	            Task<Usuario> loginTask = new Task<>() {
+	                @Override
+	                protected Usuario call() {
+	                    return devolverUsuario(username);
+	                }
+	            };
 
-				Usuario usuario = devolverUsuario(username);
+	            loginTask.setOnSucceeded(e -> {
+	                Usuario usuario = loginTask.getValue();
+	                cerrarPantallaCarga(); // Cerrar pantalla de carga
+
+	                if (usuario != null && UtilsBcrypt.checkPassword(password, usuario.getPassword())) {
+	                    NavigationUtils.navigateToBibliotecaWithUser(stage, "/views/Biblioteca.fxml", "Biblioteca", usuario);
+	                } else {                        
+	                    UtilsViews.mostrarDialogo(Alert.AlertType.WARNING, getClass(),
+	                            "No se ha encontrado al usuario", "Por favor, compruebe que los datos son correctos");
+	                }
+	            });
+
+	            loginTask.setOnFailed(e -> {
+	                cerrarPantallaCarga(); // Cerrar pantalla de carga en caso de error
+	                UtilsViews.mostrarDialogo(Alert.AlertType.ERROR, getClass(),
+	                        "Error de conexión", "Hubo un problema al iniciar sesión. Inténtelo de nuevo.");
+	            });
+
+	            new Thread(loginTask).start(); // Iniciar el hilo en segundo plano
+	        }
+	    });
+	}
+
+	
+	private void mostrarPantallaCarga() {
+	    loadingStage = new Stage();
+	    loadingStage.initStyle(StageStyle.UNDECORATED);
+	    loadingStage.initModality(Modality.APPLICATION_MODAL);
+	    loadingStage.setResizable(false);
+
+	    VBox vbox = new VBox(15);
+	    vbox.setAlignment(Pos.CENTER);
+	    vbox.getStyleClass().add("vbox-loading");
+
+	    ProgressIndicator progressIndicator = new ProgressIndicator();
+	    progressIndicator.getStyleClass().add("progress-indicator");
+
+	    Label lblCargando = new Label("Cargando...");
+	    lblCargando.getStyleClass().add("label-loading");
+
+	    vbox.getChildren().addAll(progressIndicator, lblCargando);
+
+	    Scene scene = new Scene(vbox, 250, 150);
+	    scene.getStylesheets().add(getClass().getResource("/styles/styleLoadingScreen.css").toExternalForm());
+
+	    loadingStage.setScene(scene);
+	    loadingStage.show();
+	}
 
 
-
-				try {
-
-					// Si el usuario no es nulo y la contraseña es correcta continua
-					if (usuario != null && UtilsBcrypt.checkPassword(password, usuario.getPassword())) {
-						// Usuario y contraseña correctos
-						NavigationUtils.navigateToBibliotecaWithUser(stage, "/views/Biblioteca.fxml", "Biblioteca", usuario);
-					} else {						
-						UtilsViews.mostrarDialogo(Alert.AlertType.WARNING,getClass(),"No se ha encontrado al usuario","Por favor, compruebe que los datos son correctos");
-					}
-
-				} catch (IllegalArgumentException e) {	
-					UtilsViews.mostrarDialogo(Alert.AlertType.WARNING,getClass(),"No se ha encontrado al usuario","Por favor, compruebe que los datos son correctos");
-				}
-			}
-		});
+	private void cerrarPantallaCarga() {
+	    if (loadingStage != null) {
+	        loadingStage.close();
+	    }
 	}
 
 	/**

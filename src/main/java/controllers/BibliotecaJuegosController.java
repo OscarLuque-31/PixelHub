@@ -10,6 +10,7 @@ import java.util.concurrent.Future;
 
 import dao.JuegosBibliotecaDaoImpl;
 import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -159,28 +160,39 @@ public class BibliotecaJuegosController implements Initializable{
     }
 	
 	private void showGames(String title) {
-//	    scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-//	    scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+	    scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+	    scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
-	    Platform.runLater(() -> loadingPane.setVisible(true));
+		loadingPane.setVisible(true);
 
-	        try {
-	        	
-	        	JuegosBibliotecaDaoImpl juegosBibliotecaDaoImpl = new JuegosBibliotecaDaoImpl(HibernateUtil.getSession());
-	        	
+	    Task<List<VBox>> loadGamesTask = new Task<>() {
+	        @Override
+	        protected List<VBox> call() throws Exception {
+	            JuegosBibliotecaDaoImpl juegosBibliotecaDaoImpl = new JuegosBibliotecaDaoImpl(HibernateUtil.getSession());
 	            List<JuegosBiblioteca> games = juegosBibliotecaDaoImpl.searchJuegosByUsuario(BibliotecaController.getUsuario().getId());
-	        	
-	        	List<VBox> bloques = new ArrayList<>();
-	        	for (JuegosBiblioteca game:games) {
-	        		bloques.add(crearBloqueVideojuego(game));
-				}
-	        	
-	    	    Platform.runLater(() -> loadingPane.setVisible(false));
-	        	mostrarJuegos(bloques);
 
-	        } catch (Exception e) {
-	            e.printStackTrace();
+	            List<VBox> bloques = new ArrayList<>();
+	            for (JuegosBiblioteca game : games) {
+	                bloques.add(crearBloqueVideojuego(game));
+	            }
+	            return bloques;
 	        }
+	    };
+
+	    // Cuando la tarea termine, oculta el loadingPane y muestra los juegos
+	    loadGamesTask.setOnSucceeded(event -> {
+	        List<VBox> juegosCargados = loadGamesTask.getValue();
+	        mostrarJuegos(juegosCargados);
+	        loadingPane.setVisible(false); // Oculta el loadingPane
+	    });
+
+	    loadGamesTask.setOnFailed(event -> {
+	        System.out.println("Error al cargar juegos: " + loadGamesTask.getException().getMessage());
+	        loadingPane.setVisible(false); // Asegurar que se oculta en caso de error
+	    });
+
+	    // Ejecuta la carga en un nuevo hilo para no bloquear la UI
+	    new Thread(loadGamesTask).start();
 
 	}
 	

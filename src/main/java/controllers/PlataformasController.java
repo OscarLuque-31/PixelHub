@@ -32,19 +32,6 @@ public class PlataformasController {
         
     }
 	
-	public void setPlataformas(JuegosBiblioteca game) {
-		List<String> plataformas = getPlataformas(game);
-		
-		for(String name:plataformas) {
-			Label label = new Label(name);
-			
-			label.setStyle("-fx-text-fill: FFFFFF");
-			
-			platforms.getChildren().add(label);
-		}
-        
-    }
-	
 	public void setPlataformasFoto(Game game) {
 		List<String> plataformas = getPlataformas(game);
 		platforms.setSpacing(10);
@@ -77,6 +64,7 @@ public class PlataformasController {
     }
 	
 	public void setPlataformasFoto(JuegosBiblioteca game) {
+
 		List<String> plataformas = getPlataformas(game);
 		platforms.setSpacing(10);
 		platforms.setAlignment(Pos.CENTER);
@@ -85,9 +73,7 @@ public class PlataformasController {
 		
 		for(String name:plataformas) {
 			ImageView image = new ImageView();
-			
-			image.setStyle("");//Estilo del texto
-			
+						
 			try {
 				//System.out.println(getImage(name));
 				image.setImage(new Image(getClass().getResource("/images/" + getImage(name) + ".png").toExternalForm()));
@@ -157,10 +143,8 @@ public class PlataformasController {
 	
 	private List<String> getPlataformas(JuegosBiblioteca game){
 		List<String> platforms = new ArrayList<>();
-		System.out.println("plataformas:");
 		for (Plataformas plataforma:game.getPlataformas()) {
 			if (plataforma.getPlataforma() != null) {
-				System.out.println(plataforma.getPlataforma());
 				platforms.add(plataforma.getPlataforma());
 			}
 		}
