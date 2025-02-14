@@ -22,7 +22,7 @@
             <GridPane VBox.vgrow="ALWAYS">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="100.0" />
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="100.0" />
               </columnConstraints>
               <rowConstraints>
@@ -112,7 +112,7 @@
                 <!-- Primer GridPane dentro del HBox -->
                 <GridPane HBox.hgrow="ALWAYS">
                   <columnConstraints>
-                    <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="300.0" />
+                    <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="400.0" />
                   </columnConstraints>
                   <rowConstraints>
                     <RowConstraints minHeight="50.0" vgrow="SOMETIMES" />
@@ -122,7 +122,7 @@
                     <GridPane prefHeight="85.0" prefWidth="100.0" GridPane.rowIndex="1">
                       <columnConstraints>
                         <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
-                        <ColumnConstraints hgrow="ALWAYS" maxWidth="20.0" minWidth="20.0" />
+                        <ColumnConstraints hgrow="ALWAYS" maxWidth="20.0" minWidth="40.0" />
                         <ColumnConstraints hgrow="ALWAYS" />
                       </columnConstraints>
                       <rowConstraints>
@@ -131,24 +131,30 @@
                       <children>
                         <VBox prefHeight="200.0" prefWidth="40.0">
                           <children>
-                            <Label styleClass="lblGeneroPlataforma" text="Género" />
-                            <ListView fx:id="listViewGenero" maxHeight="150.0" minHeight="150.0" />
-                                    <HBox alignment="BOTTOM_CENTER" minHeight="50.0" spacing="130.0">
+                            <Label alignment="CENTER" maxWidth="1.7976931348623157E308" styleClass="lblGeneroPlataforma" text="Género" />
+                            <ListView fx:id="listViewGenero" maxHeight="100.0" minHeight="100.0" />
+                                    <HBox alignment="BOTTOM_CENTER" minHeight="50.0">
                                        <children>
-                                          <Button fx:id="btnAnadirGenero" onAction="#agregarGenero" mnemonicParsing="false" text="Añadir" />
-                                          <Button fx:id="btnEliminarGenero"  onAction="#eliminarGenero" mnemonicParsing="false" text="Eliminar" />
+                                          <Button fx:id="btnAnadirGenero" mnemonicParsing="false" onAction="#agregarGenero" text="Añadir">
+                                             <HBox.margin>
+                                                <Insets right="20.0" />
+                                             </HBox.margin></Button>
+                                          <Button fx:id="btnEliminarGenero" mnemonicParsing="false" onAction="#eliminarGenero" text="Eliminar" />
                                        </children>
                                     </HBox>
                           </children>
                         </VBox>
                         <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2">
                           <children>
-                            <Label styleClass="lblGeneroPlataforma" text="Plataformas" />
-                            <ListView fx:id="listViewPlataforma" maxHeight="150.0" minHeight="150.0" />
-                                    <HBox alignment="BOTTOM_CENTER" minHeight="50.0" spacing="130.0">
+                            <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" styleClass="lblGeneroPlataforma" text="Plataformas" />
+                            <ListView fx:id="listViewPlataforma" maxHeight="100.0" minHeight="100.0" />
+                                    <HBox alignment="BOTTOM_CENTER" minHeight="50.0">
                                        <children>
-                                          <Button fx:id="btnAnadirPlataformas" onAction="#agregarPlataforma" mnemonicParsing="false" text="Añadir" />
-                                          <Button fx:id="btnEliminarPlataformas" onAction="#eliminarPlataforma" mnemonicParsing="false" text="Eliminar" />
+                                          <Button fx:id="btnAnadirPlataformas" mnemonicParsing="false" onAction="#agregarPlataforma" text="Añadir">
+                                             <HBox.margin>
+                                                <Insets right="20.0" />
+                                             </HBox.margin></Button>
+                                          <Button fx:id="btnEliminarPlataformas" mnemonicParsing="false" onAction="#eliminarPlataforma" text="Eliminar" />
                                        </children>
                                     </HBox>
                           </children>
@@ -162,7 +168,7 @@
                      </HBox.margin>
                 </GridPane>
                 <!-- Segundo GridPane dentro del HBox -->
-                <GridPane style="-fx-background-color: #2c3e50; -fx-background-radius: 20;" HBox.hgrow="ALWAYS">
+                <GridPane maxHeight="160.0" style="-fx-background-color: #2c3e50; -fx-background-radius: 20;" HBox.hgrow="ALWAYS">
                   <columnConstraints>
                     <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
                   </columnConstraints>
