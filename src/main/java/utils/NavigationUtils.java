@@ -1,9 +1,7 @@
 package utils;
 
 import controllers.BibliotecaController;
-import controllers.CodigoEmailController;
 import controllers.LoginController;
-import controllers.RecuperarContrasenaController;
 import controllers.RegistroController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -34,11 +32,7 @@ public class NavigationUtils {
 				((LoginController) controller).setStage(stage);
 			} else if (controller instanceof RegistroController) {
 				((RegistroController) controller).setStage(stage);
-			} else if (controller instanceof RecuperarContrasenaController) {
-				((RecuperarContrasenaController) controller).setStage(stage);
-			} else if (controller instanceof CodigoEmailController) {
-				((CodigoEmailController) controller).setStage(stage);
-			}
+			} 
 
 			prepararStage(stage, newRoot);
 
