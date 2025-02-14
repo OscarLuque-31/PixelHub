@@ -89,6 +89,7 @@ public class PlataformasController {
 			image.setStyle("");//Estilo del texto
 			
 			try {
+				//System.out.println(getImage(name));
 				image.setImage(new Image(getClass().getResource("/images/" + getImage(name) + ".png").toExternalForm()));
 				
 				image.setFitWidth(20);
@@ -156,8 +157,10 @@ public class PlataformasController {
 	
 	private List<String> getPlataformas(JuegosBiblioteca game){
 		List<String> platforms = new ArrayList<>();
+		System.out.println("plataformas:");
 		for (Plataformas plataforma:game.getPlataformas()) {
 			if (plataforma.getPlataforma() != null) {
+				System.out.println(plataforma.getPlataforma());
 				platforms.add(plataforma.getPlataforma());
 			}
 		}

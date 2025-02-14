@@ -48,9 +48,9 @@ public class GameItemCuadriculaBibliotecaController {
 
         try {
             if (game.getUrlImagen() != null) {
-				gameImage.setImage(new Image(new ByteArrayInputStream(game.getImagen())));
-			}else {
 				gameImage.setImage(new Image(game.getUrlImagen()));
+			}else {
+				gameImage.setImage(new Image(new ByteArrayInputStream(game.getImagen())));
 			}
         } catch (Exception e) {
             gameImage.setImage(new Image(getClass().getResource("/images/error.png").toExternalForm()));

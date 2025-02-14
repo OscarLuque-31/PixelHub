@@ -35,7 +35,7 @@ public class JuegosBibliotecaDaoImpl extends CommonDaoImpl<JuegosBiblioteca> imp
         return count != null ? count.intValue() : 0;
     }
     
-    public List<JuegosBiblioteca> searchAll(Integer idUsuario) {
+    public List<JuegosBiblioteca> searchJuegosByUsuario(Integer idUsuario) {
         // Consulta HQL para obtener todos los juegos asociados a un usuario
         String hql = "FROM JuegosBiblioteca j WHERE j.usuario.id = :idUsuario";
         
