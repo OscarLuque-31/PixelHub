@@ -2,17 +2,17 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.layout.StackPane?>
-
+<?import javafx.scene.layout.VBox?>
 
 <BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.BibliotecaJuegosController">
 
@@ -61,18 +61,22 @@
 	<center>
 		<StackPane>
 			<BorderPane fx:id="borderPaneCentro" BorderPane.alignment="CENTER">
-	         <center>
-	            <VBox fx:id="contenedorJuegos" BorderPane.alignment="CENTER">
-	               <BorderPane.margin>
-	                  <Insets left="50.0" />
-	               </BorderPane.margin></VBox>
-	         </center></BorderPane>
+            <center>
+               <ScrollPane fx:id="scrollPane" fitToHeight="true" fitToWidth="true" style="-fx-background-color: #192229;" BorderPane.alignment="CENTER">
+                  <content>
+      	            <VBox fx:id="contenedorJuegos" style="-fx-background-color: #192229;"/>
+                  </content>
+               </ScrollPane>
+            </center></BorderPane>
 	         
 	         <!-- Pantalla de carga superpuesta -->
          <VBox fx:id="loadingPane" alignment="CENTER" spacing="10" style="-fx-background-color: #192229;" visible="false">
             <Label style="-fx-text-fill: white; -fx-font-size: 18px;" text="Cargando juegos..." />
             <ProgressIndicator />
          </VBox>
+         <BorderPane.margin>
+            <Insets left="40.0" top="10.0" />
+         </BorderPane.margin>
 	    </StackPane>
 	</center>
 </BorderPane>
