@@ -47,5 +47,27 @@ public class UsuarioDaoImpl extends CommonDaoImpl<Usuario> implements UsuarioDao
                 .uniqueResult();
         return usuario != null;
     }
+    
+    
+    /**
+     * Método que devuelve un booleano con la condición de si existe un 
+     * nombre de usuario y un email igual en base de datos
+     * en ese caso devolvera true.
+     * @param username
+     * @param email
+     * @param userId
+     * @return
+     */
+    public boolean existeUsuario(String username, String email, int userIdActual) {
+        String hql = "FROM Usuario WHERE (username = :username OR email = :email) AND id != :userId";
+        Usuario usuario = session.createQuery(hql, Usuario.class)
+            .setParameter("username", username)
+            .setParameter("email", email)
+            .setParameter("userId", userIdActual)
+            .uniqueResult();
+
+        return usuario != null;
+    }
+
 
 }
