@@ -192,7 +192,6 @@ public class PerfilController implements Initializable {
 	    });
 	}
 
-
 	
 	@FXML
 	private void agregarPlataforma() {
