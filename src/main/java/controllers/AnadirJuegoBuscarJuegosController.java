@@ -46,7 +46,6 @@ public class AnadirJuegoBuscarJuegosController implements Initializable {
 
 	private Stage primaryStage;  // Campo para almacenar el primaryStage
 
-	private byte[] imagenPrincipalBytes; // Imagen principal en bytes
 	private static Game game;  // Variable para almacenar el juego recibido
 
 	// Método para recibir el objeto Game desde la vista anterior
@@ -153,16 +152,7 @@ public class AnadirJuegoBuscarJuegosController implements Initializable {
 		UtilsViews.hoverEffectButton(btnCancelar, "#9E181B", "#F24245");
 	}
 
-	// Método para limpiar los campos del formulario
-	private void limpiarCampos() {
-		// Limpiar campos
-		txtFRating.clear();
-		txtFComentario.clear();
-		checkBoxComprado.setSelected(false);
-		checkBoxDeseado.setSelected(false);
-		checkBoxJugado.setSelected(false);
-		imagenJuego.setImage(null);  // Limpiar la imagen del juego
-	}
+
 
 	// Método para agregar el juego a la base de datos
 	private void agregarJuegoABaseDeDatos() {

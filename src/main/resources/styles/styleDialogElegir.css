@@ -1,5 +1,46 @@
 @import url('https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=Tilt+Neon&family=Tilt+Warp&display=swap');
 
+.custom-dialog {
+    -fx-background-color: #2c3e50;
+    -fx-border-color: #3498db;
+    -fx-border-width: 2px;
+    -fx-border-radius: 10px;
+}
+
+.dialog-pane {
+    -fx-background-color: #2c3e50;
+}
+
+.dialog-pane .header-panel {
+    -fx-background-color: #34495e;
+    -fx-text-fill: white;
+}
+
+.dialog-pane .content {
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+}
+
+.dialog-pane .button-bar .button {
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-border-radius: 5px;
+}
+
+.dialog-pane .button-bar .button:hover {
+    -fx-background-color: #2980b9;
+}
+
+.custom-dialog {
+    -fx-background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente */
+}
+
+.dialog-pane {
+    -fx-background-color: transparent;
+}
+
+
 .dialog-pane {
     -fx-background-color:#192229; /* Fondo transparente para permitir ver el Stage detrás */
     -fx-border-color: #52A5E0;         /* Color del borde */
@@ -70,7 +111,38 @@
     -fx-text-fill: #008000; /* Texto en verde */
 }
 
+/* Estilo para el ComboBox dentro del ChoiceDialog */
+.combo-box {
+    -fx-text-fill: white; /* Color del texto */
+    -fx-font-family: "Tilt Neon"; /* Fuente personalizada */
+    -fx-font-size: 14px; /* Tamaño de fuente */
+    -fx-border-radius: 5px; /* Bordes redondeados */
+    -fx-padding: 5px; /* Espaciado interno */
+}
 
+/* Estilo para el ComboBox cuando está enfocado */
+.combo-box:focused {
+    -fx-background-color: #2980b9; /* Fondo al estar enfocado */
+    -fx-border-color: #52A5E0; /* Color del borde cuando está enfocado */
+    -fx-text-fill: white; /* Color del texto */
+}
 
+/* Estilo para el botón desplegable del ComboBox */
+.combo-box .arrow {
+    -fx-background-color: #2980b9; /* Fondo del botón de la flecha */
+    -fx-border-radius: 50%; /* Hacer la flecha redonda */
+}
 
+/* Estilo para el panel de items del ComboBox */
+.combo-box .list-cell {
+	-fx-background-color: #2980b9; /* Fondo al estar enfocado */
+	
+    -fx-text-fill: white; /* Color del texto */
+    -fx-font-family: "Tilt Neon"; /* Fuente personalizada */
+}
+
+/* Estilo cuando se pasa el ratón por encima de un item del ComboBox */
+.combo-box .list-cell:hover {
+    -fx-background-color: #212E36; /* Fondo al pasar el ratón */
+}
 
