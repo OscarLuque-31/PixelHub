@@ -18,12 +18,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
@@ -32,6 +35,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import models.Preferencias;
@@ -116,7 +120,7 @@ public class PerfilController implements Initializable {
 	@FXML
 	private Label creacionFecha;
 
-
+	private Stage loadingStage;
 	private Usuario usuario;
 
 	private void setUsuario(Usuario usuario) {
@@ -419,83 +423,127 @@ public class PerfilController implements Initializable {
 	        return; // Detener ejecución si hay errores
 	    }
 
-	    Session session = HibernateUtil.getSession();
-	    Transaction tx = null;
+	    // Mostrar pantalla de carga en el hilo principal
+	    mostrarPantallaCarga();
 
-	    try {
-	        tx = session.beginTransaction();
-	        UsuarioDaoImpl usuarioDaoImpl = new UsuarioDaoImpl(session);
-	        PreferenciasDaoImpl preferenciasDao = new PreferenciasDaoImpl(session);
+	    // Ejecutar la actualización en un hilo separado
+	    new Thread(() -> {
+	        Session session = HibernateUtil.getSession();
+	        Transaction tx = null;
 
-	        // Verificar si el usuario quiere cambiar la contraseña
-	        if (!txtFContrasena.getText().trim().isEmpty() && !txtFContraseniaNueva.getText().trim().isEmpty()) {
-	            if (!UtilsBcrypt.checkPassword(txtFContrasena.getText().trim(), usuario.getPassword())) {
-	                UtilsViews.mostrarDialogo(Alert.AlertType.ERROR, getClass(), "Error de Contraseña", "La contraseña actual es incorrecta.");
-	                return;
+	        try {
+	            tx = session.beginTransaction();
+	            UsuarioDaoImpl usuarioDaoImpl = new UsuarioDaoImpl(session);
+	            PreferenciasDaoImpl preferenciasDao = new PreferenciasDaoImpl(session);
+
+	            // Verificar si el usuario quiere cambiar la contraseña
+	            if (!txtFContrasena.getText().trim().isEmpty() && !txtFContraseniaNueva.getText().trim().isEmpty()) {
+	                if (!UtilsBcrypt.checkPassword(txtFContrasena.getText().trim(), usuario.getPassword())) {
+	                    Platform.runLater(() -> {
+	                        UtilsViews.mostrarDialogo(Alert.AlertType.ERROR, getClass(), "Error de Contraseña", "La contraseña actual es incorrecta.");
+	                    });
+	                    return;
+	                }
+
+	                // Validar la nueva contraseña antes de actualizarla
+	                if (!validarContrasena(txtFContraseniaNueva.getText().trim())) {
+	                    return;
+	                }
+
+	                // Hash de la nueva contraseña
+	                String nuevaPasswordHashed = UtilsBcrypt.hashPassword(txtFContraseniaNueva.getText().trim());
+	                usuario.setPassword(nuevaPasswordHashed);
 	            }
 
-	            // Validar la nueva contraseña antes de actualizarla
-	            if (!validarContrasena(txtFContraseniaNueva.getText().trim())) {
-	                return;
+	            // Actualizar datos del usuario
+	            usuario.setUsername(txtFNombreUsuario.getText().trim());
+	            usuario.setNombre(txtFNombre.getText().trim());
+	            usuario.setApellidos(txtFApellidos.getText().trim());
+	            usuario.setEmail(txtFCorreoElectronico.getText().trim());
+	            usuario.setFecha_nacimiento(Date.valueOf(LocalDate.parse(txtFFechaNacimiento.getText().trim())));
+
+	            usuarioDaoImpl.update(usuario);
+
+	            // Actualizar preferencias de género
+	            List<Preferencias> preferenciasGenero = new ArrayList<>();
+	            for (String genero : listViewGenero.getItems()) {
+	                Preferencias pref = new Preferencias();
+	                pref.setId_usuario(usuario.getId());
+	                pref.setTipo(1); // Tipo 1 para géneros
+	                pref.setPreferencia(genero);
+	                preferenciasGenero.add(pref);
 	            }
 
-	            // Hash de la nueva contraseña
-	            String nuevaPasswordHashed = UtilsBcrypt.hashPassword(txtFContraseniaNueva.getText().trim());
-	            usuario.setPassword(nuevaPasswordHashed);
+	            // Actualizar preferencias de plataforma
+	            List<Preferencias> preferenciasPlataforma = new ArrayList<>();
+	            for (String plataforma : listViewPlataforma.getItems()) {
+	                Preferencias pref = new Preferencias();
+	                pref.setId_usuario(usuario.getId());
+	                pref.setTipo(2); // Tipo 2 para plataformas
+	                pref.setPreferencia(plataforma);
+	                preferenciasPlataforma.add(pref);
+	            }
+
+	            // Eliminar preferencias antiguas y guardar las nuevas
+	            preferenciasDao.eliminarPreferenciasPorUsuario(usuario.getId());
+	            preferenciasDao.insertarPreferencias(preferenciasGenero);
+	            preferenciasDao.insertarPreferencias(preferenciasPlataforma);
+
+	            tx.commit(); // Confirmar transacción
+
+	            // Cerrar la pantalla de carga en el hilo principal
+	            Platform.runLater(() -> {
+	                cerrarPantallaCarga();
+	                UtilsViews.mostrarDialogo(Alert.AlertType.INFORMATION, getClass(), "Éxito", "Perfil actualizado correctamente.");
+	                desactivarEdicion();
+	            });
+
+	        } catch (Exception e) {
+	            if (tx != null) {
+	                tx.rollback();
+	            }
+	            Platform.runLater(() -> {
+	                UtilsViews.mostrarDialogo(Alert.AlertType.ERROR, getClass(), "Error", "No se pudo actualizar el perfil.");
+	            });
+	            e.printStackTrace();
+	        } finally {
+	            session.close();
 	        }
+	    }).start(); // Ejecuta el código en un nuevo hilo
+	}
 
-	        // Actualizar datos del usuario
-	        usuario.setUsername(txtFNombreUsuario.getText().trim());
-	        usuario.setNombre(txtFNombre.getText().trim());
-	        usuario.setApellidos(txtFApellidos.getText().trim());
-	        usuario.setEmail(txtFCorreoElectronico.getText().trim());
-	        usuario.setFecha_nacimiento(Date.valueOf(LocalDate.parse(txtFFechaNacimiento.getText().trim())));
+	
+	private void mostrarPantallaCarga() {
+	    loadingStage = new Stage();
+	    loadingStage.initStyle(StageStyle.UNDECORATED);
+	    loadingStage.initModality(Modality.APPLICATION_MODAL);
+	    loadingStage.setResizable(false);
 
-	        usuarioDaoImpl.update(usuario);
+	    VBox vbox = new VBox(15);
+	    vbox.setAlignment(Pos.CENTER);
+	    vbox.getStyleClass().add("vbox-loading");
 
-	        // Actualizar preferencias de género
-	        List<Preferencias> preferenciasGenero = new ArrayList<>();
-	        for (String genero : listViewGenero.getItems()) {
-	            Preferencias pref = new Preferencias();
-	            pref.setId_usuario(usuario.getId());
-	            pref.setTipo(1); // Tipo 1 para géneros
-	            pref.setPreferencia(genero);
-	            preferenciasGenero.add(pref);
-	        }
+	    ProgressIndicator progressIndicator = new ProgressIndicator();
+	    progressIndicator.getStyleClass().add("progress-indicator");
 
-	        // Actualizar preferencias de plataforma
-	        List<Preferencias> preferenciasPlataforma = new ArrayList<>();
-	        for (String plataforma : listViewPlataforma.getItems()) {
-	            Preferencias pref = new Preferencias();
-	            pref.setId_usuario(usuario.getId());
-	            pref.setTipo(2); // Tipo 2 para plataformas
-	            pref.setPreferencia(plataforma);
-	            preferenciasPlataforma.add(pref);
-	        }
+	    Label lblCargando = new Label("Guardando cambios...");
+	    lblCargando.getStyleClass().add("label-loading");
 
-	        // Eliminar preferencias antiguas y guardar las nuevas
-	        preferenciasDao.eliminarPreferenciasPorUsuario(usuario.getId());
-	        preferenciasDao.insertarPreferencias(preferenciasGenero);
-	        preferenciasDao.insertarPreferencias(preferenciasPlataforma);
+	    vbox.getChildren().addAll(progressIndicator, lblCargando);
 
-	        tx.commit(); // Confirmar transacción
+	    Scene scene = new Scene(vbox, 250, 150);
+	    scene.getStylesheets().add(getClass().getResource("/styles/styleLoadingScreen.css").toExternalForm());
 
-	        UtilsViews.mostrarDialogo(Alert.AlertType.INFORMATION, getClass(), "Éxito", "Perfil actualizado correctamente.");
-	        desactivarEdicion();
-
-	    } catch (Exception e) {
-	        if (tx != null) {
-	            tx.rollback();
-	        }
-	        UtilsViews.mostrarDialogo(Alert.AlertType.ERROR, getClass(), "Error", "No se pudo actualizar el perfil.");
-	        e.printStackTrace();
-	    } finally {
-	        session.close();
-	    }
+	    loadingStage.setScene(scene);
+	    loadingStage.show();
 	}
 
 
-
+	private void cerrarPantallaCarga() {
+	    if (loadingStage != null) {
+	        loadingStage.close();
+	    }
+	}
 
 	private boolean validarDatos() {
 		Session session = HibernateUtil.getSession();
