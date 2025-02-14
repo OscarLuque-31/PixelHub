@@ -15,6 +15,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
@@ -32,14 +33,13 @@ import models.JuegosBiblioteca;
 import models.Usuario;
 import utils.APIUtils;
 import utils.HibernateUtil;
+import utils.LogicaUtils;
 import utils.NavigationUtils;
 import utils.UtilsViews;
 
 public class BibliotecaJuegosController implements Initializable{
 
 
-	@FXML
-	private ImageView imgFiltro;
 
 	@FXML
 	private ImageView imgAdd;
@@ -50,11 +50,6 @@ public class BibliotecaJuegosController implements Initializable{
 	@FXML
 	private TextField textFieldBusqueda;
 
-	@FXML
-	private ImageView imgModoTarjeta;
-
-	@FXML
-	private ImageView imgModoLista;
 
 	@FXML
 	private ScrollPane scrollPane;
@@ -67,6 +62,15 @@ public class BibliotecaJuegosController implements Initializable{
 
 	@FXML
     private VBox loadingPane;
+	
+    @FXML
+    private ComboBox<String> comboBoxOrdenar;
+
+    @FXML
+    private ComboBox<String> comboBoxPlataforma;
+
+    @FXML
+    private ComboBox<String> comboBoxGenero;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {	
@@ -78,6 +82,7 @@ public class BibliotecaJuegosController implements Initializable{
 		navegacionEntrePestañas();		
 		//Cargar todos los juegos
 		buscarJuegos(null);
+		setComboContent();
 	}
 	
 	/**
@@ -126,11 +131,26 @@ public class BibliotecaJuegosController implements Initializable{
 	 * Método que inicializa las imagenes
 	 */
 	public void initializeImagesBar() {
-		imgFiltro.setImage(new Image(getClass().getResourceAsStream("/images/filtro.png")));
 		imgAdd.setImage(new Image(getClass().getResourceAsStream("/images/CirculoMas.png")));
-		imgModoLista.setImage(new Image(getClass().getResourceAsStream("/images/modoLista.png")));
-		imgModoTarjeta.setImage(new Image(getClass().getResourceAsStream("/images/modoTarjeta.png")));
 		imgLupa.setImage(new Image(getClass().getResourceAsStream("/images/lupa.png")));
+	}
+	
+//	private void setMaps() {
+//		LogicaUtils.setMapContent();
+//		platforms = LogicaUtils.platforms;
+//		genres = LogicaUtils.genres;
+//		order = LogicaUtils.order;		
+//	}
+
+	private void setComboContent() {
+		comboBoxPlataforma.getItems().addAll("PC", "PlayStation", "Xbox",
+				"iOS", "Apple Macintosh", "Linux",
+				"Nintendo", "Android", "Web");
+		comboBoxGenero.getItems().addAll("Acción", "Indie", "Aventura", "RPG", "Estrategia", 
+				"Shooter", "Casual", "Simulación", "Puzzle", "Arcade", 
+				"Plataformas", "Multijugador", "Carreras", "Deportes", 
+				"Lucha", "Familiar", "Juegos de mesa", "Educativo", "Cartas");
+		comboBoxOrdenar.getItems().addAll("A - Z", "Z - A", "Rating", "Fecha añadido");
 	}
 
 	public void mostrarDetallesJuego(JuegosBiblioteca game) {

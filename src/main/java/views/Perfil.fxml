@@ -133,10 +133,10 @@
                           <children>
                             <Label styleClass="lblGeneroPlataforma" text="Género" />
                             <ListView fx:id="listViewGenero" maxHeight="150.0" minHeight="150.0" />
-                                    <HBox minHeight="50.0" spacing="100.0">
+                                    <HBox alignment="BOTTOM_CENTER" minHeight="50.0" spacing="130.0">
                                        <children>
-                                          <Button fx:id="btnAnadirGenero" mnemonicParsing="false" text="Añadir" />
-                                          <Button fx:id="btnEliminarGenero" mnemonicParsing="false" text="Eliminar" />
+                                          <Button fx:id="btnAnadirGenero" onAction="#agregarGenero" mnemonicParsing="false" text="Añadir" />
+                                          <Button fx:id="btnEliminarGenero"  onAction="#eliminarGenero" mnemonicParsing="false" text="Eliminar" />
                                        </children>
                                     </HBox>
                           </children>
@@ -145,10 +145,10 @@
                           <children>
                             <Label styleClass="lblGeneroPlataforma" text="Plataformas" />
                             <ListView fx:id="listViewPlataforma" maxHeight="150.0" minHeight="150.0" />
-                                    <HBox minHeight="50.0" spacing="100.0">
+                                    <HBox alignment="BOTTOM_CENTER" minHeight="50.0" spacing="130.0">
                                        <children>
-                                          <Button fx:id="btnAnadirPlataformas" mnemonicParsing="false" text="Añadir" />
-                                          <Button fx:id="btnEliminarPlataformas" mnemonicParsing="false" text="Eliminar" />
+                                          <Button fx:id="btnAnadirPlataformas" onAction="#agregarPlataforma" mnemonicParsing="false" text="Añadir" />
+                                          <Button fx:id="btnEliminarPlataformas" onAction="#eliminarPlataforma" mnemonicParsing="false" text="Eliminar" />
                                        </children>
                                     </HBox>
                           </children>

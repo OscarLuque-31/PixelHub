@@ -31,6 +31,9 @@ import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import models.Preferencias;
 import models.Usuario;
 import utils.DateUtils;
@@ -157,19 +160,28 @@ public class PerfilController implements Initializable {
 
 	}
 	
+	
 	@FXML
 	private void agregarGenero() {
-	    // Lista de géneros permitidos
 	    List<String> generosPermitidos = List.of("Acción", "Indie", "Aventura", "RPG", "Estrategia", 
 	        "Shooter", "Casual", "Simulación", "Puzzle", "Arcade", "Plataformas", "Multijugador", 
 	        "Carreras", "Deportes", "Lucha", "Familiar", "Juegos de mesa", "Educativo", "Cartas");
 
-	    // Mostrar un diálogo con los géneros permitidos
 	    ChoiceDialog<String> dialog = new ChoiceDialog<>(generosPermitidos.get(0), generosPermitidos);
 	    dialog.setTitle("Agregar Género");
 	    dialog.setHeaderText("Seleccione un género para añadir:");
 	    dialog.setContentText("Género:");
 
+	    // Aplicar estilo CSS
+	    dialog.getDialogPane().getStylesheets().add(getClass().getResource("/styles/styleDialogElegir.css").toExternalForm());
+	    dialog.getDialogPane().getStyleClass().add("custom-dialog");
+
+
+	    // Obtener el Stage del diálogo y hacer transparente
+	    Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
+	    stage.initStyle(StageStyle.TRANSPARENT); // Hace la ventana sin decoración
+	    stage.getScene().setFill(Color.TRANSPARENT);
+	    
 	    Optional<String> result = dialog.showAndWait();
 	    result.ifPresent(genero -> {
 	        if (!listViewGenero.getItems().contains(genero)) {
@@ -180,6 +192,8 @@ public class PerfilController implements Initializable {
 	    });
 	}
 
+
+	
 	@FXML
 	private void agregarPlataforma() {
 	    // Lista de plataformas permitidas
@@ -191,6 +205,14 @@ public class PerfilController implements Initializable {
 	    dialog.setTitle("Agregar Plataforma");
 	    dialog.setHeaderText("Seleccione una plataforma para añadir:");
 	    dialog.setContentText("Plataforma:");
+	    
+	    dialog.getDialogPane().getStylesheets().add(getClass().getResource("/styles/styleDialogElegir.css").toExternalForm());
+	    dialog.getDialogPane().getStyleClass().add("custom-dialog");
+	    
+	    // Obtener el Stage del diálogo y hacer transparente
+	    Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
+	    stage.initStyle(StageStyle.TRANSPARENT); // Hace la ventana sin decoración
+	    stage.getScene().setFill(Color.TRANSPARENT);
 
 	    Optional<String> result = dialog.showAndWait();
 	    result.ifPresent(plataforma -> {
@@ -201,7 +223,6 @@ public class PerfilController implements Initializable {
 	        }
 	    });
 	}
-
 	
 	@FXML
 	private void eliminarPlataforma() {
@@ -394,54 +415,84 @@ public class PerfilController implements Initializable {
 
 	@FXML
 	private void confirmarCambios() {
-		// Validar los datos antes de proceder
-		if (!validarDatos()) {
-			return; // Detener ejecución si hay errores
-		}
+	    // Validar los datos antes de proceder
+	    if (!validarDatos()) {
+	        return; // Detener ejecución si hay errores
+	    }
 
-		Session session = HibernateUtil.getSession();
+	    Session session = HibernateUtil.getSession();
+	    Transaction tx = null;
 
-		try {
-			Transaction tx = session.beginTransaction();
-			UsuarioDaoImpl usuarioDaoImpl = new UsuarioDaoImpl(session);
+	    try {
+	        tx = session.beginTransaction();
+	        UsuarioDaoImpl usuarioDaoImpl = new UsuarioDaoImpl(session);
+	        PreferenciasDaoImpl preferenciasDao = new PreferenciasDaoImpl(session);
 
-			// Verificar si el usuario quiere cambiar la contraseña
-			if (!txtFContrasena.getText().trim().isEmpty() && !txtFContraseniaNueva.getText().trim().isEmpty()) {
-				if (!UtilsBcrypt.checkPassword(txtFContrasena.getText().trim(), usuario.getPassword())) {
-					UtilsViews.mostrarDialogo(Alert.AlertType.ERROR, getClass(), "Error de Contraseña", "La contraseña actual es incorrecta.");
-					return;
-				}
+	        // Verificar si el usuario quiere cambiar la contraseña
+	        if (!txtFContrasena.getText().trim().isEmpty() && !txtFContraseniaNueva.getText().trim().isEmpty()) {
+	            if (!UtilsBcrypt.checkPassword(txtFContrasena.getText().trim(), usuario.getPassword())) {
+	                UtilsViews.mostrarDialogo(Alert.AlertType.ERROR, getClass(), "Error de Contraseña", "La contraseña actual es incorrecta.");
+	                return;
+	            }
 
-				// Validar la nueva contraseña antes de actualizarla
-				if (!validarContrasena(txtFContraseniaNueva.getText().trim())) {
-					return;
-				}
+	            // Validar la nueva contraseña antes de actualizarla
+	            if (!validarContrasena(txtFContraseniaNueva.getText().trim())) {
+	                return;
+	            }
 
-				// Hash de la nueva contraseña
-				String nuevaPasswordHashed = UtilsBcrypt.hashPassword(txtFContraseniaNueva.getText().trim());
-				usuario.setPassword(nuevaPasswordHashed);
-			}
+	            // Hash de la nueva contraseña
+	            String nuevaPasswordHashed = UtilsBcrypt.hashPassword(txtFContraseniaNueva.getText().trim());
+	            usuario.setPassword(nuevaPasswordHashed);
+	        }
 
+	        // Actualizar datos del usuario
+	        usuario.setUsername(txtFNombreUsuario.getText().trim());
+	        usuario.setNombre(txtFNombre.getText().trim());
+	        usuario.setApellidos(txtFApellidos.getText().trim());
+	        usuario.setEmail(txtFCorreoElectronico.getText().trim());
+	        usuario.setFecha_nacimiento(Date.valueOf(LocalDate.parse(txtFFechaNacimiento.getText().trim())));
 
-			// Actualizar datos del usuario
-			usuario.setUsername(txtFNombreUsuario.getText().trim());
-			usuario.setNombre(txtFNombre.getText().trim());
-			usuario.setApellidos(txtFApellidos.getText().trim());
-			usuario.setEmail(txtFCorreoElectronico.getText().trim());
-			usuario.setFecha_nacimiento(Date.valueOf(LocalDate.parse(txtFFechaNacimiento.getText().trim())));
+	        usuarioDaoImpl.update(usuario);
 
-			usuarioDaoImpl.update(usuario);
-			tx.commit(); // Confirmar transacción
+	        // Actualizar preferencias de género
+	        List<Preferencias> preferenciasGenero = new ArrayList<>();
+	        for (String genero : listViewGenero.getItems()) {
+	            Preferencias pref = new Preferencias();
+	            pref.setId_usuario(usuario.getId());
+	            pref.setTipo(1); // Tipo 1 para géneros
+	            pref.setPreferencia(genero);
+	            preferenciasGenero.add(pref);
+	        }
 
-			UtilsViews.mostrarDialogo(Alert.AlertType.INFORMATION, getClass(), "Éxito", "Perfil actualizado correctamente.");
-			desactivarEdicion();
+	        // Actualizar preferencias de plataforma
+	        List<Preferencias> preferenciasPlataforma = new ArrayList<>();
+	        for (String plataforma : listViewPlataforma.getItems()) {
+	            Preferencias pref = new Preferencias();
+	            pref.setId_usuario(usuario.getId());
+	            pref.setTipo(2); // Tipo 2 para plataformas
+	            pref.setPreferencia(plataforma);
+	            preferenciasPlataforma.add(pref);
+	        }
 
-		} catch (Exception e) {
-			UtilsViews.mostrarDialogo(Alert.AlertType.ERROR, getClass(), "Error", "No se pudo actualizar el perfil.");
-			e.printStackTrace();
-		} finally {
-			session.close();
-		}
+	        // Eliminar preferencias antiguas y guardar las nuevas
+	        preferenciasDao.eliminarPreferenciasPorUsuario(usuario.getId());
+	        preferenciasDao.insertarPreferencias(preferenciasGenero);
+	        preferenciasDao.insertarPreferencias(preferenciasPlataforma);
+
+	        tx.commit(); // Confirmar transacción
+
+	        UtilsViews.mostrarDialogo(Alert.AlertType.INFORMATION, getClass(), "Éxito", "Perfil actualizado correctamente.");
+	        desactivarEdicion();
+
+	    } catch (Exception e) {
+	        if (tx != null) {
+	            tx.rollback();
+	        }
+	        UtilsViews.mostrarDialogo(Alert.AlertType.ERROR, getClass(), "Error", "No se pudo actualizar el perfil.");
+	        e.printStackTrace();
+	    } finally {
+	        session.close();
+	    }
 	}
 
 
