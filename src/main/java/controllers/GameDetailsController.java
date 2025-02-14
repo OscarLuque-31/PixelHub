@@ -3,6 +3,8 @@ package controllers;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.jsoup.Jsoup;
 
@@ -97,7 +99,7 @@ public class GameDetailsController {
 
 		
 		gameTitle.setText(game.getName());
-		descriptionText.setText(extractSpanishDescription(game.getDescription()));
+		descriptionText.setText(extractDescription(game.getDescription()));
 		gameRating.setText("⭐ " + game.getRating());
 		gamePlatforms.getChildren().add(crearBloquePlataformas(game));
 
@@ -200,28 +202,29 @@ public class GameDetailsController {
 		imageView.setClip(clip);
 	}
 
-	private String extractSpanishDescription(String description) {
-		// Usa Jsoup para limpiar el HTML y extraer texto
-		String plainText = Jsoup.parse(description).text();
+	public String extractDescription(String html) {
+		// Patrón para extraer la descripción en español
+	    Pattern patternSpanish = Pattern.compile("<p>Español<br ?/>(.*?)</p>", Pattern.DOTALL);
+	    Matcher matcherSpanish = patternSpanish.matcher(html);
 
-		// Busca el índice donde comienza la parte en español
-		String startMarker = "Español";
-		int startIndex = plainText.indexOf(startMarker);
+	    if (matcherSpanish.find()) {
+	        return limpiarTexto(matcherSpanish.group(1));
+	    }
 
-		if (startIndex == -1) {
-			return "No se ha encontrado ninguna descripción del juego en español";
-		}
+	    // Si no hay descripción en español, extrae el primer párrafo (en inglés)
+	    Pattern patternEnglish = Pattern.compile("<p>(.*?)</p>", Pattern.DOTALL);
+	    Matcher matcherEnglish = patternEnglish.matcher(html);
 
-		// Extrae el texto desde "Español"
-		String spanishText = plainText.substring(startIndex + startMarker.length()).trim();
+	    if (matcherEnglish.find()) {
+	        return limpiarTexto(matcherEnglish.group(1));
+	    }
 
-		// Opcionalmente puedes detenerte si detectas el fin del texto en español
-		int endIndex = spanishText.indexOf("English"); // Ejemplo de un marcador de fin
-		if (endIndex != -1) {
-			spanishText = spanishText.substring(0, endIndex).trim();
-		}
+	    return "Descripción no disponible.";
+	}
 
-		return spanishText;
+	private String limpiarTexto(String texto) {
+	    // Elimina las etiquetas HTML y los saltos de línea (sin reemplazar <br />)
+	    return texto.replaceAll("<.*?>", "").trim();
 	}
 
 	public void setGamesController(BuscarJuegosController controller) {

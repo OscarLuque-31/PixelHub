@@ -75,7 +75,7 @@ public class GameItemCuadriculaBibliotecaController {
                         "L0," + height + "Z");
 
         gameImage.setClip(clip);
-        
+        removeButton.setImage(new Image(getClass().getResource("/images/circuloMenos.png").toExternalForm()));
     }
     
     private HBox crearBloquePlataformas(JuegosBiblioteca game) {
@@ -111,5 +111,18 @@ public class GameItemCuadriculaBibliotecaController {
         }
     }
 
+    @FXML
+    void removeGame(MouseEvent event) {
+    	if (bibliotecaController != null) {
+            try {
+            	
+            	
+            	
+                bibliotecaController.buscarJuegos(event);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
 }
