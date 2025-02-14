@@ -168,7 +168,7 @@ public class LoginController {
 	        String password = getTxtPassword().getText().trim();
 
 	        if (validarCampos(username, password)) {
-	            mostrarPantallaCarga(); // Mostrar pantalla de carga antes de validar
+	            mostrarPantallaCarga();
 	            
 	            Task<Usuario> loginTask = new Task<>() {
 	                @Override
@@ -214,7 +214,7 @@ public class LoginController {
 	    ProgressIndicator progressIndicator = new ProgressIndicator();
 	    progressIndicator.getStyleClass().add("progress-indicator");
 
-	    Label lblCargando = new Label("Cargando...");
+	    Label lblCargando = new Label("Iniciando sesión...");
 	    lblCargando.getStyleClass().add("label-loading");
 
 	    vbox.getChildren().addAll(progressIndicator, lblCargando);
