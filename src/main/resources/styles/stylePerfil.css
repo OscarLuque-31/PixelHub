@@ -143,3 +143,31 @@
 	-fx-font-family: "Tilt Warp";
 	-fx-font-size: 16;
 }
+
+#btnAnadirGenero{
+	-fx-background-color: #52A5E0;
+	-fx-text-fill: white;
+	-fx-font-family: "Tilt Warp";
+	-fx-font-size: 16;	
+}
+
+#btnEliminarGenero{
+	-fx-background-color: #F24245;
+	-fx-text-fill: WHITE;
+	-fx-font-family: "Tilt Warp";
+	-fx-font-size: 16;	
+}
+
+#btnAnadirPlataformas{
+	-fx-background-color: #52A5E0;
+	-fx-text-fill: white;
+	-fx-font-family: "Tilt Warp";
+	-fx-font-size: 16;	
+}
+
+#btnEliminarPlataformas{
+	-fx-background-color: #F24245;
+	-fx-text-fill: WHITE;
+	-fx-font-family: "Tilt Warp";
+	-fx-font-size: 16;	
+}

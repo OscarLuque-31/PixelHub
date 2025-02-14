@@ -4,6 +4,7 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import org.hibernate.Session;
@@ -19,11 +20,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.ScrollBar;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
@@ -76,7 +80,6 @@ public class PerfilController implements Initializable {
 	@FXML
 	private PasswordField txtFContrasena;
 
-
 	@FXML
 	private Label lblContraseniaNueva;
 
@@ -85,6 +88,18 @@ public class PerfilController implements Initializable {
 
 	@FXML
 	private ListView<String> listViewGenero;
+
+	@FXML
+	private Button btnAnadirGenero;
+
+	@FXML
+	private Button btnEliminarGenero;
+	
+    @FXML
+    private Button btnAnadirPlataformas;
+
+    @FXML
+    private Button btnEliminarPlataformas;
 
 	@FXML
 	private ListView<String> listViewPlataforma;
@@ -135,7 +150,76 @@ public class PerfilController implements Initializable {
 		imgEditar.setOnMouseClicked(event -> cambiarEstadoDePerfilAEditable());
 		btnCancelar.setOnMouseClicked(event -> desactivarEdicion());
 		btnConfirmar.setOnMouseClicked(event -> confirmarCambios());
+		
+		
+		listViewGenero.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+		listViewPlataforma.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
+	}
+	
+	@FXML
+	private void agregarGenero() {
+	    // Lista de géneros permitidos
+	    List<String> generosPermitidos = List.of("Acción", "Indie", "Aventura", "RPG", "Estrategia", 
+	        "Shooter", "Casual", "Simulación", "Puzzle", "Arcade", "Plataformas", "Multijugador", 
+	        "Carreras", "Deportes", "Lucha", "Familiar", "Juegos de mesa", "Educativo", "Cartas");
+
+	    // Mostrar un diálogo con los géneros permitidos
+	    ChoiceDialog<String> dialog = new ChoiceDialog<>(generosPermitidos.get(0), generosPermitidos);
+	    dialog.setTitle("Agregar Género");
+	    dialog.setHeaderText("Seleccione un género para añadir:");
+	    dialog.setContentText("Género:");
+
+	    Optional<String> result = dialog.showAndWait();
+	    result.ifPresent(genero -> {
+	        if (!listViewGenero.getItems().contains(genero)) {
+	            listViewGenero.getItems().add(genero);
+	        } else {
+	            UtilsViews.mostrarDialogo(Alert.AlertType.WARNING, getClass(), "Duplicado", "El género ya ha sido agregado.");
+	        }
+	    });
+	}
+
+	@FXML
+	private void agregarPlataforma() {
+	    // Lista de plataformas permitidas
+	    List<String> plataformasPermitidas = List.of("PC", "PlayStation", "Xbox", "iOS", 
+	        "Apple Macintosh", "Linux", "Nintendo", "Android", "Web");
+
+	    // Mostrar un diálogo con las plataformas permitidas
+	    ChoiceDialog<String> dialog = new ChoiceDialog<>(plataformasPermitidas.get(0), plataformasPermitidas);
+	    dialog.setTitle("Agregar Plataforma");
+	    dialog.setHeaderText("Seleccione una plataforma para añadir:");
+	    dialog.setContentText("Plataforma:");
+
+	    Optional<String> result = dialog.showAndWait();
+	    result.ifPresent(plataforma -> {
+	        if (!listViewPlataforma.getItems().contains(plataforma)) {
+	            listViewPlataforma.getItems().add(plataforma);
+	        } else {
+	            UtilsViews.mostrarDialogo(Alert.AlertType.WARNING, getClass(), "Duplicado", "La plataforma ya ha sido agregada.");
+	        }
+	    });
+	}
+
+	
+	@FXML
+	private void eliminarPlataforma() {
+	    // Obtener las plataformas seleccionadas
+	    ObservableList<String> selectedPlataformas = listViewPlataforma.getSelectionModel().getSelectedItems();
+
+	    // Eliminar las plataformas seleccionadas
+	    listViewPlataforma.getItems().removeAll(selectedPlataformas);
+	}
+
+	
+	@FXML
+	private void eliminarGenero() {
+	    // Obtener los géneros seleccionados
+	    ObservableList<String> selectedGeneros = listViewGenero.getSelectionModel().getSelectedItems();
+
+	    // Eliminar los géneros seleccionados
+	    listViewGenero.getItems().removeAll(selectedGeneros);
 	}
 
 	private void desactivarBarritasListView() {
@@ -206,6 +290,11 @@ public class PerfilController implements Initializable {
 		btnConfirmar.setVisible(false);
 		lblContraseniaNueva.setVisible(false);
 		txtFContraseniaNueva.setVisible(false);
+		
+		btnAnadirGenero.setVisible(false);
+		btnEliminarGenero.setVisible(false);
+		btnAnadirPlataformas.setVisible(false);
+		btnEliminarPlataformas.setVisible(false);
 	}
 
 
@@ -217,11 +306,12 @@ public class PerfilController implements Initializable {
 		txtFNombreUsuario.setEditable(true);
 		btnCancelar.setVisible(true);
 		btnConfirmar.setVisible(true);
-		
+
 		activarActualizarContrasenia();
+		activarActualizarPreferencias();
 	}
-	
-	
+
+
 	private void activarActualizarContrasenia() {
 		lblContrasenia.setText("Contraseña actual");
 		txtFContrasena.clear();
@@ -230,23 +320,36 @@ public class PerfilController implements Initializable {
 		lblContraseniaNueva.setVisible(true);
 		txtFContraseniaNueva.setVisible(true);
 	}
+	
+	private void activarActualizarPreferencias() {
+		
+		btnAnadirGenero.setVisible(true);
+		btnEliminarGenero.setVisible(true);
+		btnAnadirPlataformas.setVisible(true);
+		btnEliminarPlataformas.setVisible(true);
+	}
 
 	private void desactivarEdicion() {
-		
+
 		txtFNombreUsuario.setEditable(false);
 		txtFNombre.setEditable(false);
 		txtFApellidos.setEditable(false);
 		txtFFechaNacimiento.setEditable(false);
 		txtFCorreoElectronico.setEditable(false);
-		
+
 		lblContrasenia.setText("Contraseña");
 		txtFContrasena.setText(usuario.getPassword());
-		
+
 		lblContraseniaNueva.setVisible(false);
 		txtFContraseniaNueva.setVisible(false);
-		
+
 		btnCancelar.setVisible(false);
 		btnConfirmar.setVisible(false);
+		
+		btnAnadirGenero.setVisible(false);
+		btnEliminarGenero.setVisible(false);
+		btnAnadirPlataformas.setVisible(false);
+		btnEliminarPlataformas.setVisible(false);
 	}
 
 
@@ -291,54 +394,54 @@ public class PerfilController implements Initializable {
 
 	@FXML
 	private void confirmarCambios() {
-	    // Validar los datos antes de proceder
-	    if (!validarDatos()) {
-	        return; // Detener ejecución si hay errores
-	    }
+		// Validar los datos antes de proceder
+		if (!validarDatos()) {
+			return; // Detener ejecución si hay errores
+		}
 
-	    Session session = HibernateUtil.getSession();
+		Session session = HibernateUtil.getSession();
 
-	    try {
-	        Transaction tx = session.beginTransaction();
-	        UsuarioDaoImpl usuarioDaoImpl = new UsuarioDaoImpl(session);
+		try {
+			Transaction tx = session.beginTransaction();
+			UsuarioDaoImpl usuarioDaoImpl = new UsuarioDaoImpl(session);
 
-	        // Verificar si el usuario quiere cambiar la contraseña
-	        if (!txtFContrasena.getText().trim().isEmpty() && !txtFContraseniaNueva.getText().trim().isEmpty()) {
-	            if (!UtilsBcrypt.checkPassword(txtFContrasena.getText().trim(), usuario.getPassword())) {
-	                UtilsViews.mostrarDialogo(Alert.AlertType.ERROR, getClass(), "Error de Contraseña", "La contraseña actual es incorrecta.");
-	                return;
-	            }
+			// Verificar si el usuario quiere cambiar la contraseña
+			if (!txtFContrasena.getText().trim().isEmpty() && !txtFContraseniaNueva.getText().trim().isEmpty()) {
+				if (!UtilsBcrypt.checkPassword(txtFContrasena.getText().trim(), usuario.getPassword())) {
+					UtilsViews.mostrarDialogo(Alert.AlertType.ERROR, getClass(), "Error de Contraseña", "La contraseña actual es incorrecta.");
+					return;
+				}
 
-	            // Validar la nueva contraseña antes de actualizarla
-	            if (!validarContrasena(txtFContraseniaNueva.getText().trim())) {
-	                return;
-	            }
+				// Validar la nueva contraseña antes de actualizarla
+				if (!validarContrasena(txtFContraseniaNueva.getText().trim())) {
+					return;
+				}
 
-	            // Hash de la nueva contraseña
-	            String nuevaPasswordHashed = UtilsBcrypt.hashPassword(txtFContraseniaNueva.getText().trim());
-	            usuario.setPassword(nuevaPasswordHashed);
-	        }
+				// Hash de la nueva contraseña
+				String nuevaPasswordHashed = UtilsBcrypt.hashPassword(txtFContraseniaNueva.getText().trim());
+				usuario.setPassword(nuevaPasswordHashed);
+			}
 
 
-	        // Actualizar datos del usuario
-	        usuario.setUsername(txtFNombreUsuario.getText().trim());
-	        usuario.setNombre(txtFNombre.getText().trim());
-	        usuario.setApellidos(txtFApellidos.getText().trim());
-	        usuario.setEmail(txtFCorreoElectronico.getText().trim());
-	        usuario.setFecha_nacimiento(Date.valueOf(LocalDate.parse(txtFFechaNacimiento.getText().trim())));
+			// Actualizar datos del usuario
+			usuario.setUsername(txtFNombreUsuario.getText().trim());
+			usuario.setNombre(txtFNombre.getText().trim());
+			usuario.setApellidos(txtFApellidos.getText().trim());
+			usuario.setEmail(txtFCorreoElectronico.getText().trim());
+			usuario.setFecha_nacimiento(Date.valueOf(LocalDate.parse(txtFFechaNacimiento.getText().trim())));
 
-	        usuarioDaoImpl.update(usuario);
-	        tx.commit(); // Confirmar transacción
+			usuarioDaoImpl.update(usuario);
+			tx.commit(); // Confirmar transacción
 
-	        UtilsViews.mostrarDialogo(Alert.AlertType.INFORMATION, getClass(), "Éxito", "Perfil actualizado correctamente.");
-	        desactivarEdicion();
+			UtilsViews.mostrarDialogo(Alert.AlertType.INFORMATION, getClass(), "Éxito", "Perfil actualizado correctamente.");
+			desactivarEdicion();
 
-	    } catch (Exception e) {
-	        UtilsViews.mostrarDialogo(Alert.AlertType.ERROR, getClass(), "Error", "No se pudo actualizar el perfil.");
-	        e.printStackTrace();
-	    } finally {
-	        session.close();
-	    }
+		} catch (Exception e) {
+			UtilsViews.mostrarDialogo(Alert.AlertType.ERROR, getClass(), "Error", "No se pudo actualizar el perfil.");
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
 	}
 
 
@@ -392,37 +495,37 @@ public class PerfilController implements Initializable {
 			session.close();
 		}
 	}
-	
+
 	// Método para validar la contraseña con los nuevos requisitos
 	private boolean validarContrasena(String password) {
-	    StringBuilder errores = new StringBuilder();
+		StringBuilder errores = new StringBuilder();
 
-	    if (password == null || password.isEmpty()) {
-	        errores.append("La contraseña no puede estar vacía.\n");
-	    }
+		if (password == null || password.isEmpty()) {
+			errores.append("La contraseña no puede estar vacía.\n");
+		}
 
-	    // Verifica que tenga al menos 8 caracteres
-	    if (password.length() < 8) {
-	        errores.append("La contraseña debe tener al menos 8 caracteres.\n");
-	    }
+		// Verifica que tenga al menos 8 caracteres
+		if (password.length() < 8) {
+			errores.append("La contraseña debe tener al menos 8 caracteres.\n");
+		}
 
-	    // Verifica que contenga al menos una letra
-	    if (!password.matches(".*[A-Za-z].*")) {
-	        errores.append("La contraseña debe contener al menos una letra.\n");
-	    }
+		// Verifica que contenga al menos una letra
+		if (!password.matches(".*[A-Za-z].*")) {
+			errores.append("La contraseña debe contener al menos una letra.\n");
+		}
 
-	    // Verifica que contenga al menos un número
-	    if (!password.matches(".*\\d.*")) {
-	        errores.append("La contraseña debe contener al menos un número.\n");
-	    }
+		// Verifica que contenga al menos un número
+		if (!password.matches(".*\\d.*")) {
+			errores.append("La contraseña debe contener al menos un número.\n");
+		}
 
-	    // Si hay errores, muestra un solo mensaje de alerta
-	    if (errores.length() > 0) {
-	        UtilsViews.mostrarDialogo(Alert.AlertType.ERROR, getClass(), "Error de Contraseña", errores.toString());
-	        return false;
-	    }
+		// Si hay errores, muestra un solo mensaje de alerta
+		if (errores.length() > 0) {
+			UtilsViews.mostrarDialogo(Alert.AlertType.ERROR, getClass(), "Error de Contraseña", errores.toString());
+			return false;
+		}
 
-	    return true;
+		return true;
 	}
 
 

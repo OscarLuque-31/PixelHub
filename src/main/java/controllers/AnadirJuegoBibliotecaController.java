@@ -30,6 +30,7 @@ import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import models.Capturas;
 import models.JuegosBiblioteca;
+import models.Plataformas;
 import utils.HibernateUtil;
 import utils.UtilsImages;
 import utils.UtilsViews;
@@ -310,6 +311,7 @@ public class AnadirJuegoBibliotecaController implements Initializable {
 	        }
 
 	        // Crear el juego
+	     // Crear el juego
 	        JuegosBiblioteca newGame = new JuegosBiblioteca();
 	        newGame.setTitulo(txtTitulo.getText());
 	        newGame.setDescripcion(txtDescripcion.getText());
@@ -322,24 +324,38 @@ public class AnadirJuegoBibliotecaController implements Initializable {
 	        newGame.setUsuario(BibliotecaController.getUsuario()); // Asignar el usuario actual
 	        newGame.setImagen(imagenPrincipalBytes); // Asignar imagen principal
 
+	        // Obtener la plataforma seleccionada
+	        String plataformaSeleccionada = dropDownPlataformas.getValue();
+	        if (plataformaSeleccionada != null && !plataformaSeleccionada.isEmpty()) {
+	            Plataformas plataforma = new Plataformas();
+	            plataforma.setPlataforma(plataformaSeleccionada);
+	            plataforma.setJuego(newGame); // Establecer la relación
+
+	            // Asignar la lista de plataformas al juego
+	            List<Plataformas> plataformasList = new ArrayList<>();
+	            plataformasList.add(plataforma);
+	            newGame.setPlataformas(plataformasList);
+	        }
+
 	        // Crear las capturas y asociarlas al juego (si existen)
 	        if (!capturasBytes.isEmpty()) {
 	            List<Capturas> capturasEntities = new ArrayList<>();
 	            for (byte[] capturaBytes : capturasBytes) {
 	                Capturas captura = new Capturas();
 	                captura.setCaptura(capturaBytes);
-	                captura.setJuego(newGame); // Establecer la relación bidireccional
+	                captura.setJuego(newGame);
 	                capturasEntities.add(captura);
 	            }
-	            newGame.setCapturas(capturasEntities); // Asignar la lista de capturas al juego
+	            newGame.setCapturas(capturasEntities);
 	        }
 
 	        // Insertar el juego en la base de datos
 	        JuegosBibliotecaDaoImpl juegoNuevoDao = new JuegosBibliotecaDaoImpl(sesion);
-	        juegoNuevoDao.insert(newGame); // CascadeType.ALL guardará las capturas automáticamente
+	        juegoNuevoDao.insert(newGame); // CascadeType.ALL guardará la plataforma y capturas automáticamente
 
 	        // Realizar commit
 	        sesion.getTransaction().commit();
+
 
 	        // Mostrar mensaje de éxito
 	        UtilsViews.mostrarDialogo(Alert.AlertType.INFORMATION, getClass(), "Éxito", "Juego agregado correctamente");

@@ -24,6 +24,8 @@ import javafx.stage.Stage;
 import models.Capturas;
 import models.Game;
 import models.JuegosBiblioteca;
+import models.Plataformas;
+import models.Preferencias;
 import utils.APIUtils;
 import utils.HibernateUtil;
 import utils.UtilsViews;
@@ -56,34 +58,34 @@ public class AnadirJuegoBuscarJuegosController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 
 		vboxPane.getStylesheets().add(getClass().getResource("/styles/styleAnadirJuegoBuscarJuego.css").toExternalForm());
-		
-		
+
+
 		if (game != null) {
-	        lblAnadirJuegoTitulo.setText(game.getName()); // Título del juego
-	        aplicarBordesRedondeados(imagenJuego);
-	        imagenJuego.setImage(new Image(game.getBackgroundImage())); // Imagen del juego
-	    } else {
-	        System.out.println("El juego es nulo o no se ha recibido correctamente.");
-	    }
+			lblAnadirJuegoTitulo.setText(game.getName()); // Título del juego
+			aplicarBordesRedondeados(imagenJuego);
+			imagenJuego.setImage(new Image(game.getBackgroundImage())); // Imagen del juego
+		} else {
+			System.out.println("El juego es nulo o no se ha recibido correctamente.");
+		}
 
 		// Configurar los botones
 		btnAgregar.setOnAction(event -> agregarJuegoABaseDeDatos());
 		cerrarVentana();
-		
-		 // Asegúrate de que 'primaryStage' no sea null
-	    if (primaryStage != null) {
-	        // Obtener el tamaño de la pantalla (puedes usar el tamaño de la ventana principal)
-	        double screenWidth = primaryStage.getWidth();
-	        double screenHeight = primaryStage.getHeight();
 
-	        // Centrar la ventana secundaria en la pantalla o en la ventana principal
-	        primaryStage.setX((screenWidth - primaryStage.getWidth()) / 2);
-	        primaryStage.setY((screenHeight - primaryStage.getHeight()) / 2);
-	    }
-	    
-	    hoverEffect();
+		// Asegúrate de que 'primaryStage' no sea null
+		if (primaryStage != null) {
+			// Obtener el tamaño de la pantalla (puedes usar el tamaño de la ventana principal)
+			double screenWidth = primaryStage.getWidth();
+			double screenHeight = primaryStage.getHeight();
+
+			// Centrar la ventana secundaria en la pantalla o en la ventana principal
+			primaryStage.setX((screenWidth - primaryStage.getWidth()) / 2);
+			primaryStage.setY((screenHeight - primaryStage.getHeight()) / 2);
+		}
+
+		hoverEffect();
 	}
-	
+
 	private void cerrarVentana(){
 		btnCancelar.setOnAction(event -> {
 			// Obtener el Stage de la ventana actual
@@ -91,7 +93,7 @@ public class AnadirJuegoBuscarJuegosController implements Initializable {
 			stage.close(); // Cerrar la ventana
 		});
 	}
-	
+
 	/**
 	 * Método para aplicar bordes redondeados a un ImageView
 	 */
@@ -145,7 +147,7 @@ public class AnadirJuegoBuscarJuegosController implements Initializable {
 
 		return true;
 	}
-	
+
 	public void hoverEffect() {
 		UtilsViews.hoverEffectButton(btnAgregar, "#0095FF", "#52A5E0");
 		UtilsViews.hoverEffectButton(btnCancelar, "#9E181B", "#F24245");
@@ -164,89 +166,112 @@ public class AnadirJuegoBuscarJuegosController implements Initializable {
 
 	// Método para agregar el juego a la base de datos
 	private void agregarJuegoABaseDeDatos() {
-	    if (!validarCampos()) {
-	        return; // Si los campos no son válidos, no continuamos
-	    }
+		if (!validarCampos()) {
+			return; // Si los campos no son válidos, no continuamos
+		}
 
-	    Session sesion = null;
-	    try {
-	        sesion = HibernateUtil.getSession();
-	        JuegosBibliotecaDaoImpl juegoDao = new JuegosBibliotecaDaoImpl(sesion);
+		Session sesion = null;
+		try {
+			sesion = HibernateUtil.getSession();
+			JuegosBibliotecaDaoImpl juegoDao = new JuegosBibliotecaDaoImpl(sesion);
 
-	        boolean existe = juegoDao.existeJuegoEnBiblioteca(BibliotecaController.getUsuario(), game.getName());
-	        if (existe) {
-	            UtilsViews.mostrarDialogo(Alert.AlertType.WARNING, getClass(), "Juego duplicado", "Este juego ya está en tu biblioteca.");
-	            return;
-	        }
+			boolean existe = juegoDao.existeJuegoEnBiblioteca(BibliotecaController.getUsuario(), game.getName());
+			if (existe) {
+				UtilsViews.mostrarDialogo(Alert.AlertType.WARNING, getClass(), "Juego duplicado", "Este juego ya está en tu biblioteca.");
+				return;
+			}
 
-	        if (!sesion.getTransaction().isActive()) {
-	            sesion.beginTransaction();
-	        }
+			if (!sesion.getTransaction().isActive()) {
+				sesion.beginTransaction();
+			}
 
-	        // Crear y guardar el juego en la biblioteca
-	        JuegosBiblioteca newGame = new JuegosBiblioteca();
-	        newGame.setTitulo(game.getName());
-	        newGame.setDescripcion(game.getDescription());
-	        newGame.setRating(Integer.parseInt(txtFRating.getText()));
-	        newGame.setFechaAñadido(new java.util.Date());
-	        newGame.setComentario(txtFComentario.getText());
-	        newGame.setComprado(checkBoxComprado.isSelected());
-	        newGame.setDeseado(checkBoxDeseado.isSelected());
-	        newGame.setJugado(checkBoxJugado.isSelected());
-	        newGame.setUrlImagen(game.getBackgroundImage());
-	        newGame.setUsuario(BibliotecaController.getUsuario());
+			// Crear y guardar el juego en la biblioteca
+			JuegosBiblioteca newGame = new JuegosBiblioteca();
+			newGame.setTitulo(game.getName());
+			newGame.setDescripcion(game.getDescription());
+			newGame.setRating(Integer.parseInt(txtFRating.getText()));
+			newGame.setFechaAñadido(new java.util.Date());
+			newGame.setComentario(txtFComentario.getText());
+			newGame.setComprado(checkBoxComprado.isSelected());
+			newGame.setDeseado(checkBoxDeseado.isSelected());
+			newGame.setJugado(checkBoxJugado.isSelected());
+			newGame.setUrlImagen(game.getBackgroundImage());
+			newGame.setUsuario(BibliotecaController.getUsuario());
 
-	        // Lista para almacenar las capturas
-	        List<Capturas> capturasList = new ArrayList<>();
+			// Lista para almacenar las capturas
+			List<Capturas> capturasList = new ArrayList<>();
 
-	        // Recorrer las capturas de `Game` y agregarlas a `Capturas`
-	        List<String> screenshots = APIUtils.getGameScreenshots(game.getId());
+			List<Plataformas> plataformasList = new ArrayList<>();
+			
+			List<String> plataformas = APIUtils.getPlatforms(game);
 
-	        if (screenshots == null || screenshots.isEmpty()) {
-	            System.out.println("No hay capturas disponibles para este juego.");
-	        } else {
-	            for (String screenshotUrl : screenshots) {
-	                Capturas captura = new Capturas();
-	                captura.setJuego(newGame);
-	                captura.setUrlImagen(screenshotUrl); // Guardar solo la URL
 
-	                // No descargamos la imagen, solo guardamos la URL
-	                captura.setCaptura(null); // Opción para no almacenar la imagen en bytes
+			// Recorrer las capturas de `Game` y agregarlas a `Capturas`
+			List<String> screenshots = APIUtils.getGameScreenshots(game.getId());
 
-	                capturasList.add(captura);
-	            }
+			if (screenshots == null || screenshots.isEmpty()) {
+				System.out.println("No hay capturas disponibles para este juego.");
+			} else {
+				for (String screenshotUrl : screenshots) {
+					Capturas captura = new Capturas();
+					captura.setJuego(newGame);
+					captura.setUrlImagen(screenshotUrl); // Guardar solo la URL
 
-	            newGame.setCapturas(capturasList);
-	        }
+					// No descargamos la imagen, solo guardamos la URL
+					captura.setCaptura(null); // Opción para no almacenar la imagen en bytes
 
-	        // Guardar el juego con las capturas
-	        juegoDao.insert(newGame);
-	        sesion.getTransaction().commit();
+					capturasList.add(captura);
+				}
 
-	        UtilsViews.mostrarDialogo(Alert.AlertType.INFORMATION, getClass(), "Éxito", "Juego agregado correctamente");
+				newGame.setCapturas(capturasList);
+			}
 
-	        // Cerrar la ventana actual
-	        Stage stage = (Stage) btnAgregar.getScene().getWindow();
-	        stage.close();
+			if (plataformas == null || plataformas.isEmpty()) {
+				System.out.println("No hay plataformas disponibles para este juego.");
+			} else {
 
-	    } catch (Exception e) {
-	        if (sesion != null && sesion.getTransaction().isActive()) {
-	            sesion.getTransaction().rollback();
-	        }
-	        UtilsViews.mostrarDialogo(Alert.AlertType.ERROR, getClass(), "Error", "No se pudo agregar el juego: " + e.getMessage());
-	        e.printStackTrace();
-	    } finally {
-	        if (sesion != null && sesion.isOpen()) {
-	            sesion.close();
-	        }
-	    }
+				for (String plataformaNombre : plataformas) {
+					Plataformas plataforma = new Plataformas();
+
+
+					plataforma.setPlataforma(plataformaNombre);
+					plataforma.setJuego(newGame);
+					
+
+					plataformasList.add(plataforma);
+				}
+
+				newGame.setPlataformas(plataformasList);
+			}
+
+			// Guardar el juego con las capturas
+			juegoDao.insert(newGame);
+			sesion.getTransaction().commit();
+
+			UtilsViews.mostrarDialogo(Alert.AlertType.INFORMATION, getClass(), "Éxito", "Juego agregado correctamente");
+
+			// Cerrar la ventana actual
+			Stage stage = (Stage) btnAgregar.getScene().getWindow();
+			stage.close();
+
+		} catch (Exception e) {
+			if (sesion != null && sesion.getTransaction().isActive()) {
+				sesion.getTransaction().rollback();
+			}
+			UtilsViews.mostrarDialogo(Alert.AlertType.ERROR, getClass(), "Error", "No se pudo agregar el juego: " + e.getMessage());
+			e.printStackTrace();
+		} finally {
+			if (sesion != null && sesion.isOpen()) {
+				sesion.close();
+			}
+		}
 	}
 
 
 
 	public void setPrimaryStage(Stage stage) {
-	    this.primaryStage = stage;
-	    // Aquí puedes realizar ajustes si lo necesitas
+		this.primaryStage = stage;
+		// Aquí puedes realizar ajustes si lo necesitas
 	}
 }
 
