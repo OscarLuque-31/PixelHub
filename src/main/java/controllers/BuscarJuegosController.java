@@ -36,11 +36,11 @@ import utils.UtilsViews;
 public class BuscarJuegosController implements Initializable {
 
 	@FXML
-    private StackPane stackPane;
+	private StackPane stackPane;
 
-    @FXML
-    private VBox loadingPane; 
-	
+	@FXML
+	private VBox loadingPane;
+
 	@FXML
 	private ImageView imgLupa;
 
@@ -62,40 +62,45 @@ public class BuscarJuegosController implements Initializable {
 	@FXML
 	private VBox contenedorJuegos;
 
+	// Mapas con las claves de la api de cada filtro
 	private Map<String, Integer> platforms;
 	private Map<String, Integer> genres;
 	private Map<String, String> order;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// Inicializar imágenes
+		// Inicializa las imágenes
 		initializeImagesBar();
-		// Inicializar combos
+		// Inicializa los combos
 		setComboContent();
-		// Establecer plataformas y géneros
+		// Establece las plataformas y los géneros
 		setMaps();
-		// Traer juegos por defecto
+		// Trae juegos por defecto
 		buscarJuegos(null);
 	}
 
+	/**
+	 * Setea los mapas con las claves de la API para filtrar
+	 */
 	private void setMaps() {
 		LogicaUtils.setMapContent();
 		platforms = LogicaUtils.platforms;
 		genres = LogicaUtils.genres;
-		order = LogicaUtils.order;		
+		order = LogicaUtils.order;
 	}
 
+	/**
+	 * Rellena los comboBox
+	 */
 	private void setComboContent() {
-		comboBoxPlataforma.getItems().addAll("PC", "PlayStation", "Xbox",
-				"iOS", "Apple Macintosh", "Linux",
-				"Nintendo", "Android", "Web");
-		comboBoxGenero.getItems().addAll("Acción", "Indie", "Aventura", "RPG", "Estrategia", 
-				"Shooter", "Casual", "Simulación", "Puzzle", "Arcade", 
-				"Plataformas", "Multijugador", "Carreras", "Deportes", 
-				"Lucha", "Familiar", "Juegos de mesa", "Educativo", "Cartas");
-		comboBoxOrdenar.getItems().addAll("A - Z", "Z - A", "Newest - Oldest", "Oldest - Newest", "Best - Worst", "Worst - Best");
+		comboBoxPlataforma.getItems().addAll("PC", "PlayStation", "Xbox", "iOS", "Apple Macintosh", "Linux", "Nintendo",
+				"Android", "Web");
+		comboBoxGenero.getItems().addAll("Acción", "Indie", "Aventura", "RPG", "Estrategia", "Shooter", "Casual",
+				"Simulación", "Puzzle", "Arcade", "Plataformas", "Multijugador", "Carreras", "Deportes", "Lucha",
+				"Familiar", "Juegos de mesa", "Educativo", "Cartas");
+		comboBoxOrdenar.getItems().addAll("A - Z", "Z - A", "Newest - Oldest", "Oldest - Newest", "Best - Worst",
+				"Worst - Best");
 	}
-
 
 	/**
 	 * Método que inicializa las imagenes
@@ -104,79 +109,94 @@ public class BuscarJuegosController implements Initializable {
 		imgLupa.setImage(new Image(getClass().getResourceAsStream("/images/lupa.png")));
 	}
 
-
+	/**
+	 * Método que busca los juegos y los muestra
+	 * @param title - titulo del juego
+	 * @param platform - plataforma
+	 * @param genre - genero
+	 * @param order - orden
+	 */
 	private void showGames(String title, Integer platform, Integer genre, String order) {
-	    scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-	    scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-	    
-	    Platform.runLater(() -> loadingPane.setVisible(true));
+		scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+		scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
-	    // Crear un pool de hilos con el número óptimo de núcleos del sistema
-	    ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+		Platform.runLater(() -> loadingPane.setVisible(true));
 
-	    // Hilo para obtener los juegos de la API
-	    executor.submit(() -> {
-	        try {
-	            List<Game> listaJuegos = APIUtils.getGames(title, platform, genre, order, 30);
+		// Crea tantos hilos como el sistema cree que es eficiente
+		ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
-	            // Crear una lista de tareas para procesar cada juego en paralelo
-	            List<Future<VBox>> futures = listaJuegos.stream()
-	                .map(juego -> executor.submit(() -> crearBloqueVideojuego(juego)))
-	                .toList();
+		// Hilo para obtener los juegos de la API
+		executor.submit(() -> {
+			try {
+				List<Game> listaJuegos = APIUtils.getGames(title, platform, genre, order, 30);
 
-	            // Obtener los resultados de los hilos
-	            List<VBox> bloquesJuegos = futures.stream()
-	                .map(future -> {
-	                    try {
-	                        return future.get(); // Obtener el resultado del hilo
-	                    } catch (Exception e) {
-	                        e.printStackTrace();
-	                        return new VBox(new Label("Error procesando juego"));
-	                    }
-	                })
-	                .toList();
+				// Crea una lista de tareas para procesar cada juego en paralelo
+				List<Future<VBox>> futures = listaJuegos.stream()
+						.map(juego -> executor.submit(() -> crearBloqueVideojuego(juego))).toList();
 
-	            Platform.runLater(() -> {
-                    mostrarJuegos(bloquesJuegos);
-                    loadingPane.setVisible(false);
-                });
+				// Obtiene los resultados de los hilos
+				List<VBox> bloquesJuegos = futures.stream().map(future -> {
+					try {
+						// Obtiene el resultado del hilo
+						return future.get(); 
+					} catch (Exception e) {
+						e.printStackTrace();
+						return new VBox(new Label("Error procesando juego"));
+					}
+				}).toList();
 
-	        } catch (Exception e) {
-	            e.printStackTrace();
-                Platform.runLater(() -> loadingPane.setVisible(false));
-	        } finally {
-	            executor.shutdown(); // Cerrar el pool de hilos
-	        }
-	    });
+				Platform.runLater(() -> {
+					// Muestra los juegos
+					mostrarJuegos(bloquesJuegos);
+					loadingPane.setVisible(false);
+				});
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				Platform.runLater(() -> loadingPane.setVisible(false));
+			} finally {
+				// Cierra todos los hilos
+				executor.shutdown();
+			}
+		});
 	}
 
+	/**
+	 * Método que muestra los juegos uniendo todas las tarjeta de juegos
+	 * @param bloquesJuegos
+	 */
 	private void mostrarJuegos(List<VBox> bloquesJuegos) {
-	    contenedorJuegos.getChildren().clear();
+		contenedorJuegos.getChildren().clear();
 
-	    HBox filaActual = new HBox();
-	    filaActual.setSpacing(20);
-	    filaActual.setAlignment(Pos.CENTER); 
+		HBox filaActual = new HBox();
+		filaActual.setSpacing(20);
+		filaActual.setAlignment(Pos.CENTER);
 
-	    int contador = 0;
-	    for (VBox bloque:bloquesJuegos) {
-	        filaActual.getChildren().add(bloque);
-	        contador++;
+		int contador = 0;
+		for (VBox bloque : bloquesJuegos) {
+			filaActual.getChildren().add(bloque);
+			contador++;
 
-	        if (contador % 3 == 0) {
-	            contenedorJuegos.setSpacing(30);
-	            contenedorJuegos.setAlignment(Pos.CENTER); 
-	            contenedorJuegos.getChildren().add(filaActual);
+			if (contador % 3 == 0) {
+				contenedorJuegos.setSpacing(30);
+				contenedorJuegos.setAlignment(Pos.CENTER);
+				contenedorJuegos.getChildren().add(filaActual);
 
-	            filaActual = new HBox();
-	            filaActual.setSpacing(20);
-	            filaActual.setAlignment(Pos.CENTER); 
-	        }
-	    }
-	    if (!filaActual.getChildren().isEmpty()) {
-	        contenedorJuegos.getChildren().add(filaActual);
-	    }
+				filaActual = new HBox();
+				filaActual.setSpacing(20);
+				filaActual.setAlignment(Pos.CENTER);
+			}
+		}
+		if (!filaActual.getChildren().isEmpty()) {
+			contenedorJuegos.getChildren().add(filaActual);
+		}
 	}
 
+	/**
+	 * Método que muestra los juegos creando los bloques o card de cada juego
+	 * @param game
+	 * @return
+	 */
 	private VBox crearBloqueVideojuego(Game juego) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/GameItemCuadricula.fxml"));
@@ -194,34 +214,22 @@ public class BuscarJuegosController implements Initializable {
 		}
 	}
 
-
-
-	private HBox crearFilaVideojuego(Game juego) {
-		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/GameItemLista.fxml"));
-			HBox gameItem = loader.load();
-
-			GameItemListaController controller = loader.getController();
-			controller.setGameData(juego);
-
-			return gameItem;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return new HBox(new Label("Error cargando juego"));
-		}
-	}
-
+	/**
+	 * Método que muestra los detalles de cada juego
+	 * @param game - juego en concreto
+	 * @param screenshots - lista de capturas de pantalla
+	 * @param dlcs - todos sus dlcs
+	 */
 	public void mostrarDetallesJuego(Game game, List<String> screenshots, List<Game> dlcs) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/GameDetails.fxml"));
 			HBox gameDetails = loader.load();
 
-			// Obtener el controlador del detalle
-			//
+			// Obtiene el controlador del detalle
 			GameDetailsController controller = loader.getController();
 			controller.setGameDetails(game, screenshots, dlcs);
 
-			// Reemplazar el contenido del contenedor principal con la nueva vista
+			// Reemplaza el contenido del contenedor principal con la nueva vista
 			contenedorJuegos.getChildren().clear();
 			contenedorJuegos.getChildren().add(gameDetails);
 
@@ -233,7 +241,8 @@ public class BuscarJuegosController implements Initializable {
 
 	@FXML
 	void buscarJuegos(MouseEvent event) {
-		showGames(textFieldBusqueda.getText(), platforms.get(comboBoxPlataforma.getValue()), genres.get(comboBoxGenero.getValue()), order.get(comboBoxOrdenar.getValue())); 
+		showGames(textFieldBusqueda.getText(), platforms.get(comboBoxPlataforma.getValue()),
+				genres.get(comboBoxGenero.getValue()), order.get(comboBoxOrdenar.getValue()));
 	}
 
 }

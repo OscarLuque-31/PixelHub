@@ -5,21 +5,20 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "Preferencias")
 public class Preferencias {
-	
-	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id_preferencia;
-	
-	@Column(name = "id_usuario")
-    private Integer id_usuario;
-  
-    @Column(name = "tipo_preferencia")
-    private int tipo;
-    
-    @Column(length = 20)
-    private String preferencia;
 
-    
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id_preferencia;
+
+	@Column(name = "id_usuario")
+	private Integer id_usuario;
+
+	@Column(name = "tipo_preferencia")
+	private int tipo;
+
+	@Column(length = 20)
+	private String preferencia;
+
 	public Integer getId_usuario() {
 		return id_usuario;
 	}
@@ -43,5 +42,5 @@ public class Preferencias {
 	public void setTipo(int tipo) {
 		this.tipo = tipo;
 	}
-	
+
 }

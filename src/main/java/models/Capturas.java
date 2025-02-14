@@ -5,46 +5,46 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "Capturas")
 public class Capturas {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_captura")
-    private Integer idCaptura;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_captura")
+	private Integer idCaptura;
 
-    @ManyToOne
-    @JoinColumn(name = "id_juego", nullable = false)
-    private JuegosBiblioteca juego;
+	@ManyToOne
+	@JoinColumn(name = "id_juego", nullable = false)
+	private JuegosBiblioteca juego;
 
-    @Lob
-    @Column(nullable = true, columnDefinition = "LONGBLOB")
-    private byte[] captura;
+	@Lob
+	@Column(nullable = true, columnDefinition = "LONGBLOB")
+	private byte[] captura;
 
-    @Column(name = "url_imagen", nullable = true)
-    private String urlImagen;
-    
-    // Getters y Setters
-    public Integer getIdCaptura() {
-        return idCaptura;
-    }
+	@Column(name = "url_imagen", nullable = true)
+	private String urlImagen;
 
-    public void setIdCaptura(Integer idCaptura) {
-        this.idCaptura = idCaptura;
-    }
+	// Getters y Setters
+	public Integer getIdCaptura() {
+		return idCaptura;
+	}
 
-    public JuegosBiblioteca getJuego() {
-        return juego;
-    }
+	public void setIdCaptura(Integer idCaptura) {
+		this.idCaptura = idCaptura;
+	}
 
-    public void setJuego(JuegosBiblioteca juego) {
-        this.juego = juego;
-    }
+	public JuegosBiblioteca getJuego() {
+		return juego;
+	}
 
-    public byte[] getCaptura() {
-        return captura;
-    }
+	public void setJuego(JuegosBiblioteca juego) {
+		this.juego = juego;
+	}
 
-    public void setCaptura(byte[] captura) {
-        this.captura = captura;
-    }
+	public byte[] getCaptura() {
+		return captura;
+	}
+
+	public void setCaptura(byte[] captura) {
+		this.captura = captura;
+	}
 
 	public String getUrlImagen() {
 		return urlImagen;
@@ -53,6 +53,5 @@ public class Capturas {
 	public void setUrlImagen(String urlImagen) {
 		this.urlImagen = urlImagen;
 	}
-    
-    
+
 }

@@ -1,5 +1,8 @@
 package configuration;
 
+/**
+ * Clase con la configuración para las llamadas a la API
+ */
 public class Config {
 	
 	public static final String API_KEY = "?key=3c99779a7b9540ed927ae33a304694b8";
