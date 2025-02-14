@@ -26,7 +26,6 @@
 				<ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="-Infinity" />
 				<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="170.0" minWidth="-Infinity" prefWidth="170.0" />
 				<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="170.0" minWidth="-Infinity" prefWidth="170.0" />
-				<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="170.0" minWidth="-Infinity" prefWidth="170.0" />
 			</columnConstraints>
 			<rowConstraints>
 				<RowConstraints prefHeight="50.0" vgrow="SOMETIMES" />
@@ -38,22 +37,12 @@
                   <Cursor fx:constant="HAND" />
                </cursor></ImageView>
 				<TextField fx:id="textFieldBusqueda" minHeight="-Infinity" minWidth="400.0" prefHeight="40.0" prefWidth="400.0" promptText="Buscar..." GridPane.columnIndex="2" />
-				<ImageView fx:id="imgModoLista" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5">
-					<cursor>
-						<Cursor fx:constant="HAND" />
-					</cursor>
-				</ImageView>
             <ComboBox fx:id="comboBoxOrdenar" prefHeight="40.0" prefWidth="150.0" promptText="Ordenar" styleClass="comboBox" GridPane.columnIndex="3">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
             </ComboBox>
             <ComboBox fx:id="comboBoxPlataforma" prefHeight="40.0" prefWidth="150.0" promptText="Plataforma" styleClass="comboBox" GridPane.columnIndex="4">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </ComboBox>
-            <ComboBox fx:id="comboBoxGenero" prefHeight="40.0" prefWidth="150.0" promptText="Género" styleClass="comboBox" GridPane.columnIndex="5">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
