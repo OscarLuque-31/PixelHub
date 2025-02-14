@@ -9,6 +9,10 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.layout.StackPane?>
+
 
 <BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.BibliotecaJuegosController">
 
@@ -55,12 +59,20 @@
 		</GridPane>
 	</top>
 	<center>
-		<BorderPane fx:id="borderPaneCentro" BorderPane.alignment="CENTER">
-         <center>
-            <VBox fx:id="contenedorJuegos" BorderPane.alignment="CENTER">
-               <BorderPane.margin>
-                  <Insets left="50.0" />
-               </BorderPane.margin></VBox>
-         </center></BorderPane>
+		<StackPane>
+			<BorderPane fx:id="borderPaneCentro" BorderPane.alignment="CENTER">
+	         <center>
+	            <VBox fx:id="contenedorJuegos" BorderPane.alignment="CENTER">
+	               <BorderPane.margin>
+	                  <Insets left="50.0" />
+	               </BorderPane.margin></VBox>
+	         </center></BorderPane>
+	         
+	         <!-- Pantalla de carga superpuesta -->
+         <VBox fx:id="loadingPane" alignment="CENTER" spacing="10" style="-fx-background-color: #192229;" visible="false">
+            <Label style="-fx-text-fill: white; -fx-font-size: 18px;" text="Cargando juegos..." />
+            <ProgressIndicator />
+         </VBox>
+	    </StackPane>
 	</center>
 </BorderPane>

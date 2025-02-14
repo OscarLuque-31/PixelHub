@@ -55,25 +55,18 @@
                <children>
                   <VBox>
                      <children>
-                        <GridPane fx:id="plataformasYRating" alignment="CENTER_RIGHT">
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                            <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
-                           <children>
-                              <HBox fx:id="gamePlatforms" />
-                              <Label fx:id="gameRating" alignment="CENTER_RIGHT" contentDisplay="RIGHT" textFill="#52a5e0" GridPane.columnIndex="1">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font></Label>
-                           </children>
+                        <HBox fx:id="gamePlatforms">
                            <VBox.margin>
-                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                              <Insets left="10.0" top="10.0" />
+                           </VBox.margin></HBox>
+                        <Label fx:id="gameRating" alignment="CENTER_RIGHT" contentDisplay="RIGHT" textFill="#52a5e0">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
                            </VBox.margin>
-                        </GridPane>
+                        </Label>
                         <Label contentDisplay="CENTER" text="DLC's" textFill="WHITE">
                            <VBox.margin>
                               <Insets bottom="10.0" left="10.0" right="10.0" />
