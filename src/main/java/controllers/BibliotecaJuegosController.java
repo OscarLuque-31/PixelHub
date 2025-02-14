@@ -64,7 +64,8 @@ public class BibliotecaJuegosController implements Initializable{
 	@FXML
 	private BorderPane borderPaneCentro;
 
-	
+	@FXML
+    private VBox loadingPane;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {	
@@ -161,6 +162,8 @@ public class BibliotecaJuegosController implements Initializable{
 //	    scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 //	    scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
+	    Platform.runLater(() -> loadingPane.setVisible(true));
+
 	        try {
 	        	
 	        	JuegosBibliotecaDaoImpl juegosBibliotecaDaoImpl = new JuegosBibliotecaDaoImpl(HibernateUtil.getSession());
@@ -172,6 +175,7 @@ public class BibliotecaJuegosController implements Initializable{
 	        		bloques.add(crearBloqueVideojuego(game));
 				}
 	        	
+	    	    Platform.runLater(() -> loadingPane.setVisible(false));
 	        	mostrarJuegos(bloques);
 
 	        } catch (Exception e) {
