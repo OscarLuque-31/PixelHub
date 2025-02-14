@@ -1,6 +1,7 @@
 package controllers;
 
 import java.net.URL;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +31,6 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
@@ -45,11 +45,8 @@ import utils.HibernateUtil;
 import utils.UtilsBcrypt;
 import utils.UtilsViews;
 
-import java.sql.Date;
-
 
 public class PerfilController implements Initializable {
-
 
 	@FXML
 	private VBox vboxContainer;
@@ -131,37 +128,35 @@ public class PerfilController implements Initializable {
 		return this.usuario;
 	}
 
+	/**
+     * Inicializa la vista del perfil.
+     * @param location   URL de localización.
+     * @param resources  Recursos utilizados en la vista.
+     */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		// Enlaza el css
 		vboxContainer.getStylesheets().add(getClass().getResource("/styles/stylePerfil.css").toExternalForm());
-
-		// Inicializar imágenes y efectos hover (si aplica)
+		// Inicializar imágenes y efectos hover
 		initializeImagesBar();
-
-		// Asume que BibliotecaController.getUsuario() retorna el usuario actual.
+		// Setea el usuario de BibliotecaController
 		setUsuario(BibliotecaController.getUsuario());
-
 		// Rellena los TextField con los datos del usuario
 		initializeTextFields(getUsuario());
 		// Rellena los ListView con las preferencias del usuario
 		initializeListViews(getUsuario());
 		desactivarBarritasListView();
-
-
-		// Actualizar el Label de juegos añadidos
+		// Actualiza el Label de juegos añadidos
 		actualizarJuegosAnadidos();
-		// Formatear y mostrar la fecha de creación
+		// Formatea y muestra la fecha de creación
 		actualizarFechaCreacion();
 
-		// Cambia el estado de perfil a editable cuando se pulsa en la imagen
 		imgEditar.setOnMouseClicked(event -> cambiarEstadoDePerfilAEditable());
 		btnCancelar.setOnMouseClicked(event -> desactivarEdicion());
 		btnConfirmar.setOnMouseClicked(event -> confirmarCambios());
 		
-		
 		listViewGenero.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		listViewPlataforma.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-
 	}
 	
 	

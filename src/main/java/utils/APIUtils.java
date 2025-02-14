@@ -16,143 +16,152 @@ import models.Game;
 import models.Game.Screenshot;
 
 public class APIUtils {
-	
-	private static final OkHttpClient client = new OkHttpClient();
-	
-	/**
-	 * Hace una llamada a la API esperando una lista de juegos
-	 * @param title 
-	 * @param genre 
-	 * @param platform 
-	 * 
-	 * @return Una lista de los juegos que devuelve la API
-	 * @throws Exception
-	 */
-	public static List<Game> getGames(String title, Integer platform, Integer genre, String order, int pageSize) throws Exception {
-		String plataforma = platform == null ? "" : Config.API_PLATFORM + String.valueOf(platform);
-		String genero = genre == null ? "" : Config.API_GENRE + String.valueOf(genre);
-		//Url de llamada a la API
-		String url = Config.API_URL + Config.API_KEY + Config.API_SEARCH + title + plataforma + genero + Config.API_ORDER + order + Config.API_PAGE_SIZE + pageSize + Config.API_PAGE + 1;
+    
+    private static final OkHttpClient client = new OkHttpClient();
 
-		Request request = new Request.Builder()
-				.url(url)
-				.build();
+    /**
+     * Realiza una llamada a la API para obtener una lista de juegos según los parámetros proporcionados.
+     *
+     * @param title     Título del juego a buscar.
+     * @param platform  ID de la plataforma del juego.
+     * @param genre     ID del género del juego.
+     * @param order     Orden de los resultados.
+     * @param pageSize  Cantidad de juegos por página.
+     * @return          Una lista de juegos obtenidos de la API.
+     * @throws Exception Si hay un error en la solicitud.
+     */
+    public static List<Game> getGames(String title, Integer platform, Integer genre, String order, int pageSize) throws Exception {
+        String plataforma = platform == null ? "" : Config.API_PLATFORM + platform;
+        String genero = genre == null ? "" : Config.API_GENRE + genre;
+        
+        String url = Config.API_URL + Config.API_KEY + Config.API_SEARCH + title + plataforma + genero + Config.API_ORDER + order + Config.API_PAGE_SIZE + pageSize + Config.API_PAGE + 1;
 
-		//Accede al resultado de la API, convierte cada juego en un objeto y los devuelve en una lista
-		try (Response response = client.newCall(request).execute()) {
-			if (response.isSuccessful()) {
-				
-				Gson gson = new Gson();
-				ApiResponse apiResponse = gson.fromJson(response.body().string(), ApiResponse.class);
-				
-				List<Game> games = apiResponse.getResults();
-				
-				return games;
-				
-			} else {
-				throw new Exception("Error en la solicitud: " + response.code());
-			}
-		}
-	}
-	
-	public static Game getGameDetails(int gameId) throws Exception {
-		String url = Config.API_URL + "/" + gameId + Config.API_KEY;
+        Request request = new Request.Builder().url(url).build();
 
-		Request request = new Request.Builder()
-				.url(url)
-				.build();
+        try (Response response = client.newCall(request).execute()) {
+            if (response.isSuccessful()) {
+                Gson gson = new Gson();
+                ApiResponse apiResponse = gson.fromJson(response.body().string(), ApiResponse.class);
+                return apiResponse.getResults();
+            } else {
+                throw new Exception("Error en la solicitud: " + response.code());
+            }
+        }
+    }
 
-		try (Response response = client.newCall(request).execute()) {
-			if (response.isSuccessful()) {
-				Gson gson = new Gson();
-	            Game gameDetails = gson.fromJson(response.body().string(), Game.class);
-	            
-	            return gameDetails;
-			} else {
-				throw new Exception("Error en la solicitud: " + response.code());
-			}
-		}
-	}
+    /**
+     * Obtiene los detalles de un juego específico a partir de su ID.
+     *
+     * @param gameId ID del juego.
+     * @return       Juego obtenido de la API.
+     * @throws Exception Si hay un error en la solicitud a la API.
+     */
+    public static Game getGameDetails(int gameId) throws Exception {
+        String url = Config.API_URL + "/" + gameId + Config.API_KEY;
+        Request request = new Request.Builder().url(url).build();
 
-	public static List<String> getPlatforms(Game game){
-		List<String> platforms = new ArrayList<>();
-		for (Game.ParentPlatform parentPlatform:game.getParentPlatforms()) {
-			if (parentPlatform.getPlatform() != null) {
-				platforms.add(parentPlatform.getPlatform().getName());
-			}
-		}
-		return platforms;
-	}
-	
-	public static List<String> getGameScreenshots(int gameId) throws Exception {
-	    String url = Config.API_URL + "/" + gameId + Config.API_SCREENSHOTS + Config.API_KEY;
-	    Request request = new Request.Builder().url(url).build();
-	    
-	    try (Response response = client.newCall(request).execute()) {
-	        if (!response.isSuccessful()) {
-	            return new ArrayList<>();
-	        }
-	        
-	        Gson gson = new Gson();
-	        ScreenshotApiResponse screenshotResponse = gson.fromJson(response.body().string(), ScreenshotApiResponse.class);
-	        
-	        List<String> screenshots = new ArrayList<>();
-	        if (screenshotResponse == null || screenshotResponse.getResults() == null || screenshotResponse.getResults().isEmpty()) {
-	            screenshots.add("No se encontraron capturas de pantalla.");
-	        } else {
-	            for (Screenshot screenshot:screenshotResponse.getResults()) {
-	                screenshots.add(screenshot.getImage());
-	            }
-	        }
-	        return screenshots;
-	    }
-	}
-	
-	public static List<Game> getGameDLCs(int gameId) throws Exception {
-		//Url de llamada a la API
-		String url = Config.API_URL + "/" + gameId + Config.API_DLCS + Config.API_KEY;
+        try (Response response = client.newCall(request).execute()) {
+            if (response.isSuccessful()) {
+                Gson gson = new Gson();
+                return gson.fromJson(response.body().string(), Game.class);
+            } else {
+                throw new Exception("Error en la solicitud: " + response.code());
+            }
+        }
+    }
 
-		Request request = new Request.Builder().url(url).build();
+    /**
+     * Obtiene la lista de plataformas en las que está disponible un juego.
+     *
+     * @param game Juego del cual se extraerán las plataformas.
+     * @return     Lista de nombres de plataformas en las que está disponible el juego.
+     */
+    public static List<String> getPlatforms(Game game) {
+        List<String> platforms = new ArrayList<>();
+        for (Game.ParentPlatform parentPlatform:game.getParentPlatforms()) {
+            if (parentPlatform.getPlatform() != null) {
+                platforms.add(parentPlatform.getPlatform().getName());
+            }
+        }
+        return platforms;
+    }
 
-		//Accede al resultado de la API, convierte cada juego en un objeto y los devuelve en una lista
-		try (Response response = client.newCall(request).execute()) {
-			if (response.isSuccessful()) {
-				
-				Gson gson = new Gson();
-				ApiResponse apiResponse = gson.fromJson(response.body().string(), ApiResponse.class);
-				
-				List<Game> games = apiResponse.getResults();
-				
-				return games;
-				
-			} else {
-				return new ArrayList<>();
-			}
-		}
-	}
-	
-	public static String extractSpanishDescription(String description) {
-		//Usa Jsoup para limpiar el HTML y extraer texto
-		String plainText = Jsoup.parse(description).text();
+    /**
+     * Obtiene las capturas de pantalla de un juego.
+     *
+     * @param gameId ID del juego.
+     * @return       Lista de URLs de capturas de pantalla del juego.
+     * @throws Exception Si hay un error en la solicitud a la API.
+     */
+    public static List<String> getGameScreenshots(int gameId) throws Exception {
+        String url = Config.API_URL + "/" + gameId + Config.API_SCREENSHOTS + Config.API_KEY;
+        Request request = new Request.Builder().url(url).build();
 
-		//Busca el índice donde comienza la parte en español
-		String startMarker = "Español";
-		int startIndex = plainText.indexOf(startMarker);
+        try (Response response = client.newCall(request).execute()) {
+            if (!response.isSuccessful()) {
+                return new ArrayList<>();
+            }
 
-		if (startIndex == -1) {
-			return "No se ha encontrado ninguna descripción del juego";
-		}
+            Gson gson = new Gson();
+            ScreenshotApiResponse screenshotResponse = gson.fromJson(response.body().string(), ScreenshotApiResponse.class);
 
-		//Extrae el texto desde "Español"
-		String spanishText = plainText.substring(startIndex + startMarker.length()).trim();
+            List<String> screenshots = new ArrayList<>();
+            if (screenshotResponse == null || screenshotResponse.getResults() == null || screenshotResponse.getResults().isEmpty()) {
+                screenshots.add("No se encontraron capturas de pantalla.");
+            } else {
+                for (Screenshot screenshot:screenshotResponse.getResults()) {
+                    screenshots.add(screenshot.getImage());
+                }
+            }
+            return screenshots;
+        }
+    }
 
-		//Opcionalmente puedes detenerte si detectas el fin del texto en español
-		int endIndex = spanishText.indexOf("English"); // Ejemplo de un marcador de fin
-		if (endIndex != -1) {
-			spanishText = spanishText.substring(0, endIndex).trim();
-		}
+    /**
+     * Obtiene la lista de DLCs disponibles para un juego.
+     *
+     * @param gameId ID del juego.
+     * @return       Lista de DLCs del juego.
+     * @throws Exception Si hay un error en la solicitud a la API.
+     */
+    public static List<Game> getGameDLCs(int gameId) throws Exception {
+        String url = Config.API_URL + "/" + gameId + Config.API_DLCS + Config.API_KEY;
+        Request request = new Request.Builder().url(url).build();
 
-		return spanishText;
-	}
-	
+        try (Response response = client.newCall(request).execute()) {
+            if (response.isSuccessful()) {
+                Gson gson = new Gson();
+                ApiResponse apiResponse = gson.fromJson(response.body().string(), ApiResponse.class);
+                return apiResponse.getResults();
+            } else {
+                return new ArrayList<>();
+            }
+        }
+    }
+
+    /**
+     * Extrae la descripción de un texto en HTML.
+     *
+     * @param description Descripción en formato HTML.
+     * @return            La descripción en español si se encuentra o en inglés en su defecto.
+     */
+    public static String extractSpanishDescription(String description) {
+        String plainText = Jsoup.parse(description).text();
+        String startMarker = "Español";
+        int startIndex = plainText.indexOf(startMarker);
+
+        if (startIndex == -1) {
+            return "No se ha encontrado ninguna descripción del juego";
+        }
+
+        String spanishText = plainText.substring(startIndex + startMarker.length()).trim();
+        int endIndex = spanishText.indexOf("English");
+
+        if (endIndex != -1) {
+            spanishText = spanishText.substring(0, endIndex).trim();
+        }
+
+        return spanishText;
+    }
 }
+

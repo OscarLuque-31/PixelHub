@@ -3,10 +3,8 @@ package controllers;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
-import java.util.List;
 
 import org.controlsfx.control.CheckComboBox;
-import org.hibernate.Hibernate;
 import org.hibernate.Session;
 
 import dao.PreferenciasDaoImpl;
@@ -14,9 +12,7 @@ import dao.UsuarioDaoImpl;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -68,6 +64,7 @@ public class RegistroController {
 
 	@FXML
 	private TextField txtUsername;
+	
 	@FXML
 	private Button btnCerrar;
 
@@ -108,24 +105,8 @@ public class RegistroController {
 	private GridPane gridPane;
 
 	private Stage stage;
-
-	/**
-	 * Método para cargar la hoja de estilos (CSS) de la ventana de login
-	 */
-	private void cargarCSS() {
-		// Cargar el archivo de estilo para la ventana de login
-		borderPane.getStylesheets().addAll(getClass().getResource("/styles/styleRegister.css").toExternalForm(),
-				getClass().getResource("/styles/styleTopBar.css").toExternalForm());
-	}
-
-	/**
-	 * Método que controla la navegación entre ventanas
-	 */
-	private void navegacionEntreVentanas() {
-		btnRegister.setOnMouseClicked(event -> NavigationUtils.navigateTo(stage, "/views/Login.fxml"));
-		btnCancel.setOnMouseClicked(event -> NavigationUtils.navigateTo(stage, "/views/Login.fxml"));
-	}
-
+	
+	
 	public void setStage(Stage stage) {
 		this.stage = stage;
 		// Funcionalidad de los botones
@@ -142,6 +123,22 @@ public class RegistroController {
 		rellenarComboBox();
 		// Registro de un usuario en bd
 		registroUsuario();
+	}
+
+	/**
+	 * Método para cargar la hoja de estilos de la ventana de login
+	 */
+	private void cargarCSS() {
+		borderPane.getStylesheets().addAll(getClass().getResource("/styles/styleRegister.css").toExternalForm(),
+				getClass().getResource("/styles/styleTopBar.css").toExternalForm());
+	}
+
+	/**
+	 * Método que controla la navegación entre ventanas
+	 */
+	private void navegacionEntreVentanas() {
+		btnRegister.setOnMouseClicked(event -> NavigationUtils.navigateTo(stage, "/views/Login.fxml"));
+		btnCancel.setOnMouseClicked(event -> NavigationUtils.navigateTo(stage, "/views/Login.fxml"));
 	}
 
 	/**
@@ -172,21 +169,16 @@ public class RegistroController {
 	}
 
 	/**
-	 * Método que crea al usuario con todos los campos correctos
+	 * Método que crea al usuario
 	 * 
 	 * @return true si la operación fue exitosa, false en caso contrario.
 	 */
 	private boolean registrarUsuario() {
 		if (validarCampos()) {
-			System.out.println("REGISTRO DE USUARIO");
-			System.out.println("-------------------");
-
 			Session sesion = null;
 			try {
-				// Iniciar sesión
 				sesion = HibernateUtil.getSession();
 
-				// Verifica si ya existe una transacción activa antes de iniciar una nueva
 				if (!sesion.getTransaction().isActive()) {
 					sesion.beginTransaction();
 				}
@@ -200,7 +192,6 @@ public class RegistroController {
 					return false;
 				}
 
-				// Crear el nuevo usuario
 				Usuario newUsuario = new Usuario();
 				newUsuario.setNombre(txtName.getText());
 				newUsuario.setApellidos(txtSurname.getText());
@@ -216,10 +207,8 @@ public class RegistroController {
 				newUsuario.setPassword(UtilsBcrypt.hashPassword(txtPassword.getText()));
 				newUsuario.setFecha_creacion(LocalDate.now());
 
-				// Insertar usuario
 				usuarioDao.insert(newUsuario);
 
-				// Insertar preferencias de género
 				for (String pref : cmbGender.getCheckModel().getCheckedItems()) {
 					Preferencias preferencia = new Preferencias();
 					preferencia.setId_usuario(newUsuario.getId());
@@ -228,7 +217,6 @@ public class RegistroController {
 					preferenciasDao.insert(preferencia);
 				}
 
-				// Insertar preferencias de plataformas
 				for (String pref : cmbPlatform.getCheckModel().getCheckedItems()) {
 					Preferencias preferencia = new Preferencias();
 					preferencia.setId_usuario(newUsuario.getId());
@@ -237,12 +225,10 @@ public class RegistroController {
 					preferenciasDao.insert(preferencia);
 				}
 
-				// Realizar commit
 				sesion.getTransaction().commit();
 				return true;
 
 			} catch (Exception e) {
-				// Realizar rollback en caso de error
 				if (sesion != null && sesion.getTransaction().isActive()) {
 					sesion.getTransaction().rollback();
 				}
@@ -257,44 +243,44 @@ public class RegistroController {
 	/**
 	 * Método que valida los campos del registro
 	 * 
-	 * @return true si son todos validos
+	 * @return true si son todos validos, false si no lo son
 	 */
 	private boolean validarCampos() {
 		StringBuilder errores = new StringBuilder();
 
-		// 1. Validación del Nombre
+		//Validación del Nombre
 		if (txtName.getText().trim().isEmpty() || txtName.getText().length() > 30) {
 			errores.append("El nombre no puede estar vacío y debe tener un máximo de 30 caracteres.\n");
 		}
 
-		// 2. Validación del Apellido
+		//Validación del Apellido
 		if (txtSurname.getText().trim().isEmpty() || txtSurname.getText().length() > 50) {
 			errores.append("El apellido no puede estar vacío y debe tener un máximo de 50 caracteres.\n");
 		}
 
-		// 3. Validación del Nombre de Usuario
+		//Validación del Nombre de Usuario
 		if (txtUsername.getText().trim().isEmpty() || txtUsername.getText().length() > 30) {
 			errores.append("El nombre de usuario no puede estar vacío y debe tener un máximo de 30 caracteres.\n");
 		}
 
-		// 4. Validación del Email
+		//Validación del Email
 		String email = txtEmail.getText().trim();
 		if (email.isEmpty() || !email.matches("^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$")) {
 			errores.append("El correo electrónico no es válido.\n");
 		}
 
-		// 5. Validación de la Contraseña
+		//Validación de la Contraseña
 		String password = txtPassword.getText();
 		if (password.isEmpty() || password.length() < 8 || !password.matches(".*\\d.*") || !password.matches(".*[A-Za-z].*")) {
 			errores.append("La contraseña debe tener al menos 8 caracteres, incluir letras y números.\n");
 		}
 
-		// 6. Validación de Confirmación de Contraseña
+		//Validación de Confirmación de Contraseña
 		if (!password.equals(txtConfirmPassword.getText())) {
 			errores.append("Las contraseñas no coinciden.\n");
 		}
 
-		// 7. Validación de la Fecha de Nacimiento
+		//Validación de la Fecha de Nacimiento
 		if (txtDate.getValue() == null) {
 			errores.append("La fecha de nacimiento no puede estar vacía.\n");
 		} else {
@@ -305,29 +291,23 @@ public class RegistroController {
 			}
 		}
 
-		// 8. Validación de Género
+		//Validación de Género
 		if (cmbGender.getCheckModel().getCheckedItems().isEmpty()) {
 			errores.append("Debe seleccionar al menos un género.\n");
 		}
 
-		// 9. Validación de Plataforma
+		//Validación de Plataforma
 		if (cmbPlatform.getCheckModel().getCheckedItems().isEmpty()) {
 			errores.append("Debe seleccionar al menos una plataforma.\n");
 		}
 
-		// Mostrar errores, si existen
 		if (errores.length() > 0) {
 			UtilsViews.mostrarDialogo(Alert.AlertType.ERROR, getClass(), "Corrige estos errores, por favor", errores.toString());
 			return false;
 		}
 
-		// Si todas las validaciones son correctas
 		return true;
 	}
-
-
-
-
 
 	/**
 	 * Método que recopila todos los hoverEffect

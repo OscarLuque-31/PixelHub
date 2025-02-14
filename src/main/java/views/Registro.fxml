@@ -188,13 +188,11 @@
 							<children>
                         <Button fx:id="btnMinimizar" mnemonicParsing="false" prefWidth="50.0" style="-fx-background-color: #192229;" styleClass="btnNavegacion">
                            <graphic>
-      								<!-- Icono Minimizar -->
       								<ImageView fx:id="iconMinimizar" fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true" />
                            </graphic>
                         </Button>
                         <Button fx:id="btnCerrar" mnemonicParsing="false" prefWidth="50.0" style="-fx-background-color: #192229;" styleClass="btnNavegacion" GridPane.columnIndex="1">
                            <graphic>
-      								<!-- Icono Cerrar -->
       								<ImageView fx:id="iconCerrar" fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true" />
                            </graphic>
                         </Button>

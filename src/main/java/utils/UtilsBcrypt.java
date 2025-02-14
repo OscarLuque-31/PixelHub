@@ -6,7 +6,8 @@ public class UtilsBcrypt {
 	
 
 	/**
-	 * Método que hashea la contraseña a meter en base de datos
+	 * Método que hashea la contraseña a meter en base de datos.
+	 * 
 	 * @param password
 	 * @return
 	 */
@@ -16,7 +17,8 @@ public class UtilsBcrypt {
 
 
 	/**
-	 * Método que checkea la contraseña hasheada para comprobar si es correcta
+	 * Método que checkea la contraseña hasheada para comprobar si es correcta.
+	 * 
 	 * @param plainPassword
 	 * @param hashedPassword
 	 * @return

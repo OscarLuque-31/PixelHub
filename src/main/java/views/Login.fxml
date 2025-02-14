@@ -18,7 +18,7 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" stylesheets="@styles/styleLogin.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LoginController">
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" stylesheets="@styles/styleLogin.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LoginController">
 
 	<center>
 		<VBox fx:id="vboxForm" alignment="CENTER" fillWidth="false" maxHeight="600.0" maxWidth="578.0" minHeight="600.0" minWidth="578.0" prefHeight="600.0" prefWidth="578.0" styleClass="vbox-form" BorderPane.alignment="CENTER">
@@ -45,13 +45,6 @@
 				</Button>
 				<VBox alignment="CENTER" spacing="20.0">
 					<children>
-						<TextFlow styleClass="textBot" textAlignment="CENTER">
-							<children>
-								<Text styleClass="textBot" text="¿Olvidaste tu " />
-								<Text fx:id="linkPassword" styleClass="label-link" text="contraseña" />
-								<Text styleClass="textBot" text="?" />
-							</children>
-						</TextFlow>
 						<TextFlow styleClass="textBot" textAlignment="CENTER">
 							<children>
 								<Text styleClass="textBot" text="¿No tienes una cuenta? " />
@@ -89,13 +82,11 @@
 							<children>
                         <Button fx:id="btnMinimizar" mnemonicParsing="false" prefWidth="50.0" style="-fx-background-color: #192229;" styleClass="btnNavegacion">
                            <graphic>
-      								<!-- Icono Minimizar -->
       								<ImageView fx:id="iconMinimizar" fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true" />
                            </graphic>
                         </Button>
                         <Button fx:id="btnCerrar" mnemonicParsing="false" prefWidth="50.0" style="-fx-background-color: #192229;" styleClass="btnNavegacion" GridPane.columnIndex="1">
                            <graphic>
-      								<!-- Icono Cerrar -->
       								<ImageView fx:id="iconCerrar" fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true" />
                            </graphic>
                         </Button>
