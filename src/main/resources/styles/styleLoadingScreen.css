@@ -2,8 +2,8 @@
     -fx-background-color: #212E36;
     -fx-padding: 20px;
     -fx-border-radius: 10px;
-    -fx-background-radius: 10px;
     -fx-alignment: center;
+
 }
 
 .label-loading {

@@ -33,6 +33,9 @@ public class GameItemCuadriculaBibliotecaController {
     @FXML
     private VBox mainBox;
     
+    @FXML
+    private ImageView removeButton;
+    
     private JuegosBiblioteca game;
     
     private BibliotecaJuegosController bibliotecaController;    
