@@ -74,17 +74,15 @@ public class BibliotecaJuegosController implements Initializable{
 		hoverEffect();
 		//Obtener y cargar los juegos
 		navegacionEntrePestañas();		
+		//Cargar todos los juegos
+		buscarJuegos(null);
 	}
 	
 	/**
 	 * Método que controla la navegación entre ventanas
 	 */
 	private void navegacionEntrePestañas() {
-
 		imgAdd.setOnMouseClicked(event -> cambiarContenidoCentro("/views/AnadirJuegoBiblioteca.fxml"));
-		
-		
-
 	}
 	
 
@@ -135,7 +133,7 @@ public class BibliotecaJuegosController implements Initializable{
 
 	public void mostrarDetallesJuego(JuegosBiblioteca game) {
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/GameDetails.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/GameDetailsBiblioteca.fxml"));
 			HBox gameDetails = loader.load();
 
 			// Obtener el controlador del detalle
@@ -167,7 +165,7 @@ public class BibliotecaJuegosController implements Initializable{
 	        	
 	        	JuegosBibliotecaDaoImpl juegosBibliotecaDaoImpl = new JuegosBibliotecaDaoImpl(HibernateUtil.getSession());
 	        	
-	            List<JuegosBiblioteca> games = juegosBibliotecaDaoImpl.searchAll();
+	            List<JuegosBiblioteca> games = juegosBibliotecaDaoImpl.searchJuegosByUsuario(BibliotecaController.getUsuario().getId());
 	        	
 	        	List<VBox> bloques = new ArrayList<>();
 	        	for (JuegosBiblioteca game:games) {

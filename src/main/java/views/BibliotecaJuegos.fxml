@@ -8,6 +8,7 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 
 <BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.BibliotecaJuegosController">
 
@@ -32,7 +33,10 @@
 					</cursor>
 				</ImageView>
 				<ImageView fx:id="imgAdd" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
-				<ImageView fx:id="imgLupa" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#buscarJuegos" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" />
+				<ImageView fx:id="imgLupa" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#buscarJuegos" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></ImageView>
 				<TextField fx:id="textFieldBusqueda" minHeight="-Infinity" minWidth="400.0" prefHeight="40.0" prefWidth="400.0" promptText="Buscar..." GridPane.columnIndex="2" />
 				<ImageView fx:id="imgModoTarjeta" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4">
 					<cursor>
@@ -51,6 +55,12 @@
 		</GridPane>
 	</top>
 	<center>
-		<BorderPane fx:id="borderPaneCentro" BorderPane.alignment="CENTER" />
+		<BorderPane fx:id="borderPaneCentro" BorderPane.alignment="CENTER">
+         <center>
+            <VBox fx:id="contenedorJuegos" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets left="50.0" />
+               </BorderPane.margin></VBox>
+         </center></BorderPane>
 	</center>
 </BorderPane>

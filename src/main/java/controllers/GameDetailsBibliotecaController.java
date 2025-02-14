@@ -16,6 +16,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import models.Capturas;
 import models.Game;
 import models.JuegosBiblioteca;
 
@@ -60,9 +61,9 @@ public class GameDetailsBibliotecaController {
     @FXML
     private ImageView previous;
     
-	private List<String> capturasApi;
-	private List<String> capturasBd;
+	private List<Capturas> capturas;
 
+	private boolean areCapturasApi;
 	private int posicionCapturas;
     
     public void setGameDetails(JuegosBiblioteca game) {
@@ -70,14 +71,18 @@ public class GameDetailsBibliotecaController {
 
 		gameTitle.setText(game.getTitulo());
 		descriptionText.setText(extractSpanishDescription(game.getDescripcion()));
-		gameRating.setText("⭐ " + game.getRating());
+		gameRating.setText("Rating personal: ⭐ " + game.getRating());
+		comentario.setText(game.getComentario());
+		gameFecha.setText("Fecha en la que se añadió a la biblioteca: " + game.getFechaAñadido());
 		gamePlatforms.getChildren().add(crearBloquePlataformas(game));
-
+		
 		try {
 			if (game.getUrlImagen() != null) {
-				gameImage.setImage(new Image(new ByteArrayInputStream(game.getImagen())));
-			}else {
 				gameImage.setImage(new Image(game.getUrlImagen()));
+				areCapturasApi = true;
+			}else {
+				gameImage.setImage(new Image(new ByteArrayInputStream(game.getImagen())));
+				areCapturasApi = false;
 			}
 		} catch (Exception e) {
 			gameImage.setImage(new Image(getClass().getResource("/images/error.png").toExternalForm()));
@@ -91,9 +96,9 @@ public class GameDetailsBibliotecaController {
 		previous.setImage(new Image(getClass().getResource("/images/imagenAnterior.png").toExternalForm()));
 		next.setImage(new Image(getClass().getResource("/images/siguienteImagen.png").toExternalForm()));
 
-//		posicionCapturas = 0;
-//	    capturasApi = game.getCapturas();
-//		setCaptura("");
+		posicionCapturas = 0;
+		capturas = game.getCapturas();
+		setCaptura("");
 		
 	}
     
@@ -119,6 +124,32 @@ public class GameDetailsBibliotecaController {
 		clip.setArcWidth(px);
 		clip.setArcHeight(px);
 		imageView.setClip(clip);
+	}
+    
+    private void setCaptura(String direction) {
+		try {
+			if (direction.equals(">") && posicionCapturas < capturas.size() - 1) {
+				posicionCapturas++;
+			} else if (direction.equals("<") && posicionCapturas > 0) {
+				posicionCapturas--;
+			}
+
+			if (capturas.size() > 0) {
+				if (areCapturasApi) {
+					gameScreenshots.setImage(new Image(capturas.get(posicionCapturas).getUrlImagen()));
+				}else {
+					gameImage.setImage(new Image(new ByteArrayInputStream(capturas.get(posicionCapturas).getCaptura())));
+				}
+			}
+			
+			gameScreenshots.setPreserveRatio(false);
+			gameScreenshots.setSmooth(true);
+			gameScreenshots.setCache(true);
+			setImageBorderRadius(gameScreenshots, 10);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
     
     private String extractSpanishDescription(String description) {
@@ -148,12 +179,12 @@ public class GameDetailsBibliotecaController {
 
     @FXML
     void nextScreenshot(MouseEvent event) {
-
+    	setCaptura(">");
     }
 
     @FXML
     void previousScreenshot(MouseEvent event) {
-
+    	setCaptura("<");
     }
 
 }
